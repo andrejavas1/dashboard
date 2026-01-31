@@ -556,6 +556,39 @@ class PortfolioConstruction:
             json.dump(summary, f, indent=2, default=str)
         logger.info(f"Portfolio summary saved to {summary_path}")
     
+    def save_dashboard_patterns(self, output_dir: str = "data"):
+        """
+        Save filtered patterns for dashboard display.
+        Filters: training_success_rate >= 80%, validation_success_rate >= 80%, occurrences >= 30
+        
+        Args:
+            output_dir: Directory to save output files
+        """
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # Filter patterns for dashboard
+        filtered_patterns = []
+        for pattern_wrapper in self.patterns:
+            pattern = pattern_wrapper.get('pattern', pattern_wrapper)
+            training_sr = pattern_wrapper.get('training_success_rate', 0)
+            validation_sr = pattern_wrapper.get('validation_success_rate', 0)
+            occ = pattern.get('occurrences', 0)
+            
+            # Apply filter: >= 80% training, >= 80% validation, >= 30 occurrences
+            if training_sr >= 80 and validation_sr >= 80 and occ >= 30:
+                # Add rates to pattern for dashboard display
+                pattern_with_rates = pattern.copy()
+                pattern_with_rates['training_success_rate'] = training_sr
+                pattern_with_rates['validation_success_rate'] = validation_sr
+                filtered_patterns.append(pattern_with_rates)
+        
+        # Save to patterns.json
+        patterns_path = os.path.join(output_dir, "patterns.json")
+        with open(patterns_path, 'w') as f:
+            json.dump(filtered_patterns, f, indent=2, default=str)
+        logger.info(f"Dashboard patterns saved to {patterns_path}: {len(filtered_patterns)} patterns")
+        logger.info(f"  (Filtered: training>=80%, validation>=80%, occurrences>=30)")
+    
     def run_phase7(self, patterns_path: str = None) -> List[Dict]:
         """
         Run complete Phase 7: Pattern Ranking & Portfolio Construction.
@@ -597,6 +630,9 @@ class PortfolioConstruction:
         
         # Save results
         self.save_portfolio()
+        
+        # Save dashboard patterns (filtered for display)
+        self.save_dashboard_patterns()
         
         logger.info("\n" + "=" * 60)
         logger.info("PHASE 7 COMPLETE")
