@@ -1,0 +1,71 @@
+# Reserved files
+nul
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# Data files (large)
+data/*.csv
+data/*.json
+!data/patterns.json
+!data/ohlcv.json
+!data/final_portfolio.json
+
+# Cache
+cache/
+.pytest_cache/
+
+# Reports (generated)
+reports/
+
+# Charts (generated)
+charts/
+
+# Screenshots
+dashboard_screenshot.png
+dashboard_test.png
+dashboard_with_markers.png
+dashboard_zoomed.png
+dashboard_status.png
+dashboard_status2.png
+
+# Logs
+orchestrator.log
+orchestrator.err
+dashboard.log

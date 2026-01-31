@@ -1,0 +1,227 @@
+# Price Movement Probability Discovery System Configuration - Balanced for Realistic Data
+
+# RUN MODE: Set to "quick" for fast testing, or "full" for complete analysis
+run_mode: "quick"  # Options: "quick" | "full"
+
+# Streaming Configuration (NEW - for real-time 15-minute analysis)
+streaming:
+  enabled: true
+  provider: "alpaca"  # Options: alpaca, yahoo, polygon, demo
+  
+  # Data source settings
+  ticker: "XOM"
+  interval: "15m"  # 1m, 5m, 15m, 1h, 1d
+  buffer_size: 252  # Number of bars to maintain
+  
+  # WebSocket settings (for real providers)
+  ws_url: "wss://stream.data.alpaca.markets/v2/iex"
+  reconnect_interval: 5  # seconds
+  max_reconnect_attempts: 10
+  
+  # Data validation
+  validation:
+    confidence_threshold: 98  # Match historical baseline
+    max_price_deviation_pct: 5
+    max_volume_deviation_pct: 10
+    require_ohlcv_complete: true
+  
+  # Pattern matching
+  pattern_matching:
+    tolerance_pct: 5.0  # ±5% tolerance for conditions
+    min_confidence_threshold: 50  # Minimum to show in dashboard
+    trigger_threshold: 90  # Minimum to trigger alert
+  
+  # Market regime detection
+  regime_detection:
+    window_size: 20  # Number of bars for regime calculation
+    volatility_thresholds:
+      low: 1.5
+      medium: 3.0
+    trend_thresholds:
+      strong_up: 0.2
+      weak_up: 0.05
+      neutral: -0.05
+      weak_down: -0.2
+  
+  # Probability estimation
+  estimation:
+    base_weight: 0.4  # Weight for historical success rate
+    regime_weight: 0.3  # Weight for regime adjustment
+    confidence_weight: 0.3  # Weight for match confidence
+  
+  # Alert settings
+  alerts:
+    enabled: true
+    levels:
+      HIGH: 90
+      MEDIUM: 70
+      LOW: 50
+    channels:
+      - websocket  # Real-time dashboard
+      - console    # Log output
+  
+  # Dashboard API
+  dashboard:
+    ws_port: 5010
+    http_port: 5011
+    update_interval: 1  # seconds (max update frequency)
+
+# Data Sources Configuration
+data_sources:
+  ticker: "XOM"
+  start_date: "2010-01-01"
+  end_date: "current"  # Will be set to current date at runtime
+  
+  # API Keys (set in .env file or here)
+  alpha_vantage:
+    api_key: "RLKWX6MH11ITU9VZ"
+    base_url: "https://www.alphavantage.co/query"
+  
+  tiingo:
+    api_key: "28f0ccb4fb2e81ad8e8657c9a4b9adf276efd1e0"
+    base_url: "https://api.tiingo.com/tiingo/daily"
+  quandl:
+    api_key: "nBL5VM3XpyVFndiew1fJ"
+    base_url: "https://www.quandl.com/api/v3"
+
+
+# Data Validation Thresholds
+validation:
+  ohlc_discrepancy_threshold: 0.5  # % difference to flag
+  consensus_agreement_threshold: 0.2  # % for consensus
+  volume_discrepancy_threshold: 10  # % difference to flag
+  max_consecutive_missing_days: 3
+  min_confidence_score: 98  # % to proceed
+
+
+# Price Movement Parameters - Optimized for realistic XOM data
+movement:
+  time_windows: [5, 10, 15, 20, 30]  # Removed 3-day (too short for XOM)
+  thresholds: [1.0, 2.0, 3.0, 5.0, 10.0]  # More achievable targets for conservative stock
+
+
+# Feature Engineering Parameters
+features:
+  moving_averages: [10, 20, 50, 100, 200]
+  rate_of_change_periods: [1, 3, 5, 10, 20]
+  atr_periods: [5, 10, 14, 20]
+  rsi_periods: [7, 14, 21, 28]
+  macd_params:
+    fast: 12
+    slow: 26
+    signal: 9
+  adx_periods: [14, 20]
+  volume_avg_periods: [5, 10, 20, 50]
+  high_low_periods: [5, 10, 20, 50, 100]
+  support_resistance_range: 2  # % within to consider proximity
+
+
+# Market Regimes Configuration
+market_regimes:
+  volatility:
+    - name: "Low Volatility"
+      atr_pct_threshold: 3.0  # ATR as % of price
+      description: "Low volatility regime - patterns may be more reliable"
+    - name: "Normal Volatility"
+      atr_pct_min: 3.0
+      atr_pct_max: 6.0
+      description: "Normal volatility regime"
+    - name: "High Volatility"
+      atr_pct_threshold: 6.0
+      description: "High volatility regime - patterns may be less reliable"
+  
+  trend:
+    - name: "Strong Uptrend"
+      sma50_above_sma200: true
+      price_above_sma50: true
+      price_above_sma200: true
+      description: "Strong bullish trend"
+    - name: "Moderate Uptrend"
+      sma50_above_sma200: true
+      price_above_sma50: true
+      description: "Moderate bullish trend"
+    - name: "Sideways"
+      sma50_near_sma200: true
+      sma50_sma200_pct_diff: 2.0  # % difference to consider "near"
+      description: "Consolidation/sideways market"
+    - name: "Moderate Downtrend"
+      sma50_below_sma200: true
+      price_below_sma50: true
+      description: "Moderate bearish trend"
+    - name: "Strong Downtrend"
+      sma50_below_sma200: true
+      price_below_sma50: true
+      price_below_sma200: true
+      description: "Strong bearish trend"
+  
+  enable_regime_detection: true  # Enable/disable regime-based pattern discovery
+  min_regime_samples: 100  # Minimum samples required to discover patterns in a regime
+
+
+# Pattern Discovery Parameters - Optimized for Better Pattern Discovery
+pattern_discovery:
+  min_occurrences: 15          # Reduced from 30 to allow rarer patterns
+  min_success_rate: 53         # Reduced from 55 for statistical significance (vs 50% random)
+  high_confidence_rate: 75     # Increased from 65 for true high-confidence patterns
+  high_confidence_occurrences: 30  # Reduced from 40 to match new min_occurrences
+  p_value_threshold: 0.05
+  max_features_per_pattern: 6  # Increased from 5 for more complex patterns
+  test_combinations: [1, 2, 3, 4, 5, 6]  # Added 6-feature combinations
+  discover_by_regime: false  # Discover patterns separately for each regime (disabled for now)
+
+
+# Validation Periods
+validation_periods:
+  training_period:
+    start: "2010-01-01"
+    end: "2020-12-31"
+  validation_period:
+    start: "2021-01-01"
+    end: "current"  # Will be set to current date at runtime
+  live_period:
+    start: "2025-01-01"
+  robust_threshold: 0.80  # % of training rate - relaxed for realistic data
+  degraded_threshold: 0.65  # % of training rate - relaxed for realistic data
+
+
+# Portfolio Construction
+portfolio:
+  max_patterns: 20
+  min_patterns: 5  # Reduced minimum for realistic data
+  long_patterns_min: 3
+  short_patterns_min: 3
+  short_term_patterns_min: 2
+  medium_term_patterns_min: 2
+  regime_patterns_min: 1
+
+
+# Scoring Weights - Balanced for realistic data
+scoring:
+  success_metrics: 0.25
+  risk_metrics: 0.50
+  practical_metrics: 0.25
+
+
+# Output Configuration
+output:
+  data_dir: "data"
+  results_dir: "results"
+  reports_dir: "reports"
+  charts_dir: "charts"
+  export_formats: ["png", "html", "pdf", "csv"]
+
+
+# Real-Time Monitoring Configuration
+monitoring:
+  scan_interval: 60  # seconds between pattern scans
+  almost_triggered_threshold: 0.9  # 90% of conditions met
+  high_probability_threshold: 0.85
+  critical_threshold: 0.95
+  max_patterns_display: 50
+  max_triggers_history: 500
+
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

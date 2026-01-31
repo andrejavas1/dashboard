@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern Trading Dashboard - Dynamic Loading</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.2.1/dist/chartjs-chart-financial.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1/dist/chartjs-adapter-luxon.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4ecca3;
+        }
+        .info {
+            background: #16213e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .info strong {
+            color: #4ecca3;
+        }
+        .chart-container {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            height: 600px;
+            position: relative;
+        }
+        .zoom-controls {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+        .zoom-btn {
+            background: #0f3460;
+            color: #4ecca3;
+            border: 1px solid #4ecca3;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .zoom-btn:hover {
+            background: #4ecca3;
+            color: #1a1a2e;
+        }
+        .pattern-selector {
+            background: #16213e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .pattern-selector label {
+            color: #4ecca3;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .pattern-selector select {
+            background: #0f3460;
+            color: #eee;
+            border: 1px solid #4ecca3;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .patterns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .pattern-card {
+            background: #16213e;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #0f3460;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .pattern-card:hover {
+            border-color: #4ecca3;
+            transform: translateY(-2px);
+        }
+        .pattern-card.selected {
+            border-color: #4ecca3;
+            box-shadow: 0 0 10px rgba(78, 204, 163, 0.3);
+        }
+        .pattern-card h3 {
+            color: #4ecca3;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            margin: 2px 0;
+            padding: 2px 0;
+            border-bottom: 1px solid #0f3460;
+            font-size: 12px;
+        }
+        .stat-label {
+            color: #aaa;
+            font-size: 11px;
+        }
+        .stat-value {
+            color: #4ecca3;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .positive { color: #4ecca3; }
+        .negative { color: #e94560; }
+        .conditions-section {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #0f3460;
+        }
+        .conditions-title {
+            color: #ffd700;
+            font-weight: bold;
+            margin-bottom: 3px;
+            font-size: 11px;
+            cursor: pointer;
+            user-select: none;
+            display: block;
+        }
+        .conditions-title:hover {
+            text-decoration: underline;
+        }
+        .condition-item {
+            font-size: 10px;
+            color: #ccc;
+            margin: 1px 0;
+            padding-left: 8px;
+            display: none;
+        }
+        .conditions-section.visible .condition-item {
+            display: block;
+        }
+        .legend {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #4ecca3;
+        }
+        .loading-spinner {
+            border: 4px solid #0f3460;
+            border-top: 4px solid #4ecca3;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .filter-section {
+            background: #16213e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .filter-section h3 {
+            color: #4ecca3;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-end;
+        }
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .filter-group label {
+            color: #aaa;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .filter-group input,
+        .filter-group select {
+            background: #0f3460;
+            color: #eee;
+            border: 1px solid #4ecca3;
+            padding: 8px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .filter-group input:focus,
+        .filter-group select:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+        .filter-group span {
+            color: #aaa;
+            font-size: 12px;
+        }
+        .reset-btn {
+            background: #e94560;
+            color: #eee;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            margin-left: auto;
+            transition: all 0.3s;
+        }
+        .reset-btn:hover {
+            background: #ff6b6b;
+            transform: translateY(-2px);
+        }
+        .filter-info {
+            color: #4ecca3;
+            font-size: 13px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .sort-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #0f3460;
+        }
+        .sort-controls label {
+            color: #aaa;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .sort-controls select {
+            background: #0f3460;
+            color: #eee;
+            border: 1px solid #4ecca3;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .sort-controls select:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+        .pattern-card.hidden {
+            display: none;
+        }
+        
+        /* Realtime Panel Styles */
+        .realtime-panel {
+            background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+            border: 2px solid #4ecca3;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .realtime-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #4ecca3;
+        }
+        .realtime-header h3 {
+            color: #4ecca3;
+            margin: 0;
+        }
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e94560;
+            transition: background 0.3s;
+        }
+        .status-dot.connected {
+            background: #4ecca3;
+            box-shadow: 0 0 10px #4ecca3;
+        }
+        .realtime-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr;
+            gap: 15px;
+        }
+        @media (max-width: 1200px) {
+            .realtime-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .realtime-section {
+            background: rgba(15, 52, 96, 0.5);
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .realtime-section.wide {
+            grid-column: span 1;
+        }
+        .realtime-section h4 {
+            color: #ffd700;
+            margin: 0 0 10px 0;
+            font-size: 14px;
+        }
+        .daily-bar-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .bar-stat {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+        .bar-label {
+            color: #aaa;
+        }
+        .bar-value {
+            color: #4ecca3;
+            font-weight: bold;
+            font-family: monospace;
+        }
+        .regime-display {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .regime-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+        .regime-label {
+            color: #aaa;
+        }
+        .regime-value {
+            color: #4ecca3;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: rgba(78, 204, 163, 0.2);
+        }
+        .regime-value.high { color: #e94560; background: rgba(233, 69, 96, 0.2); }
+        .regime-value.low { color: #4ecca3; background: rgba(78, 204, 163, 0.2); }
+        .regime-value.strong-bull { color: #4ecca3; }
+        .regime-value.strong-bear { color: #e94560; }
+        .matches-list {
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        .match-item {
+            background: rgba(26, 26, 46, 0.8);
+            border-left: 3px solid #4ecca3;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .match-item.short {
+            border-left-color: #e94560;
+        }
+        .match-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .match-pattern {
+            font-weight: bold;
+            color: #ffd700;
+            font-size: 12px;
+        }
+        .match-details {
+            font-size: 11px;
+            color: #aaa;
+        }
+        .match-confidence {
+            background: #0f3460;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #4ecca3;
+        }
+        .match-confidence.high {
+            background: #4ecca3;
+            color: #1a1a2e;
+        }
+        .no-matches {
+            color: #666;
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Pattern Trading Dashboard (Dynamic Loading + Realtime)</h1>
+        
+        <!-- Realtime Status Panel -->
+        <div class="realtime-panel" id="realtimePanel">
+            <div class="realtime-header">
+                <h3>📡 Realtime Status</h3>
+                <div class="connection-status" id="connectionStatus">
+                    <span class="status-dot" id="statusDot"></span>
+                    <span id="statusText">Disconnected</span>
+                </div>
+            </div>
+            <div class="realtime-grid">
+                <!-- Current Daily Bar -->
+                <div class="realtime-section">
+                    <h4>📈 Current Daily Bar</h4>
+                    <div class="daily-bar-display" id="dailyBarDisplay">
+                        <div class="bar-stat">
+                            <span class="bar-label">Date:</span>
+                            <span class="bar-value" id="currentDate">--</span>
+                        </div>
+                        <div class="bar-stat">
+                            <span class="bar-label">Open:</span>
+                            <span class="bar-value" id="currentOpen">--</span>
+                        </div>
+                        <div class="bar-stat">
+                            <span class="bar-label">High:</span>
+                            <span class="bar-value" id="currentHigh">--</span>
+                        </div>
+                        <div class="bar-stat">
+                            <span class="bar-label">Low:</span>
+                            <span class="bar-value" id="currentLow">--</span>
+                        </div>
+                        <div class="bar-stat">
+                            <span class="bar-label">Close:</span>
+                            <span class="bar-value" id="currentClose">--</span>
+                        </div>
+                        <div class="bar-stat">
+                            <span class="bar-label">Volume:</span>
+                            <span class="bar-value" id="currentVolume">--</span>
+                        </div>
+                        <div class="bar-stat">
+                            <span class="bar-label">Updates:</span>
+                            <span class="bar-value" id="intradayUpdates">--</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Market Regime -->
+                <div class="realtime-section">
+                    <h4>🎯 Market Regime</h4>
+                    <div class="regime-display" id="regimeDisplay">
+                        <div class="regime-item">
+                            <span class="regime-label">Volatility:</span>
+                            <span class="regime-value" id="volatilityRegime">--</span>
+                        </div>
+                        <div class="regime-item">
+                            <span class="regime-label">Trend:</span>
+                            <span class="regime-value" id="trendRegime">--</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pattern Matches -->
+                <div class="realtime-section wide">
+                    <h4>🔥 Active Pattern Matches (<span id="matchCount">0</span>)</h4>
+                    <div class="matches-list" id="matchesList">
+                        <div class="no-matches">Waiting for data...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info">
+            <p><strong>Data Range:</strong> 2010-01-04 to 2026-01-26</p>
+            <p><strong>Total Records:</strong> 4,040</p>
+            <p><strong>Patterns Found:</strong> <span id="patternCount">Loading...</span></p>
+            <p><strong>Data Created:</strong> <span id="dataTimestamp">Loading...</span></p>
+            <p><strong>Zoom:</strong> Use mouse wheel to zoom, drag to pan. Click "Reset Zoom" to reset.</p>
+            <p><strong>Pattern Selection:</strong> Click on a pattern card below to view its markers on the chart.</p>
+            <p><strong>Dynamic Loading:</strong> Pattern occurrence data is loaded on-demand when selected.</p>
+            <p><strong>Realtime:</strong> Green dot indicates live data streaming. Current day's bar updates throughout trading hours.</p>
+        </div>
+        
+        <div class="filter-section">
+            <h3>🔍 Filter Patterns</h3>
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="trainingSuccessFilter">Training Success ≥:</label>
+                    <input type="number" id="trainingSuccessFilter" min="0" max="100" value="0" step="1" onchange="applyFilters()">
+                    <span>%</span>
+                </div>
+                <div class="filter-group">
+                    <label for="validationSuccessFilter">Validation Success ≥:</label>
+                    <input type="number" id="validationSuccessFilter" min="0" max="100" value="0" step="1" onchange="applyFilters()">
+                    <span>%</span>
+                </div>
+                <div class="filter-group">
+                    <label for="directionFilter">Direction:</label>
+                    <select id="directionFilter" onchange="applyFilters()">
+                        <option value="all">All</option>
+                        <option value="long">Long Only</option>
+                        <option value="short">Short Only</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="avgMoveFilter">Avg Move ≥:</label>
+                    <input type="number" id="avgMoveFilter" min="-100" max="100" value="-100" step="0.1" onchange="applyFilters()">
+                    <span>%</span>
+                </div>
+                <div class="filter-group">
+                    <label for="occurrencesFilter">Occurrences ≥:</label>
+                    <input type="number" id="occurrencesFilter" min="0" max="1000" value="0" step="1" onchange="applyFilters()">
+                </div>
+                <button class="reset-btn" onclick="resetFilters()">Reset Filters</button>
+            </div>
+            <div class="filter-info" id="filterInfo">Loading patterns...</div>
+            <div class="sort-controls">
+                <label for="sortBy">Sort by:</label>
+                <select id="sortBy" onchange="sortPatterns()">
+                    <option value="id">Pattern ID</option>
+                    <option value="success_rate">Training Success</option>
+                    <option value="validation_success_rate">Validation Success</option>
+                    <option value="avg_move">Avg Move</option>
+                    <option value="occurrences">Occurrences</option>
+                </select>
+                <select id="sortOrder" onchange="sortPatterns()">
+                    <option value="desc">Descending</option>
+                    <option value="asc">Ascending</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="pattern-selector">
+            <label for="patternSelect">Select Pattern:</label>
+            <select id="patternSelect" onchange="selectPattern(this.value)">
+                <option value="all">All Patterns</option>
+                <option value="none">None</option>
+            </select>
+        </div>
+        
+        <div class="chart-container">
+            <div class="zoom-controls">
+                <button class="zoom-btn" onclick="resetZoom()">Reset Zoom</button>
+            </div>
+            <canvas id="candlestickChart"></canvas>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #4ecca3;"></div>
+                <span>Bullish Candle</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #e94560;"></div>
+                <span>Bearish Candle</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ffd700;"></div>
+                <span>Pattern Entry</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ff6b6b;"></div>
+                <span>Pattern Exit</span>
+            </div>
+        </div>
+        
+        <h2>Pattern Performance (Click to Select)</h2>
+        <div class="patterns-grid" id="patternsGrid">
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>Loading patterns...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Register zoom plugin
+        Chart.register(ChartZoom);
+        
+        // Custom plugin to draw candle wicks
+        const candleWickPlugin = {
+            id: 'candleWickPlugin',
+            afterDatasetsDraw: function(chart) {
+                const ctx = chart.ctx;
+                const yAxis = chart.scales.y;
+                const xAxis = chart.scales.x;
+                
+                const dataset = chart.data.datasets[0];
+                if (!dataset) return;
+                
+                ctx.save();
+                ctx.lineWidth = 3;
+                
+                dataset.data.forEach((d, i) => {
+                    const x = xAxis.getPixelForValue(d.x);
+                    const high = yAxis.getPixelForValue(d.h);
+                    const low = yAxis.getPixelForValue(d.l);
+                    
+                    const isBullish = d.c >= d.o;
+                    ctx.strokeStyle = isBullish ? '#4ecca3' : '#e94560';
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(x, low);
+                    ctx.lineTo(x, high);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(x - 3, high);
+                    ctx.lineTo(x + 3, high);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(x - 3, low);
+                    ctx.lineTo(x + 3, low);
+                    ctx.stroke();
+                });
+                
+                ctx.restore();
+            }
+        };
+        
+        Chart.register(candleWickPlugin);
+        
+        // Global variables
+        let patternStats = [];
+        let ohlcvData = [];
+        let selectedPattern = 'all';
+        let loadedPatternMarkers = {}; // Cache for loaded pattern markers
+        let chart = null;
+        
+        // Load initial data
+        async function loadData() {
+            try {
+                // Load data info (timestamps and counts)
+                const dataInfoResponse = await fetch('/api/data-info');
+                const dataInfo = await dataInfoResponse.json();
+                
+                // Format and display timestamp
+                const timestamp = new Date(dataInfo.patterns_modified);
+                const formattedTime = timestamp.toLocaleString();
+                document.getElementById('dataTimestamp').textContent = formattedTime;
+                
+                // Load patterns
+                const patternsResponse = await fetch('/api/patterns');
+                patternStats = await patternsResponse.json();
+                
+                // Load OHLCV
+                const ohlcvResponse = await fetch('/api/ohlcv');
+                ohlcvData = await ohlcvResponse.json();
+                
+                // Update UI
+                document.getElementById('patternCount').textContent = patternStats.length;
+                
+                // Populate pattern selector
+                const select = document.getElementById('patternSelect');
+                patternStats.forEach(p => {
+                    const option = document.createElement('option');
+                    option.value = p.id;
+                    option.textContent = `Pattern #${p.id} - ${p.direction} (${p.success_rate.toFixed(1)}%)`;
+                    select.appendChild(option);
+                });
+                
+                // Render pattern cards
+                renderPatternCards();
+                applyFilters();
+                
+                // Initialize chart
+                initChart();
+                
+                // Don't load all markers at startup - load on demand when pattern selected
+                // await loadPatternMarkers('all');
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('patternsGrid').innerHTML = '<p class="loading">Error loading data. Please refresh the page.</p>';
+            }
+        }
+        
+        // Render pattern cards
+        function renderPatternCards() {
+            const grid = document.getElementById('patternsGrid');
+            grid.innerHTML = '';
+            
+            patternStats.forEach(stats => {
+                const card = document.createElement('div');
+                card.className = 'pattern-card';
+                card.id = 'pattern-card-' + stats.id;
+                
+                const successRate = stats.success_rate || 0;
+                const avgMove = stats.avg_move || 0;
+                const occCount = stats.occurrences || 0;
+                const validationRate = stats.validation_success_rate || 0;
+                
+                // Format conditions
+                const conditionsHtml = Object.entries(stats.conditions || {}).map(([feature, cond]) => {
+                    const op = cond.operator || '~';
+                    const val = cond.value || 0;
+                    let formatted = `${feature} `;
+                    if (op === '~') formatted += `≈ ${val.toFixed(2)}`;
+                    else if (op === '>=') formatted += `≥ ${val.toFixed(2)}`;
+                    else if (op === '<=') formatted += `≤ ${val.toFixed(2)}`;
+                    else if (op === '>') formatted += `> ${val.toFixed(2)}`;
+                    else if (op === '<') formatted += `< ${val.toFixed(2)}`;
+                    return `<div class="condition-item">• ${formatted}</div>`;
+                }).join('');
+                
+                // Format exit conditions
+                const label_col = stats.label_col || 'Label_3pct_20d';
+                const parts = label_col.split('_');
+                let exitHtml = '';
+                if (parts.length >= 3) {
+                    const threshold = parts[1].replace('pct', '');
+                    const window = parts[2].replace('d', '');
+                    const dir = stats.direction === 'long' ? 'up' : 'down';
+                    exitHtml = `
+                        <div class="condition-item">• Exit when price moves ${threshold}% ${dir}</div>
+                        <div class="condition-item">• within ${window} days</div>
+                    `;
+                }
+                
+                card.innerHTML = `
+                    <h3>Pattern #${stats.id} <small>(${stats.direction})</small></h3>
+                    <div class="stat">
+                        <span class="stat-label">Training Success:</span>
+                        <span class="stat-value ${successRate >= 50 ? 'positive' : 'negative'}">${successRate.toFixed(1)}%</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Validation Success:</span>
+                        <span class="stat-value ${validationRate >= 50 ? 'positive' : 'negative'}">${validationRate.toFixed(1)}%</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Avg Move:</span>
+                        <span class="stat-value ${avgMove >= 0 ? 'positive' : 'negative'}">${avgMove.toFixed(2)}%</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Occurrences:</span>
+                        <span class="stat-value">${occCount}</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Method:</span>
+                        <span class="stat-value">${stats.method}</span>
+                    </div>
+                    <div class="conditions-section" id="conditions-${stats.id}">
+                        <div class="conditions-title" onclick="toggleConditions(${stats.id}); event.stopPropagation();">📥 Entry Conditions (click to show)</div>
+                        ${conditionsHtml}
+                    </div>
+                    <div class="conditions-section" id="exit-conditions-${stats.id}">
+                        <div class="conditions-title" onclick="toggleConditions(${stats.id}); event.stopPropagation();">📤 Exit Conditions (click to show)</div>
+                        ${exitHtml}
+                    </div>
+                `;
+                
+                card.onclick = function() {
+                    document.getElementById('patternSelect').value = stats.id;
+                    selectPattern(stats.id);
+                };
+                
+                grid.appendChild(card);
+            });
+        }
+        
+        // Initialize chart
+        function initChart() {
+            const ctx = document.getElementById('candlestickChart').getContext('2d');
+            
+            // Create candlestick data
+            const candlestickData = [];
+            for (let i = 0; i < ohlcvData.length; i++) {
+                candlestickData.push({
+                    x: i,
+                    o: ohlcvData[i].Open,
+                    h: ohlcvData[i].High,
+                    l: ohlcvData[i].Low,
+                    c: ohlcvData[i].Close
+                });
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'candlestick',
+                data: {
+                    datasets: [
+                        {
+                            label: 'Candlesticks',
+                            data: candlestickData,
+                            color: {
+                                up: '#4ecca3',
+                                down: '#e94560',
+                                unchanged: '#888'
+                            },
+                            borderColor: {
+                                up: '#4ecca3',
+                                down: '#e94560',
+                                unchanged: '#888'
+                            },
+                            order: 3
+                        },
+                        {
+                            label: 'Pattern Entries',
+                            data: [],
+                            backgroundColor: '#ffd700',
+                            borderColor: '#ffaa00',
+                            borderWidth: 2,
+                            pointRadius: 8,
+                            pointHoverRadius: 10,
+                            type: 'scatter',
+                            order: 1
+                        },
+                        {
+                            label: 'Pattern Exits',
+                            data: [],
+                            backgroundColor: '#ff6b6b',
+                            borderColor: '#ff4444',
+                            borderWidth: 2,
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            type: 'scatter',
+                            order: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        zoom: {
+                            zoom: {
+                                wheel: { enabled: true },
+                                pinch: { enabled: true },
+                                mode: 'xy'
+                            },
+                            pan: {
+                                enabled: true,
+                                mode: 'xy'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    if (context.dataset.type === 'scatter') {
+                                        const markers = context.datasetIndex === 1 ? currentEntryMarkers : currentExitMarkers;
+                                        const marker = markers[context.dataIndex];
+                                        if (marker) {
+                                            return [
+                                                `${context.datasetIndex === 1 ? 'Pattern Entry' : 'Pattern Exit'} #${marker.pattern}`,
+                                                `Date: ${marker.date}`,
+                                                `Price: ${marker.y.toFixed(2)}`,
+                                                `Outcome: ${marker.outcome}`
+                                            ];
+                                        }
+                                    } else {
+                                        const d = context.raw;
+                                        return [
+                                            `Date: ${ohlcvData[context.dataIndex].Date.substring(0, 10)}`,
+                                            `Open: ${d.o.toFixed(2)}`,
+                                            `High: ${d.h.toFixed(2)}`,
+                                            `Low: ${d.l.toFixed(2)}`,
+                                            `Close: ${d.c.toFixed(2)}`
+                                        ];
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            ticks: {
+                                color: '#aaa',
+                                callback: function(value) {
+                                    if (value >= 0 && value < ohlcvData.length && Math.floor(value) === value) {
+                                        return ohlcvData[value].Date.substring(0, 10);
+                                    }
+                                    return '';
+                                },
+                                maxTicksLimit: 15
+                            },
+                            grid: { color: '#0f3460' },
+                            title: { display: true, text: 'Date', color: '#aaa' }
+                        },
+                        y: {
+                            ticks: { color: '#aaa' },
+                            grid: { color: '#0f3460' },
+                            title: { display: true, text: 'Price', color: '#aaa' }
+                        }
+                    }
+                }
+            });
+        }
+        
+        let currentEntryMarkers = [];
+        let currentExitMarkers = [];
+        
+        // Select pattern and load its markers
+        async function selectPattern(patternId) {
+            selectedPattern = patternId;
+            
+            // Update card selection
+            document.querySelectorAll('.pattern-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            if (patternId !== 'all' && patternId !== 'none') {
+                const card = document.getElementById('pattern-card-' + patternId);
+                if (card) {
+                    card.classList.add('selected');
+                }
+            }
+            
+            // Load markers
+            await loadPatternMarkers(patternId);
+        }
+        
+        // Load pattern markers from API
+        async function loadPatternMarkers(patternId) {
+            let entryData = [];
+            let exitData = [];
+            
+            if (patternId === 'all') {
+                // Load all visible patterns
+                const visiblePatterns = patternStats.filter(p => {
+                    const card = document.getElementById('pattern-card-' + p.id);
+                    return card && !card.classList.contains('hidden');
+                });
+                
+                for (const p of visiblePatterns) {
+                    if (!(p.id in loadedPatternMarkers)) {
+                        try {
+                            const response = await fetch(`/api/pattern/${p.id}/markers`);
+                            const data = await response.json();
+                            loadedPatternMarkers[p.id] = data;
+                        } catch (error) {
+                            console.error(`Error loading markers for pattern ${p.id}:`, error);
+                            loadedPatternMarkers[p.id] = { entry: [], exit: [] };
+                        }
+                    }
+                    entryData = entryData.concat(loadedPatternMarkers[p.id].entry);
+                    exitData = exitData.concat(loadedPatternMarkers[p.id].exit);
+                }
+            } else if (patternId !== 'none') {
+                // Load specific pattern
+                if (!(patternId in loadedPatternMarkers)) {
+                    try {
+                        const response = await fetch(`/api/pattern/${patternId}/markers`);
+                        const data = await response.json();
+                        loadedPatternMarkers[patternId] = data;
+                    } catch (error) {
+                        console.error(`Error loading markers for pattern ${patternId}:`, error);
+                        loadedPatternMarkers[patternId] = { entry: [], exit: [] };
+                    }
+                }
+                entryData = loadedPatternMarkers[patternId].entry;
+                exitData = loadedPatternMarkers[patternId].exit;
+            }
+            
+            currentEntryMarkers = entryData;
+            currentExitMarkers = exitData;
+            
+            // Update chart
+            chart.data.datasets[1].data = entryData.map(m => ({x: m.x, y: m.y}));
+            chart.data.datasets[2].data = exitData.map(m => ({x: m.x, y: m.y}));
+            chart.update();
+        }
+        
+        // Reset zoom
+        function resetZoom() {
+            chart.resetZoom();
+        }
+        
+        // Toggle conditions
+        function toggleConditions(patternId) {
+            const entrySection = document.getElementById('conditions-' + patternId);
+            const exitSection = document.getElementById('exit-conditions-' + patternId);
+            
+            if (entrySection.classList.contains('visible')) {
+                entrySection.classList.remove('visible');
+                exitSection.classList.remove('visible');
+            } else {
+                entrySection.classList.add('visible');
+                exitSection.classList.add('visible');
+            }
+        }
+        
+        // Apply filters
+        function applyFilters() {
+            const trainingSuccess = parseFloat(document.getElementById('trainingSuccessFilter').value) || 0;
+            const validationSuccess = parseFloat(document.getElementById('validationSuccessFilter').value) || 0;
+            const direction = document.getElementById('directionFilter').value;
+            const avgMove = parseFloat(document.getElementById('avgMoveFilter').value) || -100;
+            const occurrences = parseFloat(document.getElementById('occurrencesFilter').value) || 0;
+            
+            let visibleCount = 0;
+            
+            patternStats.forEach(stats => {
+                const card = document.getElementById('pattern-card-' + stats.id);
+                if (!card) return;
+                
+                let matches = true;
+                
+                if (stats.success_rate < trainingSuccess) matches = false;
+                if (stats.validation_success_rate < validationSuccess) matches = false;
+                if (direction !== 'all' && stats.direction !== direction) matches = false;
+                if (stats.avg_move < avgMove) matches = false;
+                if (stats.occurrences < occurrences) matches = false;
+                
+                if (matches) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+            
+            document.getElementById('filterInfo').textContent = `Showing ${visibleCount} of ${patternStats.length} patterns`;
+            
+            // Re-sort and reload markers
+            sortPatterns();
+            loadPatternMarkers(selectedPattern);
+        }
+        
+        // Sort patterns
+        function sortPatterns() {
+            const sortBy = document.getElementById('sortBy').value;
+            const sortOrder = document.getElementById('sortOrder').value;
+            const patternsGrid = document.getElementById('patternsGrid');
+            
+            const cards = Array.from(patternsGrid.children);
+            
+            cards.sort((a, b) => {
+                const idA = parseInt(a.id.replace('pattern-card-', ''));
+                const idB = parseInt(b.id.replace('pattern-card-', ''));
+                
+                const statsA = patternStats.find(s => s.id === idA);
+                const statsB = patternStats.find(s => s.id === idB);
+                
+                if (!statsA || !statsB) return 0;
+                
+                let valueA, valueB;
+                
+                switch(sortBy) {
+                    case 'id': valueA = statsA.id; valueB = statsB.id; break;
+                    case 'success_rate': valueA = statsA.success_rate; valueB = statsB.success_rate; break;
+                    case 'validation_success_rate': valueA = statsA.validation_success_rate; valueB = statsB.validation_success_rate; break;
+                    case 'avg_move': valueA = statsA.avg_move; valueB = statsB.avg_move; break;
+                    case 'occurrences': valueA = statsA.occurrences; valueB = statsB.occurrences; break;
+                    default: return 0;
+                }
+                
+                return sortOrder === 'desc' ? valueB - valueA : valueA - valueB;
+            });
+            
+            cards.forEach(card => patternsGrid.appendChild(card));
+        }
+        
+        // Reset filters
+        function resetFilters() {
+            document.getElementById('trainingSuccessFilter').value = 0;
+            document.getElementById('validationSuccessFilter').value = 0;
+            document.getElementById('directionFilter').value = 'all';
+            document.getElementById('avgMoveFilter').value = -100;
+            document.getElementById('occurrencesFilter').value = 0;
+            document.getElementById('sortBy').value = 'id';
+            document.getElementById('sortOrder').value = 'desc';
+            applyFilters();
+        }
+        
+        // Initialize on load
+        window.onload = function() {
+            loadData();
+            initWebSocket();
+        };
+        
+        // WebSocket for realtime updates
+        let ws = null;
+        let wsReconnectInterval = null;
+        let currentMatches = [];
+        
+        function initWebSocket() {
+            const wsUrl = 'ws://localhost:5010';  // WebSocket port from config
+            
+            try {
+                ws = new WebSocket(wsUrl);
+                
+                ws.onopen = function() {
+                    console.log('WebSocket connected');
+                    updateConnectionStatus(true);
+                    
+                    // Subscribe to channels
+                    ws.send(JSON.stringify({
+                        action: 'subscribe',
+                        channels: ['price_updates', 'pattern_matches', 'regime_changes', 'alerts']
+                    }));
+                    
+                    // Clear any reconnect interval
+                    if (wsReconnectInterval) {
+                        clearInterval(wsReconnectInterval);
+                        wsReconnectInterval = null;
+                    }
+                };
+                
+                ws.onmessage = function(event) {
+                    try {
+                        const data = JSON.parse(event.data);
+                        handleWebSocketMessage(data);
+                    } catch (e) {
+                        console.error('Error parsing WebSocket message:', e);
+                    }
+                };
+                
+                ws.onclose = function() {
+                    console.log('WebSocket disconnected');
+                    updateConnectionStatus(false);
+                    scheduleReconnect();
+                };
+                
+                ws.onerror = function(error) {
+                    console.error('WebSocket error:', error);
+                    updateConnectionStatus(false);
+                };
+                
+            } catch (e) {
+                console.error('Error creating WebSocket:', e);
+                updateConnectionStatus(false);
+            }
+        }
+        
+        function scheduleReconnect() {
+            if (!wsReconnectInterval) {
+                wsReconnectInterval = setInterval(() => {
+                    console.log('Attempting to reconnect...');
+                    initWebSocket();
+                }, 5000);
+            }
+        }
+        
+        function updateConnectionStatus(connected) {
+            const dot = document.getElementById('statusDot');
+            const text = document.getElementById('statusText');
+            
+            if (connected) {
+                dot.classList.add('connected');
+                text.textContent = 'Live';
+            } else {
+                dot.classList.remove('connected');
+                text.textContent = 'Disconnected';
+            }
+        }
+        
+        function handleWebSocketMessage(data) {
+            switch(data.type) {
+                case 'daily_bar_update':
+                    updateDailyBarDisplay(data.daily_bar, data.intraday_stats);
+                    if (data.regime) {
+                        updateRegimeDisplay(data.regime);
+                    }
+                    // Update chart with new daily bar
+                    updateChartWithRealtimeBar(data.daily_bar);
+                    break;
+                    
+                case 'pattern_match':
+                case 'matches_update':
+                    if (data.matches) {
+                        currentMatches = data.matches;
+                        updateMatchesList(currentMatches);
+                    }
+                    break;
+                    
+                case 'regime_change':
+                case 'regime_update':
+                    if (data.current || data.to) {
+                        updateRegimeDisplay(data.current || data.to);
+                    }
+                    break;
+                    
+                case 'alert':
+                    showAlert(data);
+                    break;
+                    
+                case 'connection_status':
+                    updateConnectionStatus(data.status === 'connected');
+                    break;
+                    
+                case 'subscription_confirmed':
+                    console.log('Subscribed to channels:', data.channels);
+                    break;
+            }
+        }
+        
+        function updateDailyBarDisplay(dailyBar, intradayStats) {
+            if (!dailyBar) return;
+            
+            document.getElementById('currentDate').textContent = dailyBar.Date || '--';
+            document.getElementById('currentOpen').textContent = formatPrice(dailyBar.Open);
+            document.getElementById('currentHigh').textContent = formatPrice(dailyBar.High);
+            document.getElementById('currentLow').textContent = formatPrice(dailyBar.Low);
+            document.getElementById('currentClose').textContent = formatPrice(dailyBar.Close);
+            document.getElementById('currentVolume').textContent = formatVolume(dailyBar.Volume);
+            document.getElementById('intradayUpdates').textContent =
+                intradayStats ? `${intradayStats.bars_received || 0} bars` : '--';
+            
+            // Highlight if price moved
+            const closeEl = document.getElementById('currentClose');
+            if (dailyBar.Close > dailyBar.Open) {
+                closeEl.style.color = '#4ecca3';
+            } else if (dailyBar.Close < dailyBar.Open) {
+                closeEl.style.color = '#e94560';
+            }
+        }
+        
+        function updateRegimeDisplay(regime) {
+            const volEl = document.getElementById('volatilityRegime');
+            const trendEl = document.getElementById('trendRegime');
+            
+            if (regime.volatility_regime) {
+                volEl.textContent = regime.volatility_regime;
+                volEl.className = 'regime-value ' + regime.volatility_regime.toLowerCase();
+            }
+            
+            if (regime.trend_regime) {
+                trendEl.textContent = regime.trend_regime;
+                trendEl.className = 'regime-value ' + regime.trend_regime.toLowerCase().replace(' ', '-');
+            }
+        }
+        
+        function updateMatchesList(matches) {
+            const container = document.getElementById('matchesList');
+            const countEl = document.getElementById('matchCount');
+            
+            countEl.textContent = matches.length;
+            
+            if (matches.length === 0) {
+                container.innerHTML = '<div class="no-matches">No active pattern matches</div>';
+                return;
+            }
+            
+            container.innerHTML = matches.slice(0, 5).map(match => {
+                const isHighConfidence = match.confidence >= 90 || match.probability >= 90;
+                const direction = match.direction || 'long';
+                
+                return `
+                    <div class="match-item ${direction}">
+                        <div class="match-info">
+                            <span class="match-pattern">Pattern #${match.pattern_id} (${direction.toUpperCase()})</span>
+                            <span class="match-details">
+                                Confidence: ${match.confidence?.toFixed(1) || '--'}% |
+                                Prob: ${match.probability?.toFixed(1) || '--'}%
+                            </span>
+                        </div>
+                        <div class="match-confidence ${isHighConfidence ? 'high' : ''}">
+                            ${match.confidence?.toFixed(0) || '--'}%
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function updateChartWithRealtimeBar(dailyBar) {
+            if (!chart || !dailyBar) return;
+            
+            // Check if we already have this date in the chart
+            const lastIndex = chart.data.datasets[0].data.length - 1;
+            const lastBar = chart.data.datasets[0].data[lastIndex];
+            
+            // Create new candlestick data point
+            const newPoint = {
+                x: lastIndex + 1,
+                o: dailyBar.Open,
+                h: dailyBar.High,
+                l: dailyBar.Low,
+                c: dailyBar.Close
+            };
+            
+            // If same date, update; if new date, append
+            if (lastBar && ohlcvData[lastIndex] &&
+                ohlcvData[lastIndex].Date === dailyBar.Date) {
+                // Update existing bar
+                chart.data.datasets[0].data[lastIndex] = newPoint;
+            } else {
+                // Add new bar
+                chart.data.datasets[0].data.push(newPoint);
+                ohlcvData.push({
+                    Date: dailyBar.Date,
+                    Open: dailyBar.Open,
+                    High: dailyBar.High,
+                    Low: dailyBar.Low,
+                    Close: dailyBar.Close,
+                    Volume: dailyBar.Volume
+                });
+            }
+            
+            chart.update('none');  // Update without animation for smooth realtime feel
+        }
+        
+        function showAlert(alert) {
+            // Could show a toast notification or similar
+            console.log('Alert received:', alert);
+        }
+        
+        function formatPrice(price) {
+            if (price === undefined || price === null) return '--';
+            return price.toFixed(2);
+        }
+        
+        function formatVolume(volume) {
+            if (volume === undefined || volume === null) return '--';
+            if (volume >= 1000000) {
+                return (volume / 1000000).toFixed(1) + 'M';
+            } else if (volume >= 1000) {
+                return (volume / 1000).toFixed(1) + 'K';
+            }
+            return volume.toString();
+        }
+    </script>
+</body>
+</html>
