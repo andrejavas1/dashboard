@@ -15,13 +15,13 @@ def main():
     print("=" * 70)
     print()
     print("Architecture:")
-    print("  • Flask Server: Serves dashboard at http://localhost:5000")
-    print("  • WebSocket Server: Real-time data at ws://localhost:5010")
-    print("  • Fetches 15m prices → Updates daily bars → Matches patterns")
+    print("  • Flask Server: Serves dashboard at http://localhost:5001")
+    print("  • WebSocket Server: Real-time data at ws://localhost:5011")
+    print("  • Fetches 15m prices -> Updates daily bars -> Matches patterns")
     print()
     
     # Start Flask dashboard server
-    print("🚀 Starting Flask Dashboard Server...")
+    print("[START] Starting Flask Dashboard Server...")
     flask_process = subprocess.Popen(
         [sys.executable, "pattern_dashboard_server.py"],
         stdout=subprocess.PIPE,
@@ -33,7 +33,7 @@ def main():
     time.sleep(2)
     
     # Start WebSocket streaming server
-    print("🚀 Starting WebSocket Streaming Server...")
+    print("[START] Starting WebSocket Streaming Server...")
     ws_process = subprocess.Popen(
         [sys.executable, "-m", "src.realtime_streaming_system"],
         stdout=subprocess.PIPE,
@@ -45,8 +45,8 @@ def main():
     time.sleep(2)
     
     # Open dashboard
-    print("\n🌐 Opening Dashboard...")
-    webbrowser.open("http://localhost:5000")
+    print("\n[OPEN] Opening Dashboard...")
+    webbrowser.open("http://localhost:5001")
     
     print("\n" + "=" * 70)
     print("  SYSTEM READY!")
@@ -75,12 +75,12 @@ def main():
                 print(f"[WS] {ws_line}", end='')
                 
     except KeyboardInterrupt:
-        print("\n\n🛑 Stopping servers...")
+        print("\n\n[STOP] Stopping servers...")
         flask_process.terminate()
         ws_process.terminate()
         flask_process.wait()
         ws_process.wait()
-        print("✅ Servers stopped")
+        print("[DONE] Servers stopped")
 
 if __name__ == "__main__":
     main()

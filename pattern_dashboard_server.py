@@ -19,6 +19,10 @@ cache_timestamps = {}
 pipeline_run_id = None
 pipeline_run_timestamp = None
 
+# Force cache clear on server restart
+cached_data.clear()
+cache_timestamps.clear()
+
 def get_or_generate_pipeline_run_id():
     """Get or generate pipeline run ID from patterns file."""
     global pipeline_run_id, pipeline_run_timestamp
@@ -114,6 +118,7 @@ def get_patterns():
         pattern_stats = []
         for i, pattern in enumerate(patterns_data):
             if 'pattern' in pattern:
+                # Wrapped pattern format (from validated_patterns.json)
                 classification = pattern.get('classification', '').upper()
                 if classification in ['FAILED', 'REJECTED', 'LOW CONFIDENCE']:
                     continue
@@ -130,6 +135,21 @@ def get_patterns():
                     'validation_success_rate': pattern.get('validation_success_rate', p.get('success_rate', 0)),
                     'label_col': p.get('label_col', 'Label_3pct_20d'),
                     'conditions': p.get('conditions', {})
+                }
+                pattern_stats.append(stats)
+            else:
+                # Flat pattern format (direct from discovered_patterns.json)
+                stats = {
+                    'id': i,
+                    'success_rate': pattern.get('success_rate', 0),
+                    'avg_move': pattern.get('avg_move', 0),
+                    'occurrences': pattern.get('occurrences', 0),
+                    'method': pattern.get('method', 'N/A'),
+                    'direction': pattern.get('direction', 'N/A'),
+                    'classification': pattern.get('classification', 'MEDIUM CONFIDENCE').upper(),
+                    'validation_success_rate': pattern.get('success_rate', 0),
+                    'label_col': pattern.get('label_col', 'Label_3pct_20d'),
+                    'conditions': pattern.get('conditions', {})
                 }
                 pattern_stats.append(stats)
         
@@ -287,6 +307,6 @@ if __name__ == '__main__':
     print("Pattern Dashboard Server")
     print("=" * 60)
     print("Starting Flask server...")
-    print("Dashboard will be available at: http://localhost:5000")
+    print("Dashboard will be available at: http://localhost:5001")
     print("=" * 60)
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(host='0.0.0.0', port=5001, debug=False)

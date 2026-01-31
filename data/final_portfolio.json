@@ -15,7 +15,7 @@
       "success_count": "13",
       "success_rate": 92.85714285714286,
       "avg_move": 5.157207576674889,
-      "avg_time": 6.461538461538462,
+      "avg_time": 6.538461538461538,
       "false_positive_rate": 7.142857142857142,
       "p_value": 0.00091552734375,
       "label_col": "Label_1.0pct_10d",
@@ -23,8 +23,8 @@
       "method": "rule_based",
       "volatility_regime": "All",
       "trend_regime": "All",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
     },
     "training_success_rate": 92.85714285714286,
     "validation_success_rate": 92.85714285714286,
@@ -34,7 +34,7 @@
     "validation_occurrences": 14,
     "live_occurrences": 0,
     "validation_avg_move": 5.157207576674889,
-    "validation_avg_time": 6.461538461538462,
+    "validation_avg_time": 6.538461538461538,
     "validation_false_positive_rate": 7.142857142857142,
     "direction": "short",
     "binomial_p_value": 0.00091552734375,
@@ -43,8 +43,8 @@
     "scores": {
       "success": 96.42857142857143,
       "risk": 61.12876558716752,
-      "practical": 52.92307692307692,
-      "composite": 67.90229488149585
+      "practical": 52.87692307692308,
+      "composite": 67.8907564199574
     }
   },
   {
@@ -69,8 +69,8 @@
       "label_col": "Label_2.0pct_20d",
       "method": "rule_based",
       "direction": "short",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
     },
     "training_success_rate": 71.26436781609196,
     "validation_success_rate": 71.26436781609196,
@@ -109,14 +109,14 @@
       "success_count": "63",
       "success_rate": 64.94845360824742,
       "avg_move": 4.851888566354544,
-      "avg_time": 8.206349206349206,
+      "avg_time": 8.222222222222221,
       "false_positive_rate": 35.051546391752574,
       "p_value": 0,
       "label_col": "Label_1.0pct_15d",
       "method": "rule_based",
       "direction": "short",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
     },
     "training_success_rate": 64.94845360824742,
     "validation_success_rate": 64.94845360824742,
@@ -126,7 +126,7 @@
     "validation_occurrences": 97,
     "live_occurrences": 24,
     "validation_avg_move": 4.851888566354544,
-    "validation_avg_time": 8.206349206349206,
+    "validation_avg_time": 8.222222222222221,
     "validation_false_positive_rate": 35.051546391752574,
     "direction": "short",
     "binomial_p_value": 0.0021129019608413808,
@@ -135,8 +135,54 @@
     "scores": {
       "success": 82.4742268041237,
       "risk": 48.90411930731106,
-      "practical": 68.47619047619048,
-      "composite": 62.18966397373408
+      "practical": 68.46666666666667,
+      "composite": 62.187283021353124
+    }
+  },
+  {
+    "pattern": {
+      "conditions": {
+        "Days_Since_52w_Low": {
+          "operator": "<=",
+          "value": 59.2
+        },
+        "Dist_MA_50": {
+          "operator": ">=",
+          "value": 10.01866971123074
+        }
+      },
+      "occurrences": 44,
+      "success_count": "43",
+      "success_rate": 97.72727272727273,
+      "avg_move": 6.795267079001308,
+      "avg_time": 18.41860465116279,
+      "false_positive_rate": 2.272727272727273,
+      "p_value": 0,
+      "label_col": "Label_2.0pct_15d",
+      "method": "rule_based",
+      "direction": "long",
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
+    },
+    "training_success_rate": 97.72727272727273,
+    "validation_success_rate": 97.72727272727273,
+    "live_success_rate": 0,
+    "validation_ratio": 1.0,
+    "classification": "ROBUST",
+    "validation_occurrences": 44,
+    "live_occurrences": 0,
+    "validation_avg_move": 6.795267079001308,
+    "validation_avg_time": 18.41860465116279,
+    "validation_false_positive_rate": 2.272727272727273,
+    "direction": "long",
+    "binomial_p_value": 2.5579538487363607e-12,
+    "chi_square_p_value": 1.0,
+    "statistically_significant": "True",
+    "scores": {
+      "success": 98.86363636363637,
+      "risk": 76.91307396427665,
+      "practical": 51.74883720930232,
+      "composite": 76.109655375373
     }
   },
   {
@@ -155,14 +201,14 @@
       "success_count": "44",
       "success_rate": 91.66666666666666,
       "avg_move": 6.774709110303163,
-      "avg_time": 16.954545454545453,
+      "avg_time": 17.272727272727273,
       "false_positive_rate": 4.166666666666666,
       "p_value": 0,
       "label_col": "Label_2.0pct_15d",
       "method": "rule_based",
       "direction": "long",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
     },
     "training_success_rate": 91.66666666666666,
     "validation_success_rate": 91.66666666666666,
@@ -172,7 +218,7 @@
     "validation_occurrences": 48,
     "live_occurrences": 0,
     "validation_avg_move": 6.774709110303163,
-    "validation_avg_time": 16.954545454545453,
+    "validation_avg_time": 17.272727272727273,
     "validation_false_positive_rate": 4.166666666666666,
     "direction": "long",
     "binomial_p_value": 7.569163074094831e-10,
@@ -181,54 +227,8 @@
     "scores": {
       "success": 95.83333333333333,
       "risk": 75.75746066424281,
-      "practical": 53.42727272727273,
-      "composite": 75.19388184727292
-    }
-  },
-  {
-    "pattern": {
-      "conditions": {
-        "Days_Since_52w_Low": {
-          "operator": "<=",
-          "value": 59.2
-        },
-        "Dist_MA_50": {
-          "operator": ">=",
-          "value": 10.01866971123074
-        }
-      },
-      "occurrences": 45,
-      "success_count": "43",
-      "success_rate": 95.55555555555556,
-      "avg_move": 6.795267079001308,
-      "avg_time": 18.093023255813954,
-      "false_positive_rate": 4.444444444444445,
-      "p_value": 0,
-      "label_col": "Label_2.0pct_15d",
-      "method": "rule_based",
-      "direction": "long",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
-    },
-    "training_success_rate": 95.55555555555556,
-    "validation_success_rate": 95.55555555555556,
-    "live_success_rate": 0,
-    "validation_ratio": 1.0,
-    "classification": "ROBUST",
-    "validation_occurrences": 45,
-    "live_occurrences": 0,
-    "validation_avg_move": 6.795267079001308,
-    "validation_avg_time": 18.093023255813954,
-    "validation_false_positive_rate": 4.444444444444445,
-    "direction": "long",
-    "binomial_p_value": 2.944489096989855e-11,
-    "chi_square_p_value": 1.0,
-    "statistically_significant": "True",
-    "scores": {
-      "success": 97.77777777777777,
-      "risk": 74.94135679255947,
-      "practical": 52.14418604651163,
-      "composite": 74.95116935235208
+      "practical": 53.236363636363635,
+      "composite": 75.14615457454565
     }
   },
   {
@@ -247,14 +247,14 @@
       "success_count": "68",
       "success_rate": 78.16091954022988,
       "avg_move": 9.542826161074627,
-      "avg_time": 25.426470588235293,
+      "avg_time": 25.794117647058822,
       "false_positive_rate": 21.839080459770116,
       "p_value": 0,
       "label_col": "Label_2.0pct_30d",
       "method": "rule_based",
       "direction": "long",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
     },
     "training_success_rate": 78.16091954022988,
     "validation_success_rate": 78.16091954022988,
@@ -264,7 +264,7 @@
     "validation_occurrences": 87,
     "live_occurrences": 32,
     "validation_avg_move": 9.542826161074627,
-    "validation_avg_time": 25.426470588235293,
+    "validation_avg_time": 25.794117647058822,
     "validation_false_positive_rate": 21.839080459770116,
     "direction": "long",
     "binomial_p_value": 6.175815945075012e-08,
@@ -273,8 +273,8 @@
     "scores": {
       "success": 89.08045977011494,
       "risk": 74.18939802345378,
-      "practical": 56.14411764705883,
-      "composite": 73.40084336602033
+      "practical": 55.923529411764704,
+      "composite": 73.3456963071968
     }
   },
   {
@@ -293,14 +293,14 @@
       "success_count": "132",
       "success_rate": 67.3469387755102,
       "avg_move": 6.398433744979888,
-      "avg_time": 14.575757575757576,
+      "avg_time": 14.590909090909092,
       "false_positive_rate": 31.63265306122449,
       "p_value": 0,
       "label_col": "Label_3.0pct_15d",
       "method": "rule_based",
       "direction": "long",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
     },
     "training_success_rate": 67.3469387755102,
     "validation_success_rate": 67.3469387755102,
@@ -310,7 +310,7 @@
     "validation_occurrences": 196,
     "live_occurrences": 103,
     "validation_avg_move": 6.398433744979888,
-    "validation_avg_time": 14.575757575757576,
+    "validation_avg_time": 14.590909090909092,
     "validation_false_positive_rate": 31.63265306122449,
     "direction": "long",
     "binomial_p_value": 1.3988156067956302e-06,
@@ -319,8 +319,8 @@
     "scores": {
       "success": 83.67346938775509,
       "risk": 57.562648173715175,
-      "practical": 84.45454545454545,
-      "composite": 70.81332779743272
+      "practical": 84.44545454545454,
+      "composite": 70.81105507016
     }
   },
   {
@@ -339,7 +339,7 @@
       "success_count": "29",
       "success_rate": 93.54838709677419,
       "avg_move": 4.790659670417928,
-      "avg_time": 11.0,
+      "avg_time": 11.241379310344827,
       "false_positive_rate": 3.225806451612903,
       "p_value": 2.314336597919464e-07,
       "label_col": "Label_2.0pct_10d",
@@ -347,8 +347,8 @@
       "method": "rule_based",
       "volatility_regime": "All",
       "trend_regime": "All",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
     },
     "training_success_rate": 93.54838709677419,
     "validation_success_rate": 93.54838709677419,
@@ -358,7 +358,7 @@
     "validation_occurrences": 31,
     "live_occurrences": 0,
     "validation_avg_move": 4.790659670417928,
-    "validation_avg_time": 11.0,
+    "validation_avg_time": 11.241379310344827,
     "validation_false_positive_rate": 3.225806451612903,
     "direction": "long",
     "binomial_p_value": 2.314336597919464e-07,
@@ -367,8 +367,8 @@
     "scores": {
       "success": 96.7741935483871,
       "risk": 67.34617255964088,
-      "practical": 53.599999999999994,
-      "composite": 71.26663466691721
+      "practical": 53.45517241379311,
+      "composite": 71.2304277703655
     }
   },
   {
@@ -387,14 +387,14 @@
       "success_count": "87",
       "success_rate": 72.5,
       "avg_move": 7.801847030050603,
-      "avg_time": 18.310344827586206,
+      "avg_time": 18.517241379310345,
       "false_positive_rate": 27.500000000000004,
       "p_value": 0,
       "label_col": "Label_2.0pct_20d",
       "method": "rule_based",
       "direction": "long",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
     },
     "training_success_rate": 72.5,
     "validation_success_rate": 72.5,
@@ -404,7 +404,7 @@
     "validation_occurrences": 120,
     "live_occurrences": 66,
     "validation_avg_move": 7.801847030050603,
-    "validation_avg_time": 18.310344827586206,
+    "validation_avg_time": 18.517241379310345,
     "validation_false_positive_rate": 27.500000000000004,
     "direction": "long",
     "binomial_p_value": 4.340247665843473e-07,
@@ -413,8 +413,8 @@
     "scores": {
       "success": 86.25,
       "risk": 65.90554109015181,
-      "practical": 67.01379310344828,
-      "composite": 71.26871882093798
+      "practical": 66.8896551724138,
+      "composite": 71.23768433817935
     }
   },
   {
@@ -433,14 +433,14 @@
       "success_count": "141",
       "success_rate": 68.11594202898551,
       "avg_move": 6.3748355029499955,
-      "avg_time": 14.297872340425531,
+      "avg_time": 14.312056737588652,
       "false_positive_rate": 30.917874396135264,
       "p_value": 0,
       "label_col": "Label_3.0pct_15d",
       "method": "rule_based",
       "direction": "long",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
     },
     "training_success_rate": 68.11594202898551,
     "validation_success_rate": 68.11594202898551,
@@ -450,7 +450,7 @@
     "validation_occurrences": 207,
     "live_occurrences": 114,
     "validation_avg_move": 6.3748355029499955,
-    "validation_avg_time": 14.297872340425531,
+    "validation_avg_time": 14.312056737588652,
     "validation_false_positive_rate": 30.917874396135264,
     "direction": "long",
     "binomial_p_value": 1.0036197242475525e-07,
@@ -459,8 +459,8 @@
     "scores": {
       "success": 84.05797101449275,
       "risk": 58.20663211271472,
-      "practical": 85.42127659574469,
-      "composite": 71.47312795891672
+      "practical": 85.41276595744681,
+      "composite": 71.47100029934225
     }
   },
   {
@@ -479,14 +479,14 @@
       "success_count": "155",
       "success_rate": 68.58407079646017,
       "avg_move": 5.4883637624301524,
-      "avg_time": 13.025806451612903,
+      "avg_time": 13.058064516129033,
       "false_positive_rate": 31.41592920353982,
       "p_value": 0,
       "label_col": "Label_2.0pct_15d",
       "method": "rule_based",
       "direction": "long",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
     },
     "training_success_rate": 68.58407079646017,
     "validation_success_rate": 68.58407079646017,
@@ -496,7 +496,7 @@
     "validation_occurrences": 226,
     "live_occurrences": 106,
     "validation_avg_move": 5.4883637624301524,
-    "validation_avg_time": 13.025806451612903,
+    "validation_avg_time": 13.058064516129033,
     "validation_false_positive_rate": 31.41592920353982,
     "direction": "long",
     "binomial_p_value": 2.5685644100838003e-08,
@@ -505,54 +505,8 @@
     "scores": {
       "success": 84.29203539823008,
       "risk": 55.04916208375064,
-      "practical": 86.18451612903226,
-      "composite": 70.1437189236909
-    }
-  },
-  {
-    "pattern": {
-      "conditions": {
-        "AD_ROC_20d": {
-          "operator": ">=",
-          "value": -253.11512979536738
-        },
-        "Days_Since_52w_Low": {
-          "operator": "<=",
-          "value": 74.0
-        }
-      },
-      "occurrences": 99,
-      "success_count": "71",
-      "success_rate": 71.71717171717171,
-      "avg_move": 8.300149540389704,
-      "avg_time": 19.676056338028168,
-      "false_positive_rate": 28.28282828282828,
-      "p_value": 0,
-      "label_col": "Label_2.0pct_20d",
-      "method": "rule_based",
-      "direction": "long",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
-    },
-    "training_success_rate": 71.71717171717171,
-    "validation_success_rate": 71.71717171717171,
-    "live_success_rate": 55.35714285714286,
-    "validation_ratio": 1.0,
-    "classification": "ROBUST",
-    "validation_occurrences": 99,
-    "live_occurrences": 56,
-    "validation_avg_move": 8.300149540389704,
-    "validation_avg_time": 19.676056338028168,
-    "validation_false_positive_rate": 28.28282828282828,
-    "direction": "long",
-    "binomial_p_value": 2.3031214821873726e-05,
-    "chi_square_p_value": 1.0,
-    "statistically_significant": "True",
-    "scores": {
-      "success": 85.85858585858585,
-      "risk": 66.41762033834083,
-      "practical": 61.9943661971831,
-      "composite": 70.17204818311265
+      "practical": 86.16516129032257,
+      "composite": 70.13888021401348
     }
   },
   {
@@ -579,8 +533,8 @@
       "method": "rule_based",
       "volatility_regime": "All",
       "trend_regime": "All",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
     },
     "training_success_rate": 100.0,
     "validation_success_rate": 100.0,
@@ -619,14 +573,14 @@
       "success_count": "91",
       "success_rate": 72.8,
       "avg_move": 6.923130162929873,
-      "avg_time": 19.10989010989011,
+      "avg_time": 19.13186813186813,
       "false_positive_rate": 27.200000000000003,
       "p_value": 0,
       "label_col": "Label_2.0pct_20d",
       "method": "rule_based",
       "direction": "long",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
     },
     "training_success_rate": 72.8,
     "validation_success_rate": 72.8,
@@ -636,7 +590,7 @@
     "validation_occurrences": 125,
     "live_occurrences": 56,
     "validation_avg_move": 6.923130162929873,
-    "validation_avg_time": 19.10989010989011,
+    "validation_avg_time": 19.13186813186813,
     "validation_false_positive_rate": 27.200000000000003,
     "direction": "long",
     "binomial_p_value": 1.7369004414235311e-07,
@@ -645,8 +599,8 @@
     "scores": {
       "success": 86.4,
       "risk": 63.569390488789615,
-      "practical": 67.53406593406594,
-      "composite": 70.2682117279113
+      "practical": 67.52087912087912,
+      "composite": 70.26491502461458
     }
   },
   {
@@ -677,8 +631,8 @@
       "method": "rule_based",
       "volatility_regime": "All",
       "trend_regime": "All",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
     },
     "training_success_rate": 100.0,
     "validation_success_rate": 100.0,
@@ -704,6 +658,54 @@
   {
     "pattern": {
       "conditions": {
+        "OBV_ROC_20d": {
+          "operator": "<=",
+          "value": -207.40458618052
+        },
+        "Stoch_14_K": {
+          "operator": ">=",
+          "value": 95.01241228240886
+        }
+      },
+      "occurrences": 11,
+      "success_count": "11",
+      "success_rate": 100.0,
+      "avg_move": 4.5377737733193255,
+      "avg_time": 10.818181818181818,
+      "false_positive_rate": 0.0,
+      "p_value": 0.00048828125,
+      "label_col": "Label_1.0pct_10d",
+      "direction": "long",
+      "method": "rule_based",
+      "volatility_regime": "All",
+      "trend_regime": "All",
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
+    },
+    "training_success_rate": 100.0,
+    "validation_success_rate": 100.0,
+    "live_success_rate": 0,
+    "validation_ratio": 1.0,
+    "classification": "ROBUST",
+    "validation_occurrences": 11,
+    "live_occurrences": 0,
+    "validation_avg_move": 4.5377737733193255,
+    "validation_avg_time": 10.818181818181818,
+    "validation_false_positive_rate": 0.0,
+    "direction": "long",
+    "binomial_p_value": 0.00048828125,
+    "chi_square_p_value": 1.0,
+    "statistically_significant": "True",
+    "scores": {
+      "success": 100.0,
+      "risk": 65.81332131995798,
+      "practical": 49.709090909090904,
+      "composite": 70.33393338725172
+    }
+  },
+  {
+    "pattern": {
+      "conditions": {
         "CCI_20": {
           "operator": "<=",
           "value": -36.784763057044735
@@ -717,14 +719,14 @@
       "success_count": "69",
       "success_rate": 73.40425531914893,
       "avg_move": 8.521126136891382,
-      "avg_time": 27.91304347826087,
+      "avg_time": 27.971014492753625,
       "false_positive_rate": 26.595744680851062,
       "p_value": 0,
       "label_col": "Label_3.0pct_30d",
       "method": "rule_based",
       "direction": "long",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
     },
     "training_success_rate": 73.40425531914893,
     "validation_success_rate": 73.40425531914893,
@@ -734,7 +736,7 @@
     "validation_occurrences": 94,
     "live_occurrences": 39,
     "validation_avg_move": 8.521126136891382,
-    "validation_avg_time": 27.91304347826087,
+    "validation_avg_time": 27.971014492753625,
     "validation_false_positive_rate": 26.595744680851062,
     "direction": "long",
     "binomial_p_value": 8.658456131226896e-06,
@@ -743,54 +745,8 @@
     "scores": {
       "success": 86.70212765957447,
       "risk": 67.76763372982309,
-      "practical": 56.052173913043475,
-      "composite": 69.57239225806603
-    }
-  },
-  {
-    "pattern": {
-      "conditions": {
-        "OBV_ROC_5d": {
-          "operator": ">=",
-          "value": -83.70556061987237
-        },
-        "Williams_R_14": {
-          "operator": "<=",
-          "value": -47.50852122559831
-        }
-      },
-      "occurrences": 192,
-      "success_count": "129",
-      "success_rate": 67.1875,
-      "avg_move": 5.9628051028310285,
-      "avg_time": 13.031007751937985,
-      "false_positive_rate": 32.8125,
-      "p_value": 0,
-      "label_col": "Label_2.0pct_15d",
-      "method": "rule_based",
-      "direction": "long",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
-    },
-    "training_success_rate": 67.1875,
-    "validation_success_rate": 67.1875,
-    "live_success_rate": 77.0,
-    "validation_ratio": 1.0,
-    "classification": "ROBUST",
-    "validation_occurrences": 192,
-    "live_occurrences": 100,
-    "validation_avg_move": 5.9628051028310285,
-    "validation_avg_time": 13.031007751937985,
-    "validation_false_positive_rate": 32.8125,
-    "direction": "long",
-    "binomial_p_value": 1.0919336679556754e-06,
-    "chi_square_p_value": 1.0,
-    "statistically_significant": "True",
-    "scores": {
-      "success": 83.59375,
-      "risk": 55.07591530849308,
-      "practical": 84.58139534883722,
-      "composite": 69.58174399145585
+      "practical": 56.017391304347825,
+      "composite": 69.56369660589212
     }
   },
   {
@@ -809,14 +765,14 @@
       "success_count": "63",
       "success_rate": 70.78651685393258,
       "avg_move": 10.203553066120978,
-      "avg_time": 26.396825396825395,
+      "avg_time": 26.77777777777778,
       "false_positive_rate": 29.213483146067414,
       "p_value": 0,
       "label_col": "Label_2.0pct_30d",
       "method": "rule_based",
       "direction": "long",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
     },
     "training_success_rate": 70.78651685393258,
     "validation_success_rate": 70.78651685393258,
@@ -826,7 +782,7 @@
     "validation_occurrences": 89,
     "live_occurrences": 40,
     "validation_avg_move": 10.203553066120978,
-    "validation_avg_time": 26.396825396825395,
+    "validation_avg_time": 26.77777777777778,
     "validation_false_positive_rate": 29.213483146067414,
     "direction": "long",
     "binomial_p_value": 5.496312468556407e-05,
@@ -835,8 +791,54 @@
     "scores": {
       "success": 85.3932584269663,
       "risk": 68.58651685393258,
-      "practical": 55.96190476190476,
-      "composite": 69.63204922418406
+      "practical": 55.733333333333334,
+      "composite": 69.5749063670412
+    }
+  },
+  {
+    "pattern": {
+      "conditions": {
+        "OBV_ROC_5d": {
+          "operator": ">=",
+          "value": -83.70556061987237
+        },
+        "Williams_R_14": {
+          "operator": "<=",
+          "value": -47.50852122559831
+        }
+      },
+      "occurrences": 192,
+      "success_count": "129",
+      "success_rate": 67.1875,
+      "avg_move": 5.9628051028310285,
+      "avg_time": 13.046511627906977,
+      "false_positive_rate": 32.8125,
+      "p_value": 0,
+      "label_col": "Label_2.0pct_15d",
+      "method": "rule_based",
+      "direction": "long",
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
+    },
+    "training_success_rate": 67.1875,
+    "validation_success_rate": 67.1875,
+    "live_success_rate": 77.0,
+    "validation_ratio": 1.0,
+    "classification": "ROBUST",
+    "validation_occurrences": 192,
+    "live_occurrences": 100,
+    "validation_avg_move": 5.9628051028310285,
+    "validation_avg_time": 13.046511627906977,
+    "validation_false_positive_rate": 32.8125,
+    "direction": "long",
+    "binomial_p_value": 1.0919336679556754e-06,
+    "chi_square_p_value": 1.0,
+    "statistically_significant": "True",
+    "scores": {
+      "success": 83.59375,
+      "risk": 55.07591530849308,
+      "practical": 84.57209302325582,
+      "composite": 69.5794184100605
     }
   },
   {
@@ -855,14 +857,14 @@
       "success_count": "126",
       "success_rate": 68.10810810810811,
       "avg_move": 5.913420905012108,
-      "avg_time": 13.595238095238095,
+      "avg_time": 13.666666666666666,
       "false_positive_rate": 31.891891891891895,
       "p_value": 0,
       "label_col": "Label_2.0pct_15d",
       "method": "rule_based",
       "direction": "long",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
     },
     "training_success_rate": 68.10810810810811,
     "validation_success_rate": 68.10810810810811,
@@ -872,7 +874,7 @@
     "validation_occurrences": 185,
     "live_occurrences": 104,
     "validation_avg_move": 5.913420905012108,
-    "validation_avg_time": 13.595238095238095,
+    "validation_avg_time": 13.666666666666666,
     "validation_false_positive_rate": 31.891891891891895,
     "direction": "long",
     "binomial_p_value": 4.692301191096666e-07,
@@ -881,54 +883,54 @@
     "scores": {
       "success": 84.05405405405406,
       "risk": 55.848370823144435,
-      "practical": 82.84285714285714,
-      "composite": 69.64841321080002
+      "practical": 82.8,
+      "composite": 69.63769892508573
     }
   },
   {
     "pattern": {
       "conditions": {
-        "AD_ROC_5d": {
-          "operator": ">=",
-          "value": -101.2049854034269
-        },
-        "Williams_R_14": {
+        "Days_Since_52w_Low": {
           "operator": "<=",
-          "value": -62.619330946700586
+          "value": 18.400000000000002
+        },
+        "Vol_Change_5d": {
+          "operator": "<=",
+          "value": 23.98451071221772
         }
       },
-      "occurrences": 128,
-      "success_count": "91",
-      "success_rate": 71.09375,
-      "avg_move": 6.2830346328320825,
-      "avg_time": 15.483516483516484,
-      "false_positive_rate": 27.34375,
+      "occurrences": 32,
+      "success_count": "28",
+      "success_rate": 87.5,
+      "avg_move": 9.204617492155563,
+      "avg_time": 30.571428571428573,
+      "false_positive_rate": 12.5,
       "p_value": 0,
-      "label_col": "Label_3.0pct_15d",
+      "label_col": "Label_2.0pct_30d",
       "method": "rule_based",
       "direction": "long",
-      "pipeline_run_id": "b5757f8e",
-      "pipeline_run_timestamp": "2026-01-31T09:14:24.666045"
+      "pipeline_run_id": "8d4fa36f",
+      "pipeline_run_timestamp": "2026-01-31T11:53:07.788996"
     },
-    "training_success_rate": 71.09375,
-    "validation_success_rate": 71.09375,
-    "live_success_rate": 88.33333333333333,
+    "training_success_rate": 87.5,
+    "validation_success_rate": 87.5,
+    "live_success_rate": 83.33333333333334,
     "validation_ratio": 1.0,
     "classification": "ROBUST",
-    "validation_occurrences": 128,
-    "live_occurrences": 60,
-    "validation_avg_move": 6.2830346328320825,
-    "validation_avg_time": 15.483516483516484,
-    "validation_false_positive_rate": 27.34375,
+    "validation_occurrences": 32,
+    "live_occurrences": 18,
+    "validation_avg_move": 9.204617492155563,
+    "validation_avg_time": 30.571428571428573,
+    "validation_false_positive_rate": 12.5,
     "direction": "long",
-    "binomial_p_value": 1.0030649725150208e-06,
+    "binomial_p_value": 9.650597348809242e-06,
     "chi_square_p_value": 1.0,
     "statistically_significant": "True",
     "scores": {
-      "success": 85.546875,
-      "risk": 61.50535389849625,
-      "practical": 70.30989010989012,
-      "composite": 69.71686822672066
+      "success": 93.75,
+      "risk": 71.5138524764667,
+      "practical": 42.05714285714286,
+      "composite": 69.70871195251907
     }
   }
 ]

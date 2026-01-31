@@ -56,7 +56,7 @@ class RealtimeStreamingSystem:
         self.poll_interval = 900  # Poll every 15 minutes
         
         # WebSocket server settings
-        self.ws_port = self.streaming_config.get('dashboard', {}).get('ws_port', 5010)
+        self.ws_port = self.streaming_config.get('dashboard', {}).get('ws_port', 5012)
         self.clients: Set[websockets.WebSocketServerProtocol] = set()
         self.ws_server = None
         
@@ -107,6 +107,16 @@ class RealtimeStreamingSystem:
             'patterns_loaded': self.pattern_matcher.get_pattern_count()
         })
         
+        # Send current daily bar with regime info
+        current_bar = self.daily_reconstructor.get_current_daily_bar()
+        if current_bar:
+            await self._send_to_client(websocket, {
+                'type': 'daily_bar_update',
+                'daily_bar': current_bar,
+                'regime': self.current_regime or {},
+                'intraday_stats': {'updates': current_bar.get('IntradayUpdates', 0)}
+            })
+        
         # Send current regime if available
         if self.current_regime:
             await self._send_to_client(websocket, {
@@ -114,12 +124,12 @@ class RealtimeStreamingSystem:
                 'data': self.current_regime
             })
         
-        # Send current daily bar
-        current_bar = self.daily_reconstructor.get_current_daily_bar()
-        if current_bar:
+        # Send current matches
+        if self.current_matches:
             await self._send_to_client(websocket, {
-                'type': 'daily_bar_update',
-                'data': current_bar
+                'type': 'matches_update',
+                'matches': self.current_matches,
+                'triggered_count': len(self.triggered_patterns)
             })
         
         try:
@@ -256,7 +266,12 @@ class RealtimeStreamingSystem:
                 continue
             
             # 3. Calculate all features on daily bars
-            features = self.feature_calculator.calculate_all_features(daily_df)
+            features_df = self.feature_calculator.calculate(daily_df)
+            # Convert last row to dict for regime detector and pattern matching
+            if features_df is not None and not features_df.empty:
+                features = features_df.iloc[-1].to_dict()
+            else:
+                features = {}
             
             # 4. Detect market regime
             new_regime = self.regime_detector.update(features)
@@ -376,6 +391,9 @@ class RealtimeStreamingSystem:
         # Create HTTP session for Alpaca API
         self.session = aiohttp.ClientSession()
         
+        # Initialize with last day's data from historical data
+        await self._initialize_with_historical_data()
+        
         # Start WebSocket server
         self.ws_server = await serve(
             self._handle_client,
@@ -390,6 +408,58 @@ class RealtimeStreamingSystem:
         
         # Start data fetching loop
         await self._data_fetching_loop()
+    
+    async def _initialize_with_historical_data(self):
+        """Initialize system with last day's data when market is closed."""
+        try:
+            # Get historical data
+            import json
+            with open('data/ohlcv.json', 'r') as f:
+                historical = json.load(f)
+            
+            if not historical:
+                logger.warning("No historical data available")
+                return
+            
+            # Get last day's data
+            last_day = historical[-1]
+            logger.info(f"Initializing with last trading day: {last_day['Date']}")
+            
+            # Set as current daily bar
+            self.daily_reconstructor.current_daily_bar = {
+                'Date': last_day['Date'],
+                'Open': last_day['Open'],
+                'High': last_day['High'],
+                'Low': last_day['Low'],
+                'Close': last_day['Close'],
+                'Volume': last_day['Volume'],
+                'Timestamp': datetime.now(timezone.utc).isoformat(),
+                'IntradayUpdates': 0,
+                'IsRealtime': False
+            }
+            self.daily_reconstructor.current_date = datetime.strptime(last_day['Date'], '%Y-%m-%d')
+            
+            # Calculate features and regime
+            daily_df = self.daily_reconstructor.get_full_daily_data(include_current=True)
+            
+            if len(daily_df) >= 50:
+                features_df = self.feature_calculator.calculate(daily_df)
+                # Convert last row to dict for regime detector
+                if features_df is not None and not features_df.empty:
+                    features = features_df.iloc[-1].to_dict()
+                else:
+                    features = {}
+                self.current_regime = self.regime_detector.update(features)
+                self.current_matches = self.pattern_matcher.match_all_patterns(features)
+                
+                logger.info(f"Initialized regime: {self.current_regime.get('trend_regime', 'unknown')} / "
+                           f"{self.current_regime.get('volatility_regime', 'unknown')}")
+                logger.info(f"Found {len(self.current_matches)} pattern matches")
+            else:
+                logger.warning(f"Need 50 days of data, have {len(daily_df)}")
+                
+        except Exception as e:
+            logger.error(f"Error initializing with historical data: {e}")
     
     async def stop(self):
         """Stop the real-time streaming system."""
