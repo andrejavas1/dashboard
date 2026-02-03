@@ -42,6 +42,7 @@ class FinalReportGenerator:
         
         # Data storage
         self.data = None
+        self.patterns = None
         self.portfolio = None
         self.validation_results = None
         self.portfolio_summary = None
@@ -74,6 +75,13 @@ class FinalReportGenerator:
         if os.path.exists(features_path):
             self.data = pd.read_csv(features_path, index_col='Date', parse_dates=True)
             logger.info(f"  Features: {len(self.data)} records")
+        
+        # Load all patterns
+        patterns_path = os.path.join(self.data_dir, "patterns.json")
+        if os.path.exists(patterns_path):
+            with open(patterns_path, 'r') as f:
+                self.patterns = json.load(f)
+            logger.info(f"  Patterns: {len(self.patterns)} patterns")
         
         # Load portfolio
         portfolio_path = os.path.join(self.data_dir, "final_portfolio.json")
@@ -425,6 +433,9 @@ class FinalReportGenerator:
         # Load all data
         self.load_all_data()
         
+        # Generate pattern occurrence files for dashboard
+        self.generate_pattern_occurrences()
+        
         # Generate all sections
         self.report_content = {
             'executive_summary': self.generate_executive_summary(),
@@ -451,6 +462,108 @@ class FinalReportGenerator:
         logger.info("=" * 60)
         
         return self.report_content
+    
+    def generate_pattern_occurrences(self):
+        """
+        Generate JSON occurrence files for ALL patterns (not just portfolio).
+        These files are used by the dashboard to display pattern markers.
+        """
+        if not self.patterns or self.data is None:
+            logger.warning("No patterns or data available for occurrence generation")
+            return
+        
+        logger.info(f"Generating occurrence files for {len(self.patterns)} patterns...")
+        
+        for i, pattern in enumerate(self.patterns):
+            conditions = pattern.get('conditions', {})
+            # Get direction from pattern
+            direction = pattern.get('direction', 'long')
+            label_col = pattern.get('label_col', 'Label_3pct_20d')
+            
+            # Parse target from label_col
+            import re
+            match = re.search(r'Label_(\d+(?:\.\d+)?)pct_(\d+)d', label_col)
+            if match:
+                target_pct = float(match.group(1))
+                time_window = int(match.group(2))
+            else:
+                target_pct = 3.0
+                time_window = 20
+            
+            # Find all dates matching pattern conditions
+            occurrences = []
+            for date_idx, (date, row) in enumerate(self.data.iterrows()):
+                match = True
+                for feature, condition in conditions.items():
+                    if feature not in row or pd.isna(row[feature]):
+                        match = False
+                        break
+                    
+                    value = row[feature]
+                    op = condition.get('operator', '~')
+                    target = condition['value']
+                    
+                    if op == '>=':
+                        if value < target: match = False
+                    elif op == '<=':
+                        if value > target: match = False
+                    elif op == '>':
+                        if value <= target: match = False
+                    elif op == '<':
+                        if value >= target: match = False
+                
+                if match:
+                    entry_price = row['Close']
+                    entry_date = date.strftime('%Y-%m-%d')
+                    
+                    # Calculate exit
+                    exit_idx = min(date_idx + time_window, len(self.data) - 1)
+                    exit_price = self.data.iloc[exit_idx]['Close']
+                    actual_move = ((exit_price - entry_price) / entry_price) * 100
+                    
+                    if direction == 'long':
+                        target_reached = actual_move >= target_pct
+                    else:
+                        target_reached = actual_move <= -target_pct
+                    
+                    # Determine outcome label based on direction and target
+                    if direction == 'long':
+                        if target_reached:
+                            outcome_label = 'STRONG_UP'
+                        elif actual_move > 0:
+                            outcome_label = 'UP'
+                        else:
+                            outcome_label = 'DOWN'
+                    else:  # short
+                        if target_reached:
+                            outcome_label = 'STRONG_DOWN'
+                        elif actual_move < 0:
+                            outcome_label = 'DOWN'
+                        else:
+                            outcome_label = 'UP'
+                    
+                    occurrences.append({
+                        'Date': entry_date,
+                        'Open': float(row['Open']),
+                        'High': float(row['High']),
+                        'Low': float(row['Low']),
+                        'Close': float(entry_price),
+                        'Volume': int(row['Volume']),
+                        'outcome': outcome_label,
+                        'actual_move': float(actual_move),
+                        'time_to_target': time_window,
+                        'target_reached': bool(target_reached)
+                    })
+            
+            # Save to file
+            output_path = os.path.join(self.data_dir, f'pattern_{i}_occurrences.json')
+            with open(output_path, 'w') as f:
+                json.dump(occurrences, f, indent=2)
+            
+            if i < 5 or i % 10 == 0:
+                logger.info(f"  Pattern #{i}: {len(occurrences)} occurrences saved")
+        
+        logger.info(f"✓ Generated {len(self.patterns)} occurrence files")
     
     def save_report(self):
         """Save report to files."""

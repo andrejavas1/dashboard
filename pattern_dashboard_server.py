@@ -67,6 +67,11 @@ def index():
     """Serve the dashboard HTML."""
     return send_from_directory('.', 'DASHBOARD_DYNAMIC.html')
 
+@app.route('/regime-demo')
+def regime_demo():
+    """Serve the regime comparison demo HTML."""
+    return send_from_directory('.', 'REGIME_COMPARISON_DEMO.html')
+
 @app.route('/api/data-info')
 def get_data_info():
     """Get information about the data files including modification times and pipeline run ID."""
@@ -172,6 +177,19 @@ def get_pattern_occurrences(pattern_id):
     
     return jsonify(cached_data[cache_key])
 
+@app.route('/api/ohlcv-full')
+def get_ohlcv_full():
+    """Get full historical OHLCV data from 2010 for regime demo."""
+    try:
+        ohlcv_path = get_data_path('ohlcv_full_history.json')
+        with open(ohlcv_path, 'r') as f:
+            data = json.load(f)
+        return jsonify(data)
+    except FileNotFoundError:
+        return jsonify({'error': 'Full history data not available. Run fetch_historical_data.py'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/api/ohlcv')
 def get_ohlcv():
     """Get OHLCV data with cache invalidation."""
@@ -192,6 +210,33 @@ def get_ohlcv():
     
     return jsonify(cached_data['ohlcv'])
 
+@app.route('/api/matches-history')
+def get_matches_history():
+    """Get pattern matches history from streaming system."""
+    try:
+        matches_path = get_data_path('matches_history.json')
+        current_mtime = get_file_modification_time(matches_path)
+        
+        # Check if cache needs to be invalidated
+        if 'matches_history' in cached_data:
+            cached_mtime = cache_timestamps.get('matches_history')
+            if cached_mtime and current_mtime > cached_mtime:
+                # File was modified, clear cache
+                del cached_data['matches_history']
+        
+        if 'matches_history' not in cached_data:
+            with open(matches_path, 'r') as f:
+                cached_data['matches_history'] = json.load(f)
+            cache_timestamps['matches_history'] = current_mtime
+        
+        # Return most recent matches first (limited to 100)
+        history = cached_data['matches_history']
+        return jsonify(history[-100:][::-1])  # Reverse to get newest first
+    except FileNotFoundError:
+        return jsonify([])
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/api/pattern/<int:pattern_id>/markers')
 def get_pattern_markers(pattern_id):
     """Get entry and exit markers for a specific pattern."""
@@ -209,11 +254,15 @@ def get_pattern_markers(pattern_id):
     
     ohlcv_data = cached_data['ohlcv']
     
-    # Create date index for quick lookup
+    # Create date index for quick lookup (normalize dates to YYYY-MM-DD)
     date_to_index = {}
     for idx, row in enumerate(ohlcv_data):
-        date_to_index[row['Date']] = idx
-        date_to_index[row['Date'].replace(' ', 'T')] = idx
+        full_date = row['Date']
+        # Normalize to YYYY-MM-DD format
+        date_key = full_date.split(' ')[0] if ' ' in full_date else full_date
+        date_to_index[date_key] = idx
+        date_to_index[full_date] = idx
+        date_to_index[full_date.replace(' ', 'T')] = idx
     
     # Get pattern data for target parameters
     if 'patterns' not in cached_data:
@@ -242,6 +291,7 @@ def get_pattern_markers(pattern_id):
     
     sorted_occurrences = sorted(occurrences, key=lambda x: x['Date'])
     open_until_index = -1
+    occurrence_index = 0
     
     for occ in sorted_occurrences:
         if occ['Date'] not in date_to_index:
@@ -252,13 +302,16 @@ def get_pattern_markers(pattern_id):
         if idx < open_until_index:
             continue
         
+        occurrence_index += 1
+        
         # Entry marker
         entry_markers.append({
             'x': idx,
             'y': occ['Close'],
             'pattern': pattern_id,
             'outcome': occ.get('outcome', 'UNKNOWN'),
-            'date': occ['Date']
+            'date': occ['Date'],
+            'occurrence': occurrence_index
         })
         
         # Calculate exit
@@ -292,7 +345,8 @@ def get_pattern_markers(pattern_id):
             'y': exit_price,
             'pattern': pattern_id,
             'outcome': occ.get('outcome', 'UNKNOWN'),
-            'date': ohlcv_data[exit_idx]['Date']
+            'date': ohlcv_data[exit_idx]['Date'],
+            'occurrence': occurrence_index
         })
         
         open_until_index = exit_idx + 1
@@ -301,6 +355,87 @@ def get_pattern_markers(pattern_id):
         'entry': entry_markers,
         'exit': exit_markers
     })
+
+@app.route('/api/regime-history')
+def get_regime_history():
+    """Get market regime history for trend visualization on chart."""
+    try:
+        regime_path = get_data_path('regime_history.json')
+        with open(regime_path, 'r') as f:
+            regime_data = json.load(f)
+        return jsonify(regime_data)
+    except FileNotFoundError:
+        return jsonify([])
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/pattern-regime-analysis')
+def get_pattern_regime_analysis():
+    """Get pattern performance analysis by market regime."""
+    try:
+        analysis_path = get_data_path('pattern_regime_analysis.json')
+        with open(analysis_path, 'r') as f:
+            analysis_data = json.load(f)
+        return jsonify(analysis_data)
+    except FileNotFoundError:
+        return jsonify({})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/pattern/<int:pattern_id>/indicators')
+def get_pattern_indicators(pattern_id):
+    """Get indicator data for a specific pattern with threshold values."""
+    try:
+        # Load patterns to get conditions
+        patterns_path = get_data_path('patterns.json')
+        with open(patterns_path, 'r') as f:
+            patterns_data = json.load(f)
+        
+        if pattern_id >= len(patterns_data):
+            return jsonify({'error': 'Pattern not found'}), 404
+        
+        pattern = patterns_data[pattern_id]
+        conditions = pattern.get('conditions', {})
+        
+        # Load features matrix
+        import csv
+        features_path = get_data_path('features_matrix.csv')
+        
+        indicators_data = {}
+        indicator_names = list(conditions.keys())
+        
+        with open(features_path, 'r') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                date = row['Date']
+                for indicator in indicator_names:
+                    if indicator in row:
+                        if indicator not in indicators_data:
+                            indicators_data[indicator] = {
+                                'values': [],
+                                'threshold': conditions[indicator].get('value'),
+                                'operator': conditions[indicator].get('operator'),
+                                'min': float('inf'),
+                                'max': float('-inf')
+                            }
+                        val = float(row[indicator])
+                        indicators_data[indicator]['values'].append({
+                            'date': date,
+                            'value': val
+                        })
+                        indicators_data[indicator]['min'] = min(indicators_data[indicator]['min'], val)
+                        indicators_data[indicator]['max'] = max(indicators_data[indicator]['max'], val)
+        
+        return jsonify({
+            'pattern_id': pattern_id,
+            'indicators': indicators_data,
+            'direction': pattern.get('direction', 'unknown'),
+            'label_col': pattern.get('label_col', '')
+        })
+    except FileNotFoundError as e:
+        return jsonify({'error': f'File not found: {e}'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     print("=" * 60)

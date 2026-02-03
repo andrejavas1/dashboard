@@ -47,15 +47,18 @@ class MarketRegimeDetector:
         self.vol_low_threshold = vol_thresholds.get('low', 1.5)
         self.vol_medium_threshold = vol_thresholds.get('medium', 3.0)
         
-        # Trend thresholds
+        # Trend thresholds - widened sideways range for more stable regime detection
         trend_thresholds = regime_config.get('trend_thresholds', {})
-        self.trend_strong_up = trend_thresholds.get('strong_up', 0.2)
-        self.trend_weak_up = trend_thresholds.get('weak_up', 0.05)
-        self.trend_neutral = trend_thresholds.get('neutral', -0.05)
-        self.trend_weak_down = trend_thresholds.get('weak_down', -0.2)
+        self.trend_strong_up = trend_thresholds.get('strong_up', 0.3)
+        self.trend_weak_up = trend_thresholds.get('weak_up', 0.1)
+        self.trend_neutral = trend_thresholds.get('neutral', -0.1)
+        self.trend_weak_down = trend_thresholds.get('weak_down', -0.3)
         
         # Feature history for regime detection
         self.feature_history = deque(maxlen=self.window_size)
+        
+        # Regime history for visualization (date -> regime)
+        self.regime_history = []
         
         # Current regime state
         self.current_regime = {
@@ -98,6 +101,13 @@ class MarketRegimeDetector:
         
         if regime_changed:
             logger.info(f"Regime changed: {self.previous_regime} -> {regime}")
+            # Store regime change in history
+            from datetime import datetime
+            self.regime_history.append({
+                'date': datetime.now().isoformat(),
+                'trend_regime': regime.get('trend_regime', 'Sideways'),
+                'volatility_regime': regime.get('volatility_regime', 'Medium')
+            })
         
         self.previous_regime = self.current_regime.copy()
         self.current_regime = regime
@@ -263,6 +273,10 @@ class MarketRegimeDetector:
         }
         self.previous_regime = None
         logger.info("Regime detector state reset")
+    
+    def get_regime_history(self) -> List[Dict]:
+        """Get the history of regime changes for visualization."""
+        return self.regime_history
 
 
 if __name__ == "__main__":
