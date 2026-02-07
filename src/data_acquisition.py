@@ -129,6 +129,7 @@ class DataAcquisition:
         self.config = self._load_config(config_path)
         self.run_mode = self.config.get('run_mode', 'full')
         self.ticker = self.config['data_sources']['ticker']
+        logger.info(f"[DEBUG DataAcquisition] Loaded ticker from config: {self.ticker}")
         self.start_date = self._get_start_date()
         self.end_date = self._get_end_date()
         
@@ -202,7 +203,12 @@ class DataAcquisition:
     
     def _get_start_date(self) -> str:
         """Get start date based on run mode."""
-        if self.run_mode == 'quick':
+        if self.run_mode == 'ultra':
+            # Ultra mode: last 6 months only
+            end = datetime.now()
+            start = end - timedelta(days=180)  # 6 months
+            return start.strftime('%Y-%m-%d')
+        elif self.run_mode == 'quick':
             # Quick mode: last 2 years of data
             end = datetime.now()
             start = end - timedelta(days=730)  # 2 years
@@ -523,6 +529,31 @@ class DataAcquisition:
         
         return self.data_sources
     
+    def _filter_data_by_run_mode(self, data: pd.DataFrame) -> pd.DataFrame:
+        """
+        Filter data to match the current run mode's date range.
+        
+        Args:
+            data: DataFrame with datetime index
+            
+        Returns:
+            Filtered DataFrame containing only data within run mode date range
+        """
+        if data.empty:
+            return data
+            
+        # Convert start_date to datetime for comparison
+        start_dt = pd.to_datetime(self.start_date)
+        end_dt = pd.to_datetime(self.end_date)
+        
+        # Filter data to run mode date range
+        filtered = data[(data.index >= start_dt) & (data.index <= end_dt)].copy()
+        
+        if len(filtered) < len(data):
+            logger.info(f"Filtered data from {len(data)} to {len(filtered)} records based on run mode '{self.run_mode}' date range ({self.start_date} to {self.end_date})")
+        
+        return filtered
+    
     def verify_data_quality(self) -> Tuple[pd.DataFrame, Dict]:
         """
         Verify data quality using Yahoo Finance as primary source.
@@ -549,6 +580,10 @@ class DataAcquisition:
             else:
                 logger.error("No valid data sources available")
                 return pd.DataFrame(), {}
+        
+        # Filter data to match current run mode's date range
+        primary_data = self._filter_data_by_run_mode(primary_data)
+        logger.info(f"After run mode filtering: {len(primary_data)} records from {primary_data.index.min()} to {primary_data.index.max()}")
         
         # Validate data quality against other sources (for reporting only)
         validation_results = []

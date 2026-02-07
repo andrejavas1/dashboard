@@ -1,0 +1,1842 @@
+[
+  {
+    "conditions": {
+      "AD_ROC_5d": {
+        "operator": ">=",
+        "value": 10444920.270419404
+      },
+      "OBV_ROC_20d": {
+        "operator": ">=",
+        "value": 140.91470979305817
+      }
+    },
+    "occurrences": 6,
+    "success_count": "6",
+    "success_rate": 100.0,
+    "avg_move": 2.8126785297711128,
+    "avg_time": 3.5,
+    "false_positive_rate": 0.0,
+    "p_value": 0.015625,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_5d": {
+        "operator": "<=",
+        "value": -64524162.11400444
+      },
+      "Vol_Change_5d": {
+        "operator": ">=",
+        "value": 27.02162094254771
+      }
+    },
+    "occurrences": 3,
+    "success_count": "3",
+    "success_rate": 100.0,
+    "avg_move": 1.8018793966105584,
+    "avg_time": 1.3333333333333333,
+    "false_positive_rate": 0.0,
+    "p_value": 0.125,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Chaikin_Oscillator": {
+        "operator": "<=",
+        "value": -7654627.641768783
+      },
+      "Vol_Change_5d": {
+        "operator": ">=",
+        "value": 103.3014666301906
+      }
+    },
+    "occurrences": 3,
+    "success_count": "3",
+    "success_rate": 100.0,
+    "avg_move": 2.8807937048525645,
+    "avg_time": 2.0,
+    "false_positive_rate": 0.0,
+    "p_value": 0.125,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Vol_Change_5d": {
+        "operator": "<=",
+        "value": -39.433317666504664
+      }
+    },
+    "occurrences": 13,
+    "success_count": "12",
+    "success_rate": 92.3076923076923,
+    "avg_move": 2.570303912415724,
+    "avg_time": 5.166666666666667,
+    "false_positive_rate": 0.0,
+    "p_value": 0.001708984375,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Chaikin_Oscillator": {
+        "operator": ">=",
+        "value": 7168349.124480078
+      },
+      "OBV_ROC_20d": {
+        "operator": ">=",
+        "value": 140.91470979305817
+      }
+    },
+    "occurrences": 7,
+    "success_count": "6",
+    "success_rate": 85.71428571428571,
+    "avg_move": 2.8126785297711128,
+    "avg_time": 3.5,
+    "false_positive_rate": 14.285714285714285,
+    "p_value": 0.0625,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "OBV_ROC_20d": {
+        "operator": ">=",
+        "value": -390.44908579182163
+      },
+      "OBV_ROC_5d": {
+        "operator": ">=",
+        "value": 66.82758989080159
+      }
+    },
+    "occurrences": 7,
+    "success_count": "6",
+    "success_rate": 85.71428571428571,
+    "avg_move": 3.9566558507359564,
+    "avg_time": 3.8333333333333335,
+    "false_positive_rate": 14.285714285714285,
+    "p_value": 0.0625,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "OBV_ROC_20d": {
+        "operator": ">=",
+        "value": -12.990706129673491
+      },
+      "Stoch_14_K": {
+        "operator": ">=",
+        "value": 93.60456690043475
+      }
+    },
+    "occurrences": 6,
+    "success_count": "5",
+    "success_rate": 83.33333333333334,
+    "avg_move": 2.909728033233639,
+    "avg_time": 2.8,
+    "false_positive_rate": 16.666666666666664,
+    "p_value": 0.109375,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "OBV_ROC_20d": {
+        "operator": ">=",
+        "value": -12.990706129673491
+      },
+      "Williams_R_14": {
+        "operator": ">=",
+        "value": -6.395433099565253
+      }
+    },
+    "occurrences": 6,
+    "success_count": "5",
+    "success_rate": 83.33333333333334,
+    "avg_move": 2.909728033233639,
+    "avg_time": 2.8,
+    "false_positive_rate": 16.666666666666664,
+    "p_value": 0.109375,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_5d": {
+        "operator": "<=",
+        "value": -64524162.11400444
+      },
+      "Days_Since_52w_Low": {
+        "operator": ">=",
+        "value": 120.75
+      }
+    },
+    "occurrences": 6,
+    "success_count": "5",
+    "success_rate": 83.33333333333334,
+    "avg_move": 1.6165340842938467,
+    "avg_time": 1.4,
+    "false_positive_rate": 16.666666666666664,
+    "p_value": 0.109375,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": "<=",
+        "value": -20522044.23535821
+      },
+      "Vol_Change_5d": {
+        "operator": ">=",
+        "value": 103.3014666301906
+      }
+    },
+    "occurrences": 5,
+    "success_count": "4",
+    "success_rate": 80.0,
+    "avg_move": 2.606287333527282,
+    "avg_time": 3.0,
+    "false_positive_rate": 20.0,
+    "p_value": 0.1875,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Chaikin_Oscillator": {
+        "operator": "<=",
+        "value": -22325123.43398053
+      },
+      "Days_Since_52w_Low": {
+        "operator": ">=",
+        "value": 120.75
+      }
+    },
+    "occurrences": 10,
+    "success_count": "8",
+    "success_rate": 80.0,
+    "avg_move": 1.6409301263044287,
+    "avg_time": 2.125,
+    "false_positive_rate": 20.0,
+    "p_value": 0.0546875,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "OBV_ROC_20d": {
+        "operator": ">=",
+        "value": -12.990706129673491
+      },
+      "CCI_20": {
+        "operator": ">=",
+        "value": 136.23502964593345
+      }
+    },
+    "occurrences": 18,
+    "success_count": "14",
+    "success_rate": 77.77777777777779,
+    "avg_move": 2.712822665231774,
+    "avg_time": 3.5714285714285716,
+    "false_positive_rate": 16.666666666666664,
+    "p_value": 0.01544189453125,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Stoch_14_K": {
+        "operator": "<=",
+        "value": 15.144286144608992
+      }
+    },
+    "occurrences": 13,
+    "success_count": "10",
+    "success_rate": 76.92307692307693,
+    "avg_move": 2.7286041247991673,
+    "avg_time": 2.3,
+    "false_positive_rate": 23.076923076923077,
+    "p_value": 0.046142578125,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Williams_R_14": {
+        "operator": "<=",
+        "value": -84.855713855391
+      }
+    },
+    "occurrences": 13,
+    "success_count": "10",
+    "success_rate": 76.92307692307693,
+    "avg_move": 2.7286041247991673,
+    "avg_time": 2.3,
+    "false_positive_rate": 23.076923076923077,
+    "p_value": 0.046142578125,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "OBV_ROC_20d": {
+        "operator": "<=",
+        "value": -12.990706129673491
+      },
+      "Days_Since_52w_Low": {
+        "operator": ">=",
+        "value": 120.75
+      }
+    },
+    "occurrences": 13,
+    "success_count": "10",
+    "success_rate": 76.92307692307693,
+    "avg_move": 2.341779217523361,
+    "avg_time": 2.5,
+    "false_positive_rate": 23.076923076923077,
+    "p_value": 0.046142578125,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": "<=",
+        "value": -68954473.58064501
+      },
+      "OBV_ROC_20d": {
+        "operator": "<=",
+        "value": -12.990706129673491
+      }
+    },
+    "occurrences": 8,
+    "success_count": "6",
+    "success_rate": 75.0,
+    "avg_move": 1.8060879558934577,
+    "avg_time": 1.6666666666666667,
+    "false_positive_rate": 25.0,
+    "p_value": 0.14453125,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Chaikin_Oscillator": {
+        "operator": "<=",
+        "value": -22325123.43398053
+      },
+      "CCI_20": {
+        "operator": "<=",
+        "value": -50.93793016823824
+      }
+    },
+    "occurrences": 8,
+    "success_count": "6",
+    "success_rate": 75.0,
+    "avg_move": 1.5180389652073911,
+    "avg_time": 2.0,
+    "false_positive_rate": 25.0,
+    "p_value": 0.14453125,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "OBV_ROC_20d": {
+        "operator": "<=",
+        "value": 25.122681420314763
+      },
+      "Vol_Change_5d": {
+        "operator": ">=",
+        "value": 103.3014666301906
+      }
+    },
+    "occurrences": 8,
+    "success_count": "6",
+    "success_rate": 75.0,
+    "avg_move": 3.00708766147725,
+    "avg_time": 3.3333333333333335,
+    "false_positive_rate": 25.0,
+    "p_value": 0.14453125,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_5d": {
+        "operator": "<=",
+        "value": -64524162.11400444
+      },
+      "CCI_20": {
+        "operator": "<=",
+        "value": -50.93793016823824
+      }
+    },
+    "occurrences": 7,
+    "success_count": "5",
+    "success_rate": 71.42857142857143,
+    "avg_move": 1.6165340842938467,
+    "avg_time": 1.4,
+    "false_positive_rate": 28.57142857142857,
+    "p_value": 0.2265625,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_5d": {
+        "operator": ">=",
+        "value": 10444920.270419404
+      },
+      "OBV_ROC_5d": {
+        "operator": ">=",
+        "value": 29.43913407110903
+      }
+    },
+    "occurrences": 24,
+    "success_count": "17",
+    "success_rate": 70.83333333333334,
+    "avg_move": 3.208438445363397,
+    "avg_time": 3.5294117647058822,
+    "false_positive_rate": 20.833333333333336,
+    "p_value": 0.03195732831954956,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Chaikin_Oscillator": {
+        "operator": "<=",
+        "value": -22325123.43398053
+      },
+      "OBV_ROC_20d": {
+        "operator": "<=",
+        "value": -12.990706129673491
+      }
+    },
+    "occurrences": 10,
+    "success_count": "7",
+    "success_rate": 70.0,
+    "avg_move": 1.5127069381116784,
+    "avg_time": 2.142857142857143,
+    "false_positive_rate": 30.0,
+    "p_value": 0.171875,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "OBV_ROC_5d": {
+        "operator": "<=",
+        "value": -267.42867153583825
+      }
+    },
+    "occurrences": 13,
+    "success_count": "9",
+    "success_rate": 69.23076923076923,
+    "avg_move": 2.5618577520839296,
+    "avg_time": 3.6666666666666665,
+    "false_positive_rate": 30.76923076923077,
+    "p_value": 0.1334228515625,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Chaikin_Oscillator": {
+        "operator": ">=",
+        "value": -7654627.641768783
+      },
+      "OBV_ROC_5d": {
+        "operator": ">=",
+        "value": 29.43913407110903
+      }
+    },
+    "occurrences": 29,
+    "success_count": "20",
+    "success_rate": 68.96551724137932,
+    "avg_move": 3.397464188385024,
+    "avg_time": 3.85,
+    "false_positive_rate": 24.137931034482758,
+    "p_value": 0.03071417286992073,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": ">=",
+        "value": 72601500.39783233
+      },
+      "OBV_ROC_20d": {
+        "operator": ">=",
+        "value": 140.91470979305817
+      }
+    },
+    "occurrences": 9,
+    "success_count": "6",
+    "success_rate": 66.66666666666666,
+    "avg_move": 2.622397446537883,
+    "avg_time": 3.5,
+    "false_positive_rate": 33.33333333333333,
+    "p_value": 0.25390625,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": "<=",
+        "value": -68954473.58064501
+      },
+      "AD_ROC_5d": {
+        "operator": "<=",
+        "value": -33545184.470789224
+      }
+    },
+    "occurrences": 6,
+    "success_count": "4",
+    "success_rate": 66.66666666666666,
+    "avg_move": 1.7033840883321942,
+    "avg_time": 1.75,
+    "false_positive_rate": 33.33333333333333,
+    "p_value": 0.34375,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": "<=",
+        "value": -68954473.58064501
+      },
+      "Chaikin_Oscillator": {
+        "operator": "<=",
+        "value": -7654627.641768783
+      }
+    },
+    "occurrences": 9,
+    "success_count": "6",
+    "success_rate": 66.66666666666666,
+    "avg_move": 1.8060879558934577,
+    "avg_time": 1.6666666666666667,
+    "false_positive_rate": 33.33333333333333,
+    "p_value": 0.25390625,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": "<=",
+        "value": -68954473.58064501
+      },
+      "Days_Since_52w_Low": {
+        "operator": ">=",
+        "value": 120.75
+      }
+    },
+    "occurrences": 9,
+    "success_count": "6",
+    "success_rate": 66.66666666666666,
+    "avg_move": 1.8060879558934577,
+    "avg_time": 1.6666666666666667,
+    "false_positive_rate": 33.33333333333333,
+    "p_value": 0.25390625,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Chaikin_Oscillator": {
+        "operator": "<=",
+        "value": -22325123.43398053
+      },
+      "Stoch_14_K": {
+        "operator": "<=",
+        "value": 31.83560343993384
+      }
+    },
+    "occurrences": 9,
+    "success_count": "6",
+    "success_rate": 66.66666666666666,
+    "avg_move": 1.5180389652073911,
+    "avg_time": 2.0,
+    "false_positive_rate": 33.33333333333333,
+    "p_value": 0.25390625,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Chaikin_Oscillator": {
+        "operator": "<=",
+        "value": -22325123.43398053
+      },
+      "Williams_R_14": {
+        "operator": "<=",
+        "value": -68.16439656006617
+      }
+    },
+    "occurrences": 9,
+    "success_count": "6",
+    "success_rate": 66.66666666666666,
+    "avg_move": 1.5180389652073911,
+    "avg_time": 2.0,
+    "false_positive_rate": 33.33333333333333,
+    "p_value": 0.25390625,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "OBV_ROC_20d": {
+        "operator": "<=",
+        "value": -500.0
+      },
+      "OBV_ROC_5d": {
+        "operator": "<=",
+        "value": -33.05581046406268
+      }
+    },
+    "occurrences": 18,
+    "success_count": "12",
+    "success_rate": 66.66666666666666,
+    "avg_move": 2.8852173641602143,
+    "avg_time": 4.416666666666667,
+    "false_positive_rate": 33.33333333333333,
+    "p_value": 0.1189422607421875,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "OBV_ROC_20d": {
+        "operator": "<=",
+        "value": -500.0
+      },
+      "CCI_20": {
+        "operator": "<=",
+        "value": 80.10005970387499
+      }
+    },
+    "occurrences": 3,
+    "success_count": "2",
+    "success_rate": 66.66666666666666,
+    "avg_move": 2.324942427224033,
+    "avg_time": 1.5,
+    "false_positive_rate": 33.33333333333333,
+    "p_value": 0.5,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "OBV_ROC_5d": {
+        "operator": ">=",
+        "value": 29.43913407110903
+      }
+    },
+    "occurrences": 31,
+    "success_count": "20",
+    "success_rate": 64.51612903225806,
+    "avg_move": 3.397464188385024,
+    "avg_time": 3.85,
+    "false_positive_rate": 29.03225806451613,
+    "p_value": 0.07480639219284058,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "OBV_ROC_20d": {
+        "operator": ">=",
+        "value": -390.44908579182163
+      },
+      "Days_Since_52w_Low": {
+        "operator": "<=",
+        "value": 76.5
+      }
+    },
+    "occurrences": 31,
+    "success_count": "20",
+    "success_rate": 64.51612903225806,
+    "avg_move": 3.836746035059349,
+    "avg_time": 4.05,
+    "false_positive_rate": 35.483870967741936,
+    "p_value": 0.07480639219284058,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": "<=",
+        "value": -20522044.23535821
+      },
+      "Stoch_14_K": {
+        "operator": "<=",
+        "value": 73.50920124419062
+      }
+    },
+    "occurrences": 25,
+    "success_count": "16",
+    "success_rate": 64.0,
+    "avg_move": 1.9744925938600058,
+    "avg_time": 2.875,
+    "false_positive_rate": 36.0,
+    "p_value": 0.11476147174835205,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": "<=",
+        "value": -20522044.23535821
+      },
+      "Williams_R_14": {
+        "operator": "<=",
+        "value": -26.49079875580938
+      }
+    },
+    "occurrences": 25,
+    "success_count": "16",
+    "success_rate": 64.0,
+    "avg_move": 1.9744925938600058,
+    "avg_time": 2.875,
+    "false_positive_rate": 36.0,
+    "p_value": 0.11476147174835205,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_5d": {
+        "operator": ">=",
+        "value": 10444920.270419404
+      },
+      "Stoch_14_K": {
+        "operator": ">=",
+        "value": 87.87757744595115
+      }
+    },
+    "occurrences": 27,
+    "success_count": "17",
+    "success_rate": 62.96296296296296,
+    "avg_move": 2.579086569107355,
+    "avg_time": 3.1176470588235294,
+    "false_positive_rate": 33.33333333333333,
+    "p_value": 0.12389428168535233,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_5d": {
+        "operator": ">=",
+        "value": 10444920.270419404
+      },
+      "Williams_R_14": {
+        "operator": ">=",
+        "value": -12.122422554048859
+      }
+    },
+    "occurrences": 27,
+    "success_count": "17",
+    "success_rate": 62.96296296296296,
+    "avg_move": 2.579086569107355,
+    "avg_time": 3.1176470588235294,
+    "false_positive_rate": 33.33333333333333,
+    "p_value": 0.12389428168535233,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "OBV_ROC_20d": {
+        "operator": "<=",
+        "value": -500.0
+      }
+    },
+    "occurrences": 27,
+    "success_count": "17",
+    "success_rate": 62.96296296296296,
+    "avg_move": 2.7803701165247303,
+    "avg_time": 3.823529411764706,
+    "false_positive_rate": 37.03703703703704,
+    "p_value": 0.12389428168535233,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": "<=",
+        "value": -20522044.23535821
+      },
+      "CCI_20": {
+        "operator": "<=",
+        "value": 136.23502964593345
+      }
+    },
+    "occurrences": 27,
+    "success_count": "17",
+    "success_rate": 62.96296296296296,
+    "avg_move": 1.997274223029542,
+    "avg_time": 2.764705882352941,
+    "false_positive_rate": 37.03703703703704,
+    "p_value": 0.12389428168535233,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": "<=",
+        "value": -68954473.58064501
+      },
+      "OBV_ROC_5d": {
+        "operator": "<=",
+        "value": 29.43913407110903
+      }
+    },
+    "occurrences": 8,
+    "success_count": "5",
+    "success_rate": 62.5,
+    "avg_move": 1.6957063216919024,
+    "avg_time": 1.4,
+    "false_positive_rate": 37.5,
+    "p_value": 0.36328125,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "OBV_ROC_20d": {
+        "operator": "<=",
+        "value": -500.0
+      },
+      "Stoch_14_K": {
+        "operator": "<=",
+        "value": 87.87757744595115
+      }
+    },
+    "occurrences": 21,
+    "success_count": "13",
+    "success_rate": 61.904761904761905,
+    "avg_move": 2.490159782260184,
+    "avg_time": 3.3846153846153846,
+    "false_positive_rate": 38.095238095238095,
+    "p_value": 0.19165515899658203,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "OBV_ROC_20d": {
+        "operator": "<=",
+        "value": -500.0
+      },
+      "Williams_R_14": {
+        "operator": "<=",
+        "value": -12.122422554048859
+      }
+    },
+    "occurrences": 21,
+    "success_count": "13",
+    "success_rate": 61.904761904761905,
+    "avg_move": 2.490159782260184,
+    "avg_time": 3.3846153846153846,
+    "false_positive_rate": 38.095238095238095,
+    "p_value": 0.19165515899658203,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "OBV_ROC_20d": {
+        "operator": ">=",
+        "value": 140.91470979305817
+      }
+    },
+    "occurrences": 13,
+    "success_count": "8",
+    "success_rate": 61.53846153846154,
+    "avg_move": 2.842475674127353,
+    "avg_time": 3.75,
+    "false_positive_rate": 38.46153846153847,
+    "p_value": 0.29052734375,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": ">=",
+        "value": -68954473.58064501
+      },
+      "OBV_ROC_5d": {
+        "operator": ">=",
+        "value": 29.43913407110903
+      }
+    },
+    "occurrences": 26,
+    "success_count": "16",
+    "success_rate": 61.53846153846154,
+    "avg_move": 3.0609977605835716,
+    "avg_time": 3.25,
+    "false_positive_rate": 30.76923076923077,
+    "p_value": 0.16346979141235352,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "OBV_ROC_20d": {
+        "operator": ">=",
+        "value": 25.122681420314763
+      },
+      "Vol_Change_5d": {
+        "operator": "<=",
+        "value": 103.3014666301906
+      }
+    },
+    "occurrences": 26,
+    "success_count": "16",
+    "success_rate": 61.53846153846154,
+    "avg_move": 2.659951453346168,
+    "avg_time": 3.6875,
+    "false_positive_rate": 34.61538461538461,
+    "p_value": 0.16346979141235352,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Chaikin_Oscillator": {
+        "operator": "<=",
+        "value": -22325123.43398053
+      }
+    },
+    "occurrences": 13,
+    "success_count": "8",
+    "success_rate": 61.53846153846154,
+    "avg_move": 1.6409301263044287,
+    "avg_time": 2.125,
+    "false_positive_rate": 38.46153846153847,
+    "p_value": 0.29052734375,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "CCI_20": {
+        "operator": "<=",
+        "value": -119.8412246768571
+      }
+    },
+    "occurrences": 13,
+    "success_count": "8",
+    "success_rate": 61.53846153846154,
+    "avg_move": 1.9347256952698808,
+    "avg_time": 2.375,
+    "false_positive_rate": 38.46153846153847,
+    "p_value": 0.29052734375,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Vol_Change_5d": {
+        "operator": ">=",
+        "value": 103.3014666301906
+      }
+    },
+    "occurrences": 13,
+    "success_count": "8",
+    "success_rate": 61.53846153846154,
+    "avg_move": 2.6335218914375926,
+    "avg_time": 3.375,
+    "false_positive_rate": 38.46153846153847,
+    "p_value": 0.29052734375,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_5d": {
+        "operator": "<=",
+        "value": -33545184.470789224
+      },
+      "Stoch_14_K": {
+        "operator": "<=",
+        "value": 73.50920124419062
+      }
+    },
+    "occurrences": 26,
+    "success_count": "16",
+    "success_rate": 61.53846153846154,
+    "avg_move": 2.017941946916662,
+    "avg_time": 2.4375,
+    "false_positive_rate": 38.46153846153847,
+    "p_value": 0.16346979141235352,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_5d": {
+        "operator": "<=",
+        "value": -33545184.470789224
+      },
+      "Williams_R_14": {
+        "operator": "<=",
+        "value": -26.49079875580938
+      }
+    },
+    "occurrences": 26,
+    "success_count": "16",
+    "success_rate": 61.53846153846154,
+    "avg_move": 2.017941946916662,
+    "avg_time": 2.4375,
+    "false_positive_rate": 38.46153846153847,
+    "p_value": 0.16346979141235352,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Chaikin_Oscillator": {
+        "operator": "<=",
+        "value": -22325123.43398053
+      },
+      "OBV_ROC_5d": {
+        "operator": "<=",
+        "value": 66.82758989080159
+      }
+    },
+    "occurrences": 13,
+    "success_count": "8",
+    "success_rate": 61.53846153846154,
+    "avg_move": 1.6409301263044287,
+    "avg_time": 2.125,
+    "false_positive_rate": 38.46153846153847,
+    "p_value": 0.29052734375,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_5d": {
+        "operator": "<=",
+        "value": -33545184.470789224
+      },
+      "OBV_ROC_20d": {
+        "operator": "<=",
+        "value": 25.122681420314763
+      }
+    },
+    "occurrences": 27,
+    "success_count": "16",
+    "success_rate": 59.25925925925925,
+    "avg_move": 1.9951123072325376,
+    "avg_time": 2.625,
+    "false_positive_rate": 40.74074074074074,
+    "p_value": 0.22103416919708252,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_5d": {
+        "operator": "<=",
+        "value": -33545184.470789224
+      },
+      "OBV_ROC_5d": {
+        "operator": "<=",
+        "value": 66.82758989080159
+      }
+    },
+    "occurrences": 29,
+    "success_count": "17",
+    "success_rate": 58.620689655172406,
+    "avg_move": 1.97852795815265,
+    "avg_time": 2.5294117647058822,
+    "false_positive_rate": 41.37931034482759,
+    "p_value": 0.22912915982306004,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "CCI_20": {
+        "operator": ">=",
+        "value": 80.10005970387499
+      }
+    },
+    "occurrences": 62,
+    "success_count": "36",
+    "success_rate": 58.06451612903226,
+    "avg_move": 3.1408589381446728,
+    "avg_time": 3.6944444444444446,
+    "false_positive_rate": 40.32258064516129,
+    "p_value": 0.12642719709405537,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Stoch_14_K": {
+        "operator": ">=",
+        "value": 87.87757744595115
+      }
+    },
+    "occurrences": 31,
+    "success_count": "18",
+    "success_rate": 58.06451612903226,
+    "avg_move": 2.5408316769177883,
+    "avg_time": 3.1666666666666665,
+    "false_positive_rate": 38.70967741935484,
+    "p_value": 0.23656482994556427,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Williams_R_14": {
+        "operator": ">=",
+        "value": -12.122422554048859
+      }
+    },
+    "occurrences": 31,
+    "success_count": "18",
+    "success_rate": 58.06451612903226,
+    "avg_move": 2.5408316769177883,
+    "avg_time": 3.1666666666666665,
+    "false_positive_rate": 38.70967741935484,
+    "p_value": 0.23656482994556427,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Chaikin_Oscillator": {
+        "operator": ">=",
+        "value": -22325123.43398053
+      },
+      "Stoch_14_K": {
+        "operator": ">=",
+        "value": 87.87757744595115
+      }
+    },
+    "occurrences": 31,
+    "success_count": "18",
+    "success_rate": 58.06451612903226,
+    "avg_move": 2.5408316769177883,
+    "avg_time": 3.1666666666666665,
+    "false_positive_rate": 38.70967741935484,
+    "p_value": 0.23656482994556427,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Chaikin_Oscillator": {
+        "operator": ">=",
+        "value": -22325123.43398053
+      },
+      "Williams_R_14": {
+        "operator": ">=",
+        "value": -12.122422554048859
+      }
+    },
+    "occurrences": 31,
+    "success_count": "18",
+    "success_rate": 58.06451612903226,
+    "avg_move": 2.5408316769177883,
+    "avg_time": 3.1666666666666665,
+    "false_positive_rate": 38.70967741935484,
+    "p_value": 0.23656482994556427,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_5d": {
+        "operator": "<=",
+        "value": -33545184.470789224
+      }
+    },
+    "occurrences": 31,
+    "success_count": "18",
+    "success_rate": 58.06451612903226,
+    "avg_move": 1.9290173382095306,
+    "avg_time": 2.4444444444444446,
+    "false_positive_rate": 41.935483870967744,
+    "p_value": 0.23656482994556427,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_5d": {
+        "operator": "<=",
+        "value": -33545184.470789224
+      },
+      "Chaikin_Oscillator": {
+        "operator": "<=",
+        "value": 7168349.124480078
+      }
+    },
+    "occurrences": 31,
+    "success_count": "18",
+    "success_rate": 58.06451612903226,
+    "avg_move": 1.9290173382095306,
+    "avg_time": 2.4444444444444446,
+    "false_positive_rate": 41.935483870967744,
+    "p_value": 0.23656482994556427,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Chaikin_Oscillator": {
+        "operator": ">=",
+        "value": -7654627.641768783
+      },
+      "CCI_20": {
+        "operator": ">=",
+        "value": 80.10005970387499
+      }
+    },
+    "occurrences": 57,
+    "success_count": "33",
+    "success_rate": 57.89473684210527,
+    "avg_move": 3.265471196952872,
+    "avg_time": 3.6363636363636362,
+    "false_positive_rate": 40.35087719298245,
+    "p_value": 0.14462187355451026,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_5d": {
+        "operator": ">=",
+        "value": -33545184.470789224
+      },
+      "CCI_20": {
+        "operator": ">=",
+        "value": 80.10005970387499
+      }
+    },
+    "occurrences": 56,
+    "success_count": "32",
+    "success_rate": 57.14285714285714,
+    "avg_move": 3.316992157819662,
+    "avg_time": 3.65625,
+    "false_positive_rate": 41.07142857142857,
+    "p_value": 0.17484097649184238,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": ">=",
+        "value": -68954473.58064501
+      },
+      "Stoch_14_K": {
+        "operator": ">=",
+        "value": 87.87757744595115
+      }
+    },
+    "occurrences": 30,
+    "success_count": "17",
+    "success_rate": 56.666666666666664,
+    "avg_move": 2.484194022924192,
+    "avg_time": 3.0588235294117645,
+    "false_positive_rate": 40.0,
+    "p_value": 0.2923323558643461,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": ">=",
+        "value": -68954473.58064501
+      },
+      "Williams_R_14": {
+        "operator": ">=",
+        "value": -12.122422554048859
+      }
+    },
+    "occurrences": 30,
+    "success_count": "17",
+    "success_rate": 56.666666666666664,
+    "avg_move": 2.484194022924192,
+    "avg_time": 3.0588235294117645,
+    "false_positive_rate": 40.0,
+    "p_value": 0.2923323558643461,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": ">=",
+        "value": -20522044.23535821
+      },
+      "CCI_20": {
+        "operator": ">=",
+        "value": 80.10005970387499
+      }
+    },
+    "occurrences": 57,
+    "success_count": "32",
+    "success_rate": 56.14035087719298,
+    "avg_move": 3.0967140445571686,
+    "avg_time": 3.34375,
+    "false_positive_rate": 42.10526315789473,
+    "p_value": 0.21352142825162762,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_5d": {
+        "operator": ">=",
+        "value": 10444920.270419404
+      },
+      "Chaikin_Oscillator": {
+        "operator": ">=",
+        "value": 26462668.972848773
+      }
+    },
+    "occurrences": 27,
+    "success_count": "15",
+    "success_rate": 55.55555555555556,
+    "avg_move": 2.3059651198050184,
+    "avg_time": 2.4,
+    "false_positive_rate": 37.03703703703704,
+    "p_value": 0.3505540192127228,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_5d": {
+        "operator": ">=",
+        "value": 63385133.368150584
+      }
+    },
+    "occurrences": 31,
+    "success_count": "17",
+    "success_rate": 54.83870967741935,
+    "avg_move": 2.734576766318526,
+    "avg_time": 2.8823529411764706,
+    "false_positive_rate": 38.70967741935484,
+    "p_value": 0.360050065908581,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": "<=",
+        "value": -20522044.23535821
+      }
+    },
+    "occurrences": 31,
+    "success_count": "17",
+    "success_rate": 54.83870967741935,
+    "avg_move": 1.997274223029542,
+    "avg_time": 2.764705882352941,
+    "false_positive_rate": 45.16129032258064,
+    "p_value": 0.360050065908581,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": ">=",
+        "value": -68954473.58064501
+      },
+      "Vol_Change_5d": {
+        "operator": "<=",
+        "value": -22.50773061831962
+      }
+    },
+    "occurrences": 28,
+    "success_count": "15",
+    "success_rate": 53.57142857142857,
+    "avg_move": 2.444886434303527,
+    "avg_time": 4.466666666666667,
+    "false_positive_rate": 42.857142857142854,
+    "p_value": 0.4252770096063614,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Chaikin_Oscillator": {
+        "operator": ">=",
+        "value": -22325123.43398053
+      },
+      "Vol_Change_5d": {
+        "operator": "<=",
+        "value": -22.50773061831962
+      }
+    },
+    "occurrences": 28,
+    "success_count": "15",
+    "success_rate": 53.57142857142857,
+    "avg_move": 2.500607820015973,
+    "avg_time": 4.4,
+    "false_positive_rate": 42.857142857142854,
+    "p_value": 0.4252770096063614,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": ">=",
+        "value": -68954473.58064501
+      },
+      "AD_ROC_5d": {
+        "operator": ">=",
+        "value": 63385133.368150584
+      }
+    },
+    "occurrences": 30,
+    "success_count": "16",
+    "success_rate": 53.333333333333336,
+    "avg_move": 2.686508327037876,
+    "avg_time": 2.75,
+    "false_positive_rate": 40.0,
+    "p_value": 0.42776777595281607,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_5d": {
+        "operator": ">=",
+        "value": -33545184.470789224
+      },
+      "Vol_Change_5d": {
+        "operator": "<=",
+        "value": -5.591799369510719
+      }
+    },
+    "occurrences": 49,
+    "success_count": "26",
+    "success_rate": 53.06122448979592,
+    "avg_move": 3.1101976386961026,
+    "avg_time": 3.8461538461538463,
+    "false_positive_rate": 42.857142857142854,
+    "p_value": 0.38772482734078295,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Chaikin_Oscillator": {
+        "operator": ">=",
+        "value": -7654627.641768783
+      },
+      "Days_Since_52w_Low": {
+        "operator": "<=",
+        "value": 76.5
+      }
+    },
+    "occurrences": 57,
+    "success_count": "30",
+    "success_rate": 52.63157894736842,
+    "avg_move": 3.721557936979441,
+    "avg_time": 3.8,
+    "false_positive_rate": 47.368421052631575,
+    "p_value": 0.3956832138895903,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_5d": {
+        "operator": ">=",
+        "value": 10444920.270419404
+      },
+      "Days_Since_52w_Low": {
+        "operator": "<=",
+        "value": 120.75
+      }
+    },
+    "occurrences": 48,
+    "success_count": "25",
+    "success_rate": 52.083333333333336,
+    "avg_move": 3.6028448440144727,
+    "avg_time": 3.88,
+    "false_positive_rate": 47.91666666666667,
+    "p_value": 0.4427167486432568,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Chaikin_Oscillator": {
+        "operator": ">=",
+        "value": 26462668.972848773
+      }
+    },
+    "occurrences": 31,
+    "success_count": "16",
+    "success_rate": 51.61290322580645,
+    "avg_move": 2.2799984566731526,
+    "avg_time": 2.5,
+    "false_positive_rate": 41.935483870967744,
+    "p_value": 0.5,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Days_Since_52w_Low": {
+        "operator": "<=",
+        "value": 76.5
+      }
+    },
+    "occurrences": 62,
+    "success_count": "32",
+    "success_rate": 51.61290322580645,
+    "avg_move": 3.6204484987791483,
+    "avg_time": 3.9375,
+    "false_positive_rate": 48.38709677419355,
+    "p_value": 0.44953815682642945,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": ">=",
+        "value": -68954473.58064501
+      },
+      "Chaikin_Oscillator": {
+        "operator": ">=",
+        "value": 26462668.972848773
+      }
+    },
+    "occurrences": 31,
+    "success_count": "16",
+    "success_rate": 51.61290322580645,
+    "avg_move": 2.2799984566731526,
+    "avg_time": 2.5,
+    "false_positive_rate": 41.935483870967744,
+    "p_value": 0.5,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": ">=",
+        "value": -68954473.58064501
+      },
+      "Days_Since_52w_Low": {
+        "operator": "<=",
+        "value": 76.5
+      }
+    },
+    "occurrences": 62,
+    "success_count": "32",
+    "success_rate": 51.61290322580645,
+    "avg_move": 3.6204484987791483,
+    "avg_time": 3.9375,
+    "false_positive_rate": 48.38709677419355,
+    "p_value": 0.44953815682642945,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "Days_Since_52w_Low": {
+        "operator": ">=",
+        "value": 76.5
+      }
+    },
+    "occurrences": 62,
+    "success_count": "32",
+    "success_rate": 51.61290322580645,
+    "avg_move": 2.753605590814996,
+    "avg_time": 3.6875,
+    "false_positive_rate": 45.16129032258064,
+    "p_value": 0.44953815682642945,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": ">=",
+        "value": 72601500.39783233
+      }
+    },
+    "occurrences": 62,
+    "success_count": "31",
+    "success_rate": 50.0,
+    "avg_move": 3.2802525794930153,
+    "avg_time": 3.7419354838709675,
+    "false_positive_rate": 46.774193548387096,
+    "p_value": 0.5504618431735706,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All"
+  }
+]

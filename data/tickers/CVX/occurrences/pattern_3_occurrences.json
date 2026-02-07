@@ -1,0 +1,38 @@
+[
+  {
+    "Date": "2024-03-05",
+    "Open": 137.8497105589962,
+    "High": 139.50764278610225,
+    "Low": 137.3588137141139,
+    "Close": 138.5536346435547,
+    "Volume": 6985500,
+    "outcome": "STRONG_UP",
+    "actual_move": 1.537534590178179,
+    "time_to_target": 5,
+    "target_reached": true
+  },
+  {
+    "Date": "2024-04-16",
+    "Open": 145.69482736517728,
+    "High": 146.16719583427516,
+    "Low": 143.9535242403647,
+    "Close": 144.7500762939453,
+    "Volume": 5541900,
+    "outcome": "STRONG_UP",
+    "actual_move": 4.20398128214029,
+    "time_to_target": 5,
+    "target_reached": true
+  },
+  {
+    "Date": "2024-08-07",
+    "Open": 135.26550283802504,
+    "High": 136.3414089156193,
+    "Low": 133.11367640708784,
+    "Close": 133.2353057861328,
+    "Volume": 8867900,
+    "outcome": "STRONG_UP",
+    "actual_move": 1.5869516494422797,
+    "time_to_target": 5,
+    "target_reached": true
+  }
+]

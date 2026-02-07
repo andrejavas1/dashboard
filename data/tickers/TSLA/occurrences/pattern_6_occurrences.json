@@ -1,0 +1,86 @@
+[
+  {
+    "Date": "2024-08-06",
+    "Open": 200.75,
+    "High": 202.8999938964844,
+    "Low": 192.6699981689453,
+    "Close": 200.63999938964844,
+    "Volume": 73783900,
+    "outcome": "UP",
+    "actual_move": 3.5835339230853296,
+    "time_to_target": 5,
+    "target_reached": false
+  },
+  {
+    "Date": "2025-01-17",
+    "Open": 421.5,
+    "High": 439.739990234375,
+    "Low": 419.75,
+    "Close": 426.5,
+    "Volume": 94991400,
+    "outcome": "STRONG_DOWN",
+    "actual_move": -6.8815958038723615,
+    "time_to_target": 5,
+    "target_reached": true
+  },
+  {
+    "Date": "2025-06-13",
+    "Open": 313.9700012207031,
+    "High": 332.989990234375,
+    "Low": 313.29998779296875,
+    "Close": 325.3099975585937,
+    "Volume": 128964300,
+    "outcome": "UP",
+    "actual_move": 7.183915432226529,
+    "time_to_target": 5,
+    "target_reached": false
+  },
+  {
+    "Date": "2025-06-23",
+    "Open": 327.5400085449219,
+    "High": 357.5400085449219,
+    "Low": 327.4800109863281,
+    "Close": 348.67999267578125,
+    "Volume": 190716800,
+    "outcome": "STRONG_DOWN",
+    "actual_move": -8.896406351171313,
+    "time_to_target": 5,
+    "target_reached": true
+  },
+  {
+    "Date": "2025-07-02",
+    "Open": 312.6300048828125,
+    "High": 316.8299865722656,
+    "Low": 303.82000732421875,
+    "Close": 315.6499938964844,
+    "Volume": 119483700,
+    "outcome": "DOWN",
+    "actual_move": -1.83114173643621,
+    "time_to_target": 5,
+    "target_reached": false
+  },
+  {
+    "Date": "2026-01-13",
+    "Open": 450.2000122070313,
+    "High": 451.80999755859375,
+    "Low": 443.9500122070313,
+    "Close": 447.2000122070313,
+    "Volume": 53719200,
+    "outcome": "STRONG_DOWN",
+    "actual_move": -3.524152355865523,
+    "time_to_target": 5,
+    "target_reached": true
+  },
+  {
+    "Date": "2026-01-22",
+    "Open": 435.1600036621094,
+    "High": 449.5,
+    "Low": 432.6300048828125,
+    "Close": 449.3599853515625,
+    "Volume": 71546700,
+    "outcome": "STRONG_DOWN",
+    "actual_move": -7.299267594400348,
+    "time_to_target": 5,
+    "target_reached": true
+  }
+]

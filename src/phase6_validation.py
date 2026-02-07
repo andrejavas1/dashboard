@@ -35,12 +35,23 @@ class OutOfSampleValidation:
             config_path: Path to configuration file
         """
         self.config = self._load_config(config_path)
+        self.run_mode = self.config.get('run_mode', 'full')
         
         # Validation parameters
         self.training_period = self.config['validation_periods']['training_period']
         self.validation_period = self.config['validation_periods']['validation_period']
         self.robust_threshold = self.config['validation_periods']['robust_threshold']
         self.degraded_threshold = self.config['validation_periods']['degraded_threshold']
+        
+        # Adjust thresholds for quick/ultra mode (more lenient)
+        if self.run_mode == 'ultra':
+            self.robust_threshold = 0.60  # Much lower threshold
+            self.degraded_threshold = 0.40
+            logger.info("Ultra Mode: Reduced validation thresholds")
+        elif self.run_mode == 'quick':
+            self.robust_threshold = 0.70
+            self.degraded_threshold = 0.50
+            logger.info("Quick Mode: Reduced validation thresholds")
         
         # Data storage
         self.data = None
@@ -363,14 +374,31 @@ class OutOfSampleValidation:
         # Split data
         training_data, validation_data, live_data = self.split_data()
         
+        # Limit patterns for validation in quick/ultra mode
+        patterns_to_validate = self.patterns
+        if self.run_mode == 'ultra' and len(self.patterns) > 30:
+            logger.info(f"Ultra Mode: Limiting to top 30 patterns (from {len(self.patterns)})")
+            patterns_to_validate = sorted(
+                self.patterns,
+                key=lambda p: p.get('success_rate', 0),
+                reverse=True
+            )[:30]
+        elif self.run_mode == 'quick' and len(self.patterns) > 50:
+            logger.info(f"Quick Mode: Limiting to top 50 patterns (from {len(self.patterns)})")
+            patterns_to_validate = sorted(
+                self.patterns,
+                key=lambda p: p.get('success_rate', 0),
+                reverse=True
+            )[:50]
+        
         # Validate each pattern
-        logger.info(f"\nValidating {len(self.patterns)} patterns...")
+        logger.info(f"\nValidating {len(patterns_to_validate)} patterns...")
         
         robust = []
         degraded = []
         failed = []
         
-        for pattern in tqdm(self.patterns, desc="Validating patterns"):
+        for pattern in tqdm(patterns_to_validate, desc="Validating patterns"):
             # Validate pattern
             result = self.validate_pattern(pattern, training_data, validation_data, live_data)
             

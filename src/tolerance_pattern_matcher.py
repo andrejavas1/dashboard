@@ -50,13 +50,20 @@ class TolerancePatternMatcher:
         
         logger.info(f"Tolerance Pattern Matcher initialized with {tolerance_pct}% tolerance")
     
-    def load_patterns(self, portfolio_path: str = "data/final_portfolio.json"):
+    def load_patterns(self, portfolio_path: str = None, ticker: str = None):
         """
         Load pattern portfolio from file.
         
         Args:
-            portfolio_path: Path to portfolio JSON file
+            portfolio_path: Path to portfolio JSON file. If None, uses ticker-specific path
+            ticker: Ticker symbol to construct path from
         """
+        # If portfolio_path not provided, construct from ticker
+        if portfolio_path is None:
+            if ticker:
+                portfolio_path = f"data/tickers/{ticker}/final_portfolio.json"
+            else:
+                portfolio_path = "data/final_portfolio.json"
         try:
             with open(portfolio_path, 'r') as f:
                 portfolio = json.load(f)

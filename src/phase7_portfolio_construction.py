@@ -35,6 +35,7 @@ class PortfolioConstruction:
             config_path: Path to configuration file
         """
         self.config = self._load_config(config_path)
+        self.run_mode = self.config.get('run_mode', 'full')
         
         # Portfolio parameters
         self.max_patterns = self.config['portfolio']['max_patterns']
@@ -44,6 +45,24 @@ class PortfolioConstruction:
         self.short_term_min = self.config['portfolio']['short_term_patterns_min']
         self.medium_term_min = self.config['portfolio']['medium_term_patterns_min']
         self.regime_min = self.config['portfolio']['regime_patterns_min']
+        
+        # Adjust parameters for quick/ultra mode
+        if self.run_mode == 'ultra':
+            # Lower thresholds for ultra mode
+            self.dashboard_min_training_sr = 45
+            self.dashboard_min_validation_sr = 40
+            self.dashboard_min_occurrences = 3
+            logger.info("Ultra Mode: Reduced dashboard pattern thresholds")
+        elif self.run_mode == 'quick':
+            self.dashboard_min_training_sr = 60
+            self.dashboard_min_validation_sr = 55
+            self.dashboard_min_occurrences = 5
+            logger.info("Quick Mode: Reduced dashboard pattern thresholds")
+        else:
+            # Full mode - original thresholds
+            self.dashboard_min_training_sr = 80
+            self.dashboard_min_validation_sr = 80
+            self.dashboard_min_occurrences = 30
         
         # Scoring weights
         self.success_weight = self.config['scoring']['success_metrics']
@@ -522,13 +541,18 @@ class PortfolioConstruction:
         
         return summary
     
-    def save_portfolio(self, output_dir: str = "data"):
+    def save_portfolio(self, output_dir: str = "data", ticker: str = None):
         """
         Save portfolio to files.
         
         Args:
             output_dir: Directory to save output files
+            ticker: Ticker symbol for path construction
         """
+        # If ticker provided, use ticker-specific directory
+        if ticker:
+            output_dir = os.path.join("data", "tickers", ticker)
+        
         os.makedirs(output_dir, exist_ok=True)
         
         # Save ranked patterns
@@ -559,7 +583,10 @@ class PortfolioConstruction:
     def save_dashboard_patterns(self, output_dir: str = "data"):
         """
         Save filtered patterns for dashboard display.
-        Filters: training_success_rate >= 80%, validation_success_rate >= 80%, occurrences >= 30
+        Filters depend on run mode:
+        - full: >= 80% training, >= 80% validation, >= 30 occurrences
+        - quick: >= 60% training, >= 55% validation, >= 5 occurrences
+        - ultra: >= 45% training, >= 40% validation, >= 3 occurrences
         
         Args:
             output_dir: Directory to save output files
@@ -574,8 +601,10 @@ class PortfolioConstruction:
             validation_sr = pattern_wrapper.get('validation_success_rate', 0)
             occ = pattern.get('occurrences', 0)
             
-            # Apply filter: >= 80% training, >= 80% validation, >= 30 occurrences
-            if training_sr >= 80 and validation_sr >= 80 and occ >= 30:
+            # Apply filter based on run mode
+            if (training_sr >= self.dashboard_min_training_sr and 
+                validation_sr >= self.dashboard_min_validation_sr and 
+                occ >= self.dashboard_min_occurrences):
                 # Add rates to pattern for dashboard display
                 pattern_with_rates = pattern.copy()
                 pattern_with_rates['training_success_rate'] = training_sr
@@ -587,7 +616,9 @@ class PortfolioConstruction:
         with open(patterns_path, 'w') as f:
             json.dump(filtered_patterns, f, indent=2, default=str)
         logger.info(f"Dashboard patterns saved to {patterns_path}: {len(filtered_patterns)} patterns")
-        logger.info(f"  (Filtered: training>=80%, validation>=80%, occurrences>=30)")
+        logger.info(f"  (Filtered: training>={self.dashboard_min_training_sr}%, "
+                   f"validation>={self.dashboard_min_validation_sr}%, "
+                   f"occurrences>={self.dashboard_min_occurrences})")
     
     def run_phase7(self, patterns_path: str = None) -> List[Dict]:
         """
@@ -623,10 +654,13 @@ class PortfolioConstruction:
         
         # Generate summary
         summary = self.generate_portfolio_summary()
-        logger.info(f"\nPortfolio Summary:")
-        logger.info(f"  Total Patterns: {summary['total_patterns']}")
-        logger.info(f"  Avg Validation Success Rate: {summary['average_validation_success_rate']:.2f}%")
-        logger.info(f"  Expected Signals/Month: {summary['expected_signals_per_month']:.2f}")
+        if summary:
+            logger.info(f"\nPortfolio Summary:")
+            logger.info(f"  Total Patterns: {summary['total_patterns']}")
+            logger.info(f"  Avg Validation Success Rate: {summary['average_validation_success_rate']:.2f}%")
+            logger.info(f"  Expected Signals/Month: {summary['expected_signals_per_month']:.2f}")
+        else:
+            logger.warning("\nPortfolio Summary: No patterns in portfolio")
         
         # Save results
         self.save_portfolio()

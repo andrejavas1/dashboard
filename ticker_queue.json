@@ -1,0 +1,24 @@
+{
+  "portfolio": [
+    "XOM",
+    "AAPL",
+    "TSLA",
+    "CVX"
+  ],
+  "queued": [],
+  "current": null,
+  "failed": {
+    "NKLA": {
+      "error": "Pipeline exited with code 1",
+      "timestamp": "2026-02-07T11:11:46.795794"
+    },
+    "NVDA": {
+      "error": "Pipeline exited with code 1",
+      "timestamp": "2026-02-07T11:18:51.187681"
+    }
+  },
+  "settings": {
+    "auto_start": true,
+    "max_parallel": 1
+  }
+}

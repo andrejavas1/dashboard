@@ -317,12 +317,14 @@ class MovementLabeling:
         if data_path:
             self.load_data(data_path)
         elif self.data is None:
-            # Try default path
-            default_path = os.path.join("data", "XOM_verified_ohlcv.csv")
+            # Try to find the verified data file based on config ticker
+            ticker = self.config.get('data_sources', {}).get('ticker', 'XOM')
+            default_path = os.path.join("data", f"{ticker}_verified_ohlcv.csv")
+            logger.info(f"[DEBUG Phase2] Looking for data file: {default_path}")
             if os.path.exists(default_path):
                 self.load_data(default_path)
             else:
-                logger.error("No data path provided and default file not found")
+                logger.error(f"No data path provided and default file not found: {default_path}")
                 return pd.DataFrame()
         
         # Calculate forward movements

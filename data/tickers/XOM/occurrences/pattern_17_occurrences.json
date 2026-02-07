@@ -1,0 +1,80 @@
+[
+  {
+    "Date": "2024-02-07",
+    "Open": 95.37670661239063,
+    "High": 95.82444391651993,
+    "Low": 94.3786328034068,
+    "Close": 95.34872436523438,
+    "Volume": 13826800,
+    "outcome": "STRONG_UP",
+    "actual_move": 3.2003237755118192,
+    "time_to_target": 15,
+    "target_reached": true,
+    "regime": "Sideways"
+  },
+  {
+    "Date": "2024-02-29",
+    "Open": 98.55082746567577,
+    "High": 98.91799179934898,
+    "Low": 98.1177620255146,
+    "Close": 98.4001922607422,
+    "Volume": 17566100,
+    "outcome": "STRONG_UP",
+    "actual_move": 8.582082898171787,
+    "time_to_target": 15,
+    "target_reached": true,
+    "regime": "Sideways"
+  },
+  {
+    "Date": "2024-03-21",
+    "Open": 106.30835302465636,
+    "High": 107.24039212464083,
+    "Low": 105.97884751678974,
+    "Close": 106.84497833251952,
+    "Volume": 14878000,
+    "outcome": "STRONG_UP",
+    "actual_move": 6.062222653833081,
+    "time_to_target": 15,
+    "target_reached": true,
+    "regime": "Sideways"
+  },
+  {
+    "Date": "2025-03-17",
+    "Open": 108.80667312368628,
+    "High": 111.43438043462734,
+    "Low": 108.73854759859152,
+    "Close": 110.71419525146484,
+    "Volume": 19908800,
+    "outcome": "DOWN",
+    "actual_move": -9.51125694456359,
+    "time_to_target": 15,
+    "target_reached": false,
+    "regime": "Strong Bull"
+  },
+  {
+    "Date": "2025-05-12",
+    "Open": 107.3176321665748,
+    "High": 107.48308623647448,
+    "Low": 105.41984435857492,
+    "Close": 106.23735809326172,
+    "Volume": 14244600,
+    "outcome": "DOWN",
+    "actual_move": -4.03442993525986,
+    "time_to_target": 15,
+    "target_reached": false,
+    "regime": "Strong Bull"
+  },
+  {
+    "Date": "2025-06-11",
+    "Open": 105.84075452080062,
+    "High": 107.44172088817773,
+    "Low": 104.56390502980446,
+    "Close": 107.36314392089844,
+    "Volume": 22648200,
+    "outcome": "STRONG_UP",
+    "actual_move": 2.6438531520997643,
+    "time_to_target": 15,
+    "target_reached": true,
+    "regime": "Strong Bull"
+  }
+]

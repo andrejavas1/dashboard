@@ -1,0 +1,442 @@
+[
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": ">=",
+        "value": 82889619.62651016
+      },
+      "AD_ROC_5d": {
+        "operator": ">=",
+        "value": 94458033.9714024
+      },
+      "Body_Range_Ratio": {
+        "operator": ">=",
+        "value": 83.1774181587939
+      }
+    },
+    "occurrences": 8,
+    "success_count": 4,
+    "success_rate": 50.0,
+    "avg_move": 6.076604759998773,
+    "avg_time": 3.7777777777777777,
+    "false_positive_rate": 10.0,
+    "p_value": 0.0107421875,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "cc26d3d6",
+    "pipeline_run_timestamp": "2026-02-06T22:48:38.220544",
+    "training_success_rate": 90.0,
+    "validation_success_rate": 90.0
+  },
+  {
+    "conditions": {
+      "Body_Range_Ratio": {
+        "operator": ">=",
+        "value": 68.5534537544521
+      },
+      "RSI_14": {
+        "operator": ">=",
+        "value": 75.96666062021762
+      }
+    },
+    "occurrences": 6,
+    "success_count": 3,
+    "success_rate": 50.0,
+    "avg_move": 9.023826581775806,
+    "avg_time": 5.533333333333333,
+    "false_positive_rate": 0.0,
+    "p_value": 3.0517578125e-05,
+    "label_col": "Label_1.0pct_10d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "cc26d3d6",
+    "pipeline_run_timestamp": "2026-02-06T22:48:38.220544",
+    "training_success_rate": 100.0,
+    "validation_success_rate": 100.0
+  },
+  {
+    "conditions": {
+      "Lower_Shadow_Ratio": {
+        "operator": "<=",
+        "value": 10.804145689301864
+      },
+      "RSI_14": {
+        "operator": ">=",
+        "value": 75.96666062021762
+      }
+    },
+    "occurrences": 5,
+    "success_count": 4,
+    "success_rate": 80.0,
+    "avg_move": 11.035000214429527,
+    "avg_time": 6.454545454545454,
+    "false_positive_rate": 8.333333333333332,
+    "p_value": 0.003173828125,
+    "label_col": "Label_1.0pct_10d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "cc26d3d6",
+    "pipeline_run_timestamp": "2026-02-06T22:48:38.220544",
+    "training_success_rate": 91.66666666666666,
+    "validation_success_rate": 91.66666666666666
+  },
+  {
+    "conditions": {
+      "Days_Since_52w_Low": {
+        "operator": "<=",
+        "value": 107.0
+      },
+      "RSI_14": {
+        "operator": ">=",
+        "value": 75.96666062021762
+      }
+    },
+    "occurrences": 2,
+    "success_count": 1,
+    "success_rate": 50.0,
+    "avg_move": 9.699436676665723,
+    "avg_time": 4.7,
+    "false_positive_rate": 9.090909090909092,
+    "p_value": 0.005859375,
+    "label_col": "Label_1.0pct_10d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "cc26d3d6",
+    "pipeline_run_timestamp": "2026-02-06T22:48:38.220544",
+    "training_success_rate": 90.9090909090909,
+    "validation_success_rate": 90.9090909090909
+  },
+  {
+    "conditions": {
+      "Days_Since_52w_Low": {
+        "operator": "<=",
+        "value": 107.0
+      },
+      "Dist_MA_50": {
+        "operator": ">=",
+        "value": 26.81584450792113
+      }
+    },
+    "occurrences": 2,
+    "success_count": 1,
+    "success_rate": 50.0,
+    "avg_move": 7.133752601756195,
+    "avg_time": 3.8,
+    "false_positive_rate": 9.090909090909092,
+    "p_value": 0.005859375,
+    "label_col": "Label_1.0pct_10d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "cc26d3d6",
+    "pipeline_run_timestamp": "2026-02-06T22:48:38.220544",
+    "training_success_rate": 90.9090909090909,
+    "validation_success_rate": 90.9090909090909
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": "<=",
+        "value": -280369719.77623296
+      },
+      "AD_ROC_5d": {
+        "operator": ">=",
+        "value": 7673776.454147845
+      },
+      "Body_Range_Ratio": {
+        "operator": "<=",
+        "value": 68.5534537544521
+      }
+    },
+    "occurrences": 6,
+    "success_count": 3,
+    "success_rate": 50.0,
+    "avg_move": 8.520146260125701,
+    "avg_time": 4.666666666666667,
+    "false_positive_rate": 0.0,
+    "p_value": 0.000244140625,
+    "label_col": "Label_2.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "cc26d3d6",
+    "pipeline_run_timestamp": "2026-02-06T22:48:38.220544",
+    "training_success_rate": 100.0,
+    "validation_success_rate": 100.0
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": "<=",
+        "value": -280369719.77623296
+      },
+      "AD_ROC_5d": {
+        "operator": ">=",
+        "value": -69077771.30000642
+      },
+      "MA_Alignment_Score": {
+        "operator": "<=",
+        "value": 0.0
+      }
+    },
+    "occurrences": 7,
+    "success_count": 4,
+    "success_rate": 57.14285714285714,
+    "avg_move": 4.8585290099138145,
+    "avg_time": 4.428571428571429,
+    "false_positive_rate": 6.666666666666667,
+    "p_value": 0.00048828125,
+    "label_col": "Label_2.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "cc26d3d6",
+    "pipeline_run_timestamp": "2026-02-06T22:48:38.220544",
+    "training_success_rate": 93.33333333333333,
+    "validation_success_rate": 93.33333333333333
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": "<=",
+        "value": -280369719.77623296
+      },
+      "AD_ROC_5d": {
+        "operator": ">=",
+        "value": 7673776.454147845
+      },
+      "Upper_Shadow_Ratio": {
+        "operator": "<=",
+        "value": 53.293435058705285
+      }
+    },
+    "occurrences": 6,
+    "success_count": 3,
+    "success_rate": 50.0,
+    "avg_move": 8.512723931163228,
+    "avg_time": 4.5,
+    "false_positive_rate": 7.6923076923076925,
+    "p_value": 0.001708984375,
+    "label_col": "Label_2.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "cc26d3d6",
+    "pipeline_run_timestamp": "2026-02-06T22:48:38.220544",
+    "training_success_rate": 92.3076923076923,
+    "validation_success_rate": 92.3076923076923
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": "<=",
+        "value": -280369719.77623296
+      },
+      "AD_ROC_5d": {
+        "operator": ">=",
+        "value": 7673776.454147845
+      },
+      "Days_Since_52w_Low": {
+        "operator": "<=",
+        "value": 335.0
+      }
+    },
+    "occurrences": 5,
+    "success_count": 3,
+    "success_rate": 60.0,
+    "avg_move": 9.031751955357542,
+    "avg_time": 4.909090909090909,
+    "false_positive_rate": 8.333333333333332,
+    "p_value": 0.003173828125,
+    "label_col": "Label_2.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "cc26d3d6",
+    "pipeline_run_timestamp": "2026-02-06T22:48:38.220544",
+    "training_success_rate": 91.66666666666666,
+    "validation_success_rate": 91.66666666666666
+  },
+  {
+    "conditions": {
+      "CCI_20": {
+        "operator": "<=",
+        "value": 12.13392655923046
+      },
+      "52w_Range_Pct": {
+        "operator": ">=",
+        "value": 80.95719960298334
+      }
+    },
+    "occurrences": 4,
+    "success_count": 3,
+    "success_rate": 75.0,
+    "avg_move": 8.014372953191835,
+    "avg_time": 6.857142857142857,
+    "false_positive_rate": 6.666666666666667,
+    "p_value": 0.00048828125,
+    "label_col": "Label_2.0pct_10d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "cc26d3d6",
+    "pipeline_run_timestamp": "2026-02-06T22:48:38.220544",
+    "training_success_rate": 93.33333333333333,
+    "validation_success_rate": 93.33333333333333
+  },
+  {
+    "conditions": {
+      "Chaikin_Oscillator": {
+        "operator": "<=",
+        "value": 10521017.073097156
+      },
+      "52w_Range_Pct": {
+        "operator": ">=",
+        "value": 80.95719960298334
+      }
+    },
+    "occurrences": 5,
+    "success_count": 3,
+    "success_rate": 60.0,
+    "avg_move": 6.009126036468207,
+    "avg_time": 5.333333333333333,
+    "false_positive_rate": 7.6923076923076925,
+    "p_value": 0.001708984375,
+    "label_col": "Label_2.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "cc26d3d6",
+    "pipeline_run_timestamp": "2026-02-06T22:48:38.220544",
+    "training_success_rate": 92.3076923076923,
+    "validation_success_rate": 92.3076923076923
+  },
+  {
+    "conditions": {
+      "Vol_Change_5d": {
+        "operator": "<=",
+        "value": -22.45119655051937
+      },
+      "52w_Range_Pct": {
+        "operator": ">=",
+        "value": 80.95719960298334
+      }
+    },
+    "occurrences": 8,
+    "success_count": 4,
+    "success_rate": 50.0,
+    "avg_move": 6.7391373202969485,
+    "avg_time": 4.909090909090909,
+    "false_positive_rate": 8.333333333333332,
+    "p_value": 0.003173828125,
+    "label_col": "Label_2.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "cc26d3d6",
+    "pipeline_run_timestamp": "2026-02-06T22:48:38.220544",
+    "training_success_rate": 91.66666666666666,
+    "validation_success_rate": 91.66666666666666
+  },
+  {
+    "conditions": {
+      "Upper_Shadow_Ratio": {
+        "operator": ">=",
+        "value": 39.23167837341815
+      },
+      "52w_Range_Pct": {
+        "operator": ">=",
+        "value": 80.95719960298334
+      }
+    },
+    "occurrences": 8,
+    "success_count": 3,
+    "success_rate": 37.5,
+    "avg_move": 4.250293933612891,
+    "avg_time": 2.8,
+    "false_positive_rate": 9.090909090909092,
+    "p_value": 0.005859375,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "cc26d3d6",
+    "pipeline_run_timestamp": "2026-02-06T22:48:38.220544",
+    "training_success_rate": 90.9090909090909,
+    "validation_success_rate": 90.9090909090909
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": "<=",
+        "value": 82889619.62651016
+      },
+      "52w_Range_Pct": {
+        "operator": ">=",
+        "value": 80.95719960298334
+      }
+    },
+    "occurrences": 4,
+    "success_count": 2,
+    "success_rate": 50.0,
+    "avg_move": 5.432041620045052,
+    "avg_time": 4.666666666666667,
+    "false_positive_rate": 10.0,
+    "p_value": 0.0107421875,
+    "label_col": "Label_2.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "cc26d3d6",
+    "pipeline_run_timestamp": "2026-02-06T22:48:38.220544",
+    "training_success_rate": 90.0,
+    "validation_success_rate": 90.0
+  },
+  {
+    "conditions": {
+      "Vol_Change_5d": {
+        "operator": "<=",
+        "value": -40.1079984191646
+      },
+      "MA_Alignment_Score": {
+        "operator": ">=",
+        "value": 100.0
+      }
+    },
+    "occurrences": 9,
+    "success_count": 4,
+    "success_rate": 44.44444444444444,
+    "avg_move": 7.130903733153846,
+    "avg_time": 3.2857142857142856,
+    "false_positive_rate": 12.5,
+    "p_value": 0.0020904541015625,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "cc26d3d6",
+    "pipeline_run_timestamp": "2026-02-06T22:48:38.220544",
+    "training_success_rate": 87.5,
+    "validation_success_rate": 87.5
+  }
+]

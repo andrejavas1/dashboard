@@ -33,13 +33,21 @@ class RealtimeDailyReconstructor:
     NOT against 15-minute bars directly.
     """
     
-    def __init__(self, historical_data_path: str = "data/ohlcv.json"):
+    def __init__(self, historical_data_path: str = None, ticker: str = None):
         """
         Initialize the daily bar reconstructor.
         
         Args:
-            historical_data_path: Path to historical daily OHLCV data
+            historical_data_path: Path to historical daily OHLCV data. If None, constructs from ticker
+            ticker: Ticker symbol for path construction
         """
+        # If path not provided, construct from ticker
+        if historical_data_path is None:
+            if ticker:
+                historical_data_path = f"data/tickers/{ticker}/ohlcv.json"
+            else:
+                historical_data_path = "data/ohlcv.json"
+        
         self.historical_data_path = historical_data_path
         self.daily_history: List[Dict] = []
         self.current_daily_bar: Optional[Dict] = None

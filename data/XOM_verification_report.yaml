@@ -1,151 +1,26 @@
-confidence_score: 98.6
+confidence_score: 100.0
 data_quality_metrics:
-  completeness: 98.6
-  gap_rate: 0
-  outlier_rate: 1.4
-missing_gaps: []
-outliers:
-- avg_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - &id001 !!python/object/apply:numpy.dtype
-    args:
-    - f8
-    - false
-    - true
-    state: !!python/tuple
-    - 3
-    - <
-    - null
-    - null
-    - null
-    - -1
-    - -1
-    - 0
-  - !!binary |
-    ocP5jPOR9z8=
-  daily_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    jbrfkMwdC0A=
-  date: !!python/object/apply:pandas._libs.tslibs.timestamps._unpickle_timestamp
-  - 1712880000000000000
+  completeness: 100.0
+  gap_rate: 78.23
+  outlier_rate: 0.0
+missing_gaps:
+- days: 97
+  end_date: !!python/object/apply:pandas._libs.tslibs.timestamps._unpickle_timestamp
+  - 1770264000000000000
   - null
   - null
   - 10
-  std_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    IcBdn6It4j8=
-- avg_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    Atoqc2Ey/D8=
-  daily_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    PxQL9p8/DUA=
-  date: !!python/object/apply:pandas._libs.tslibs.timestamps._unpickle_timestamp
-  - 1716422400000000000
+  start_date: !!python/object/apply:pandas._libs.tslibs.timestamps._unpickle_timestamp
+  - 1761969600000000000
   - null
   - null
   - 10
-  std_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    u5NLlQUy5D8=
-- avg_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    usVTjn5w+D8=
-  daily_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    XioEARrIEUA=
-  date: !!python/object/apply:pandas._libs.tslibs.timestamps._unpickle_timestamp
-  - 1730419200000000000
-  - null
-  - null
-  - 10
-  std_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    nAAmjR486T8=
-- avg_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    yxhLlLXB+z8=
-  daily_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    3g8OXSE4EEA=
-  date: !!python/object/apply:pandas._libs.tslibs.timestamps._unpickle_timestamp
-  - 1736467200000000000
-  - null
-  - null
-  - 10
-  std_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    yAkBU9iG5j8=
-- avg_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    Imb5IzGnAEA=
-  daily_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    OWr1K/j4FEA=
-  date: !!python/object/apply:pandas._libs.tslibs.timestamps._unpickle_timestamp
-  - 1740960000000000000
-  - null
-  - null
-  - 10
-  std_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    tcfA995M8D8=
-- avg_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    YyvYFvVQAUA=
-  daily_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    aJvQS9nVGkA=
-  date: !!python/object/apply:pandas._libs.tslibs.timestamps._unpickle_timestamp
-  - 1743724800000000000
-  - null
-  - null
-  - 10
-  std_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    rtUNu64d9T8=
-- avg_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    BkPLLF3X/j8=
-  daily_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    aL5hmwa6FEA=
-  date: !!python/object/apply:pandas._libs.tslibs.timestamps._unpickle_timestamp
-  - 1750636800000000000
-  - null
-  - null
-  - 10
-  std_range: !!python/object/apply:numpy._core.multiarray.scalar
-  - *id001
-  - !!binary |
-    fnZGW30q7T8=
+outliers: []
 sources_used:
 - yahoo_finance
 - alpha_vantage
 - tiingo
 - quandl
-total_days: 501
-validation_results:
-- common_dates: 501
-  discrepancies: 1799
-  discrepancy_rate: 359.08183632734534
-  source: tiingo
-verified_days: 494
+total_days: 124
+validation_results: []
+verified_days: 124

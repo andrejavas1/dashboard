@@ -1,0 +1,11 @@
+{
+  "ticker": null,
+  "current_phase": 7,
+  "total_phases": 10,
+  "phase_name": "PORTFOLIO CONSTRUCTION",
+  "progress_pct": 70,
+  "status": "idle",
+  "start_time": 1770455869.8489125,
+  "elapsed_seconds": 61,
+  "error": "Pipeline exited with code 1"
+}

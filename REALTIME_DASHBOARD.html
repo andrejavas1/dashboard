@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XOM Real-Time Pattern Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1/dist/chartjs-adapter-luxon.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.2.1/dist/chartjs-chart-financial.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: #161b22;
+            padding: 15px 30px;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            color: #58a6ff;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+        
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #da3633;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-indicator.connected {
+            background: #238636;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+        
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #f0f6fc;
+        }
+        
+        .card-subtitle {
+            font-size: 12px;
+            color: #8b949e;
+        }
+        
+        .chart-container {
+            height: 450px;
+            position: relative;
+        }
+        
+        .daily-bar-info {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #30363d;
+        }
+        
+        .bar-metric {
+            text-align: center;
+        }
+        
+        .bar-metric-label {
+            font-size: 11px;
+            color: #8b949e;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        
+        .bar-metric-value {
+            font-size: 18px;
+            font-weight: 600;
+            font-family: 'SF Mono', monospace;
+        }
+        
+        .bar-metric-value.positive {
+            color: #3fb950;
+        }
+        
+        .bar-metric-value.negative {
+            color: #f85149;
+        }
+        
+        .regime-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .regime-item {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .regime-label {
+            font-size: 11px;
+            color: #8b949e;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        
+        .regime-value {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        .regime-value.trend-strong-bull {
+            color: #3fb950;
+        }
+        
+        .regime-value.trend-weak-bull {
+            color: #7ee787;
+        }
+        
+        .regime-value.trend-sideways {
+            color: #d29922;
+        }
+        
+        .regime-value.trend-weak-bear {
+            color: #f85149;
+        }
+        
+        .regime-value.trend-strong-bear {
+            color: #da3633;
+        }
+        
+        .regime-value.volatility-low {
+            color: #58a6ff;
+        }
+        
+        .regime-value.volatility-medium {
+            color: #d29922;
+        }
+        
+        .regime-value.volatility-high {
+            color: #f85149;
+        }
+        
+        .intraday-progress {
+            margin-top: 15px;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #8b949e;
+            margin-bottom: 5px;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: #0d1117;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #238636, #3fb950);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+        
+        .pattern-matches {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .pattern-match-item {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .pattern-match-item:hover {
+            border-color: #58a6ff;
+            background: #1c2128;
+        }
+        
+        .pattern-match-item.triggered {
+            border-color: #3fb950;
+            background: rgba(63, 185, 80, 0.1);
+        }
+        
+        .pattern-match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .pattern-id {
+            font-size: 14px;
+            font-weight: 600;
+            color: #f0f6fc;
+        }
+        
+        .confidence-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .confidence-badge.high {
+            background: rgba(63, 185, 80, 0.2);
+            color: #3fb950;
+        }
+        
+        .confidence-badge.medium {
+            background: rgba(217, 153, 34, 0.2);
+            color: #d29922;
+        }
+        
+        .confidence-badge.low {
+            background: rgba(139, 148, 158, 0.2);
+            color: #8b949e;
+        }
+        
+        .pattern-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            font-size: 12px;
+        }
+        
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .detail-label {
+            color: #8b949e;
+        }
+        
+        .detail-value {
+            color: #c9d1d9;
+            font-weight: 500;
+        }
+        
+        .alert-panel {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .alert-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            background: #0d1117;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            border-left: 3px solid;
+        }
+        
+        .alert-item.high {
+            border-left-color: #f85149;
+        }
+        
+        .alert-item.medium {
+            border-left-color: #d29922;
+        }
+        
+        .alert-item.low {
+            border-left-color: #58a6ff;
+        }
+        
+        .alert-icon {
+            font-size: 18px;
+        }
+        
+        .alert-content {
+            flex: 1;
+        }
+        
+        .alert-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #f0f6fc;
+        }
+        
+        .alert-time {
+            font-size: 11px;
+            color: #8b949e;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        
+        .stat-box {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #f0f6fc;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 11px;
+            color: #8b949e;
+            text-transform: uppercase;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #8b949e;
+        }
+        
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
+        .timestamp {
+            font-size: 11px;
+            color: #8b949e;
+            font-family: 'SF Mono', monospace;
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0d1117;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #484f58;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📈 XOM Real-Time Pattern Dashboard</h1>
+        <div class="connection-status">
+            <span id="connectionText">Connecting...</span>
+            <div id="connectionIndicator" class="status-indicator"></div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="left-panel">
+            <!-- Daily Candlestick Chart -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Daily Candlestick (Updating)</div>
+                        <div class="card-subtitle">Today's bar updates with each 15-minute price</div>
+                    </div>
+                    <div class="timestamp" id="lastUpdate">--:--:--</div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="candlestickChart"></canvas>
+                </div>
+                <div class="daily-bar-info">
+                    <div class="bar-metric">
+                        <div class="bar-metric-label">Open</div>
+                        <div class="bar-metric-value" id="dailyOpen">--</div>
+                    </div>
+                    <div class="bar-metric">
+                        <div class="bar-metric-label">High</div>
+                        <div class="bar-metric-value positive" id="dailyHigh">--</div>
+                    </div>
+                    <div class="bar-metric">
+                        <div class="bar-metric-label">Low</div>
+                        <div class="bar-metric-value negative" id="dailyLow">--</div>
+                    </div>
+                    <div class="bar-metric">
+                        <div class="bar-metric-label">Close</div>
+                        <div class="bar-metric-value" id="dailyClose">--</div>
+                    </div>
+                    <div class="bar-metric">
+                        <div class="bar-metric-label">Volume</div>
+                        <div class="bar-metric-value" id="dailyVolume">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Market Stats -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Market Statistics</div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-value" id="patternCount">0</div>
+                        <div class="stat-label">Patterns Matched</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="highConfidenceCount">0</div>
+                        <div class="stat-label">High Confidence</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="intradayBars">0</div>
+                        <div class="stat-label">15m Bars Today</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <!-- Market Regime -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Market Regime</div>
+                </div>
+                <div class="regime-display">
+                    <div class="regime-item">
+                        <div class="regime-label">Trend</div>
+                        <div class="regime-value trend-sideways" id="trendRegime">Sideways</div>
+                    </div>
+                    <div class="regime-item">
+                        <div class="regime-label">Volatility</div>
+                        <div class="regime-value volatility-medium" id="volatilityRegime">Medium</div>
+                    </div>
+                </div>
+                <div class="intraday-progress">
+                    <div class="progress-label">
+                        <span>Market Session Progress</span>
+                        <span id="sessionProgressText">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="sessionProgress" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>

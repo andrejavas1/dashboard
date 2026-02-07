@@ -38,10 +38,19 @@ class PatternOptimization:
             config_path: Path to configuration file
         """
         self.config = self._load_config(config_path)
+        self.run_mode = self.config.get('run_mode', 'full')
         
         # Parameters
         self.time_windows = self.config['movement']['time_windows']
         self.thresholds = self.config['movement']['thresholds']
+        
+        # Adjust parameters for quick/ultra mode
+        if self.run_mode == 'ultra':
+            # Skip optimization entirely in ultra mode
+            logger.info("Ultra Mode: Pattern optimization will be skipped")
+        elif self.run_mode == 'quick':
+            # Reduce optimization grid in quick mode
+            logger.info("Quick Mode: Reduced pattern optimization")
         
         # Data storage
         self.data = None
@@ -659,15 +668,32 @@ class PatternOptimization:
             logger.error("No patterns loaded. Call load_patterns() first.")
             return []
         
+        # Ultra mode: skip optimization entirely, just pass through patterns
+        if self.run_mode == 'ultra':
+            logger.info("Ultra Mode: Skipping optimization, passing patterns through")
+            self.optimized_patterns = self.patterns.copy()
+            return self.optimized_patterns
+        
         optimized = []
         
         # Clear cache before optimization
         self._evaluation_cache.clear()
         
-        # Optimize each pattern
-        logger.info(f"\nOptimizing {len(self.patterns)} patterns...")
+        # Limit patterns for optimization in quick mode
+        patterns_to_optimize = self.patterns
+        if self.run_mode == 'quick' and len(self.patterns) > 50:
+            logger.info(f"Quick Mode: Limiting to top 50 patterns (from {len(self.patterns)})")
+            # Sort by success rate and take top 50
+            patterns_to_optimize = sorted(
+                self.patterns, 
+                key=lambda p: p.get('success_rate', 0), 
+                reverse=True
+            )[:50]
         
-        for pattern in tqdm(self.patterns, desc="Optimizing patterns"):
+        # Optimize each pattern
+        logger.info(f"\nOptimizing {len(patterns_to_optimize)} patterns...")
+        
+        for pattern in tqdm(patterns_to_optimize, desc="Optimizing patterns"):
             # Preserve direction from original pattern
             direction = pattern.get('direction', 'unknown')
             

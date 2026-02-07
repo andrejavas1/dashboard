@@ -52,8 +52,17 @@ class PatternDiscovery:
         self.max_features = self.config['pattern_discovery']['max_features_per_pattern']
         self.test_combinations = self.config['pattern_discovery']['test_combinations']
         
-        # Adjust parameters for quick mode
-        if self.run_mode == 'quick':
+        # Adjust parameters for quick/ultra mode
+        if self.run_mode == 'ultra':
+            # Ultra mode: minimal parameters for fastest discovery
+            self.min_occurrences = 3  # Minimal
+            self.min_success_rate = 45  # Lower threshold
+            self.high_confidence_rate = 55
+            self.high_confidence_occurrences = 5
+            self.test_combinations = [1, 2]  # Only 1-2 features
+            self.max_features = 3  # Reduce max features per pattern
+            logger.info("Ultra Mode: Minimal pattern discovery parameters")
+        elif self.run_mode == 'quick':
             self.min_occurrences = 5  # Reduced from 15
             self.min_success_rate = 50  # Reduced from 53
             self.high_confidence_rate = 60  # Reduced from 75
@@ -358,7 +367,12 @@ class PatternDiscovery:
         
         # Limit features for computational efficiency
         # Use top features by variance
-        if self.run_mode == 'quick':
+        if self.run_mode == 'ultra':
+            # Ultra mode: minimal features
+            feature_variances = {f: self.data[f].var() for f in self.numeric_features}
+            top_features = sorted(feature_variances.items(), key=lambda x: x[1], reverse=True)[:10]
+            top_feature_names = [f[0] for f in top_features]
+        elif self.run_mode == 'quick':
             # Quick mode: use fewer features and combinations
             feature_variances = {f: self.data[f].var() for f in self.numeric_features}
             top_features = sorted(feature_variances.items(), key=lambda x: x[1], reverse=True)[:20]
@@ -377,7 +391,9 @@ class PatternDiscovery:
             from itertools import islice
             
             # Limit combinations for efficiency
-            if self.run_mode == 'quick':
+            if self.run_mode == 'ultra':
+                max_combos = {1: 100, 2: 30}.get(n_features, 10)
+            elif self.run_mode == 'quick':
                 max_combos = {1: 500, 2: 200, 3: 50}.get(n_features, 20)
             else:
                 max_combos = {1: 5000, 2: 5000, 3: 5000, 4: 2000, 5: 500, 6: 50}.get(n_features, 100)
@@ -984,8 +1000,12 @@ class PatternDiscovery:
         patterns = []
         
         # Use thresholds and windows from config
-        # In quick mode, use fewer threshold/window combinations
-        if self.run_mode == 'quick':
+        # In quick/ultra mode, use fewer threshold/window combinations
+        if self.run_mode == 'ultra':
+            key_thresholds = self.thresholds[:1]  # Only first threshold
+            key_windows = self.time_windows[:1]  # Only first window
+            logger.info(f"Ultra Mode: Testing thresholds {key_thresholds} and windows {key_windows}")
+        elif self.run_mode == 'quick':
             key_thresholds = self.thresholds[:2]  # Only first 2 thresholds
             key_windows = self.time_windows[:2]  # Only first 2 windows
             logger.info(f"Quick Mode: Testing thresholds {key_thresholds} and windows {key_windows}")
@@ -1021,16 +1041,16 @@ class PatternDiscovery:
                         p['trend_regime'] = trend_regime
                     patterns.extend(dt_patterns)
                     
-                    # Method 3: Clustering (skip in quick mode for speed)
-                    if self.run_mode != 'quick':
+                    # Method 3: Clustering (skip in quick/ultra mode for speed)
+                    if self.run_mode not in ['quick', 'ultra']:
                         cluster_patterns = self.clustering_discovery(label_col, direction)
                         for p in cluster_patterns:
                             p['volatility_regime'] = volatility_regime
                             p['trend_regime'] = trend_regime
                         patterns.extend(cluster_patterns)
                     
-                    # Method 4: Sequential (skip in quick mode)
-                    if self.run_mode != 'quick' and len(patterns) < 200:
+                    # Method 4: Sequential (skip in quick/ultra mode)
+                    if self.run_mode not in ['quick', 'ultra'] and len(patterns) < 200:
                         seq_patterns = self.sequential_pattern_discovery(label_col, direction)
                         for p in seq_patterns:
                             p['volatility_regime'] = volatility_regime

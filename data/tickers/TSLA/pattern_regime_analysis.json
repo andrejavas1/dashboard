@@ -1,0 +1,207 @@
+{
+  "0": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 4,
+        "successes": 3,
+        "success_rate": 75.0
+      },
+      "Unknown": {
+        "total_occurrences": 4,
+        "successes": 1,
+        "success_rate": 25.0
+      }
+    }
+  },
+  "1": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 4,
+        "successes": 1,
+        "success_rate": 25.0
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "2": {
+    "direction": "long",
+    "overall_success_rate": 80.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 3,
+        "successes": 2,
+        "success_rate": 66.7
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "3": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 1,
+        "success_rate": 50.0
+      }
+    }
+  },
+  "4": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 1,
+        "success_rate": 50.0
+      }
+    }
+  },
+  "5": {
+    "direction": "short",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 5,
+        "successes": 4,
+        "success_rate": 80.0
+      },
+      "Unknown": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "6": {
+    "direction": "short",
+    "overall_success_rate": 57.14285714285714,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 6,
+        "successes": 5,
+        "success_rate": 83.3
+      },
+      "Unknown": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "7": {
+    "direction": "short",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 5,
+        "successes": 4,
+        "success_rate": 80.0
+      },
+      "Unknown": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "8": {
+    "direction": "short",
+    "overall_success_rate": 60.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 4,
+        "successes": 3,
+        "success_rate": 75.0
+      },
+      "Unknown": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "9": {
+    "direction": "short",
+    "overall_success_rate": 75.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 4,
+        "successes": 4,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "10": {
+    "direction": "short",
+    "overall_success_rate": 60.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 5,
+        "successes": 3,
+        "success_rate": 60.0
+      }
+    }
+  },
+  "11": {
+    "direction": "short",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 8,
+        "successes": 7,
+        "success_rate": 87.5
+      }
+    }
+  },
+  "12": {
+    "direction": "short",
+    "overall_success_rate": 37.5,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 8,
+        "successes": 7,
+        "success_rate": 87.5
+      }
+    }
+  },
+  "13": {
+    "direction": "short",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 4,
+        "successes": 3,
+        "success_rate": 75.0
+      }
+    }
+  },
+  "14": {
+    "direction": "short",
+    "overall_success_rate": 44.44444444444444,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 7,
+        "successes": 7,
+        "success_rate": 100.0
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  }
+}

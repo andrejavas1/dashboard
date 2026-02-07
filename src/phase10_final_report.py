@@ -472,6 +472,17 @@ class FinalReportGenerator:
             logger.warning("No patterns or data available for occurrence generation")
             return
         
+        # Clean up old occurrence files to ensure they match current patterns
+        logger.info("Cleaning up old occurrence files...")
+        import glob
+        old_files = glob.glob(os.path.join(self.data_dir, 'pattern_*_occurrences.json'))
+        for old_file in old_files:
+            try:
+                os.remove(old_file)
+            except Exception as e:
+                logger.warning(f"Could not remove {old_file}: {e}")
+        logger.info(f"Removed {len(old_files)} old occurrence files")
+        
         logger.info(f"Generating occurrence files for {len(self.patterns)} patterns...")
         
         for i, pattern in enumerate(self.patterns):
@@ -491,8 +502,15 @@ class FinalReportGenerator:
                 time_window = 20
             
             # Find all dates matching pattern conditions
+            # Filter to only include tradable (non-overlapping) occurrences
             occurrences = []
+            open_until_idx = -1  # Track when current trade closes
+            
             for date_idx, (date, row) in enumerate(self.data.iterrows()):
+                # Skip if we're still in an open trade window
+                if date_idx < open_until_idx:
+                    continue
+                
                 match = True
                 for feature, condition in conditions.items():
                     if feature not in row or pd.isna(row[feature]):
@@ -554,14 +572,32 @@ class FinalReportGenerator:
                         'time_to_target': time_window,
                         'target_reached': bool(target_reached)
                     })
+                    
+                    # Set the trade window - no new trades until this one closes
+                    open_until_idx = date_idx + time_window
             
             # Save to file
             output_path = os.path.join(self.data_dir, f'pattern_{i}_occurrences.json')
             with open(output_path, 'w') as f:
                 json.dump(occurrences, f, indent=2)
             
+            # Update the pattern's occurrence count and success stats based on ACTUAL occurrences
+            actual_occurrences = len(occurrences)
+            actual_successes = sum(1 for occ in occurrences if occ.get('target_reached', False))
+            actual_success_rate = (actual_successes / actual_occurrences * 100) if actual_occurrences > 0 else 0
+            
+            self.patterns[i]['occurrences'] = actual_occurrences
+            self.patterns[i]['success_count'] = actual_successes
+            self.patterns[i]['success_rate'] = actual_success_rate
+            
             if i < 5 or i % 10 == 0:
                 logger.info(f"  Pattern #{i}: {len(occurrences)} occurrences saved")
+        
+        # Save updated patterns.json with corrected occurrence counts
+        patterns_path = os.path.join(self.data_dir, 'patterns.json')
+        with open(patterns_path, 'w') as f:
+            json.dump(self.patterns, f, indent=2)
+        logger.info(f"Updated patterns.json with corrected occurrence counts")
         
         logger.info(f"✓ Generated {len(self.patterns)} occurrence files")
     

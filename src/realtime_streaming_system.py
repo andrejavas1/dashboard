@@ -25,6 +25,7 @@ from realtime_feature_calculator import RealtimeFeatureCalculator
 from tolerance_pattern_matcher import TolerancePatternMatcher
 from market_regime_detector import MarketRegimeDetector
 from probability_estimator import ProbabilityEstimator
+from pattern_outcome_tracker import PatternOutcomeTracker
 
 load_dotenv()
 
@@ -63,14 +64,16 @@ class RealtimeStreamingSystem:
         self.clients: Set[websockets.WebSocketServerProtocol] = set()
         self.ws_server = None
         
-        # Initialize components
-        self.daily_reconstructor = RealtimeDailyReconstructor()
+        # Initialize components with ticker support
+        self.daily_reconstructor = RealtimeDailyReconstructor(ticker=self.ticker)
         self.feature_calculator = RealtimeFeatureCalculator()
         self.pattern_matcher = TolerancePatternMatcher(
             tolerance_pct=self.streaming_config.get('pattern_matching', {}).get('tolerance_pct', 5.0)
         )
-        self.pattern_matcher.load_patterns()
+        # CRITICAL: Pass ticker to load patterns from ticker-specific directory
+        self.pattern_matcher.load_patterns(ticker=self.ticker)
         self.regime_detector = MarketRegimeDetector()
+        self.outcome_tracker = PatternOutcomeTracker()
         self.probability_estimator = ProbabilityEstimator()
         
         # State
@@ -370,11 +373,42 @@ class RealtimeStreamingSystem:
                     
                     self.triggered_patterns.append(trigger_data)
                     
+                    # Record trade in outcome tracker
+                    entry_price = trigger_data['entry_price'] or daily_bar['Close']
+                    target_price = trigger_data['target_price'] or (entry_price * 1.02)
+                    stop_price = trigger_data['stop_loss'] or (entry_price * 0.99)
+                    
+                    self.outcome_tracker.record_pattern_trigger(
+                        pattern_id=match['pattern_id'],
+                        trigger_date=daily_bar['Date'],
+                        entry_price=entry_price,
+                        direction=match.get('direction', 'long'),
+                        target_price=target_price,
+                        stop_price=stop_price,
+                        label_col=match.get('label_col', 'Label_2.0pct_10d')
+                    )
+                    
                     # Broadcast high-confidence trigger
                     await self._broadcast({
                         'type': 'pattern_triggered',
                         'timestamp': datetime.now(timezone.utc).isoformat(),
                         'data': trigger_data
+                    })
+            
+            # 6.5 Check open trades for outcomes (only on new days)
+            if is_new_day:
+                closed_trades = self.outcome_tracker.check_open_trades(
+                    daily_df, daily_bar['Date']
+                )
+                for trade in closed_trades:
+                    logger.info(f"Trade outcome: Pattern #{trade['pattern_id']} "
+                              f"{trade['outcome']} ({trade['profit_pct']:.2f}%)")
+                    
+                    # Broadcast trade outcome
+                    await self._broadcast({
+                        'type': 'trade_outcome',
+                        'timestamp': datetime.now(timezone.utc).isoformat(),
+                        'data': trade
                     })
             
             # 7. Broadcast updates to all clients

@@ -1,0 +1,151 @@
+confidence_score: 98.6
+data_quality_metrics:
+  completeness: 98.6
+  gap_rate: 0
+  outlier_rate: 1.4
+missing_gaps: []
+outliers:
+- avg_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - &id001 !!python/object/apply:numpy.dtype
+    args:
+    - f8
+    - false
+    - true
+    state: !!python/tuple
+    - 3
+    - <
+    - null
+    - null
+    - null
+    - -1
+    - -1
+    - 0
+  - !!binary |
+    Gp7TNkd+EEA=
+  daily_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    oTWmiYLkKEA=
+  date: !!python/object/apply:pandas._libs.tslibs.timestamps._unpickle_timestamp
+  - 1709856000000000000
+  - null
+  - null
+  - 10
+  std_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    cd/YQdC5AkA=
+- avg_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    Ap7g7EnVEEA=
+  daily_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    MmGarMLhJkA=
+  date: !!python/object/apply:pandas._libs.tslibs.timestamps._unpickle_timestamp
+  - 1713484800000000000
+  - null
+  - null
+  - 10
+  std_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    fbbEg99zAEA=
+- avg_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    b5UWaSJlCEA=
+  daily_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    Nsgwh1KfIEA=
+  date: !!python/object/apply:pandas._libs.tslibs.timestamps._unpickle_timestamp
+  - 1732147200000000000
+  - null
+  - null
+  - 10
+  std_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    czzXjtav9j8=
+- avg_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    w1kR3LVJD0A=
+  daily_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    SnG5wWG5IkA=
+  date: !!python/object/apply:pandas._libs.tslibs.timestamps._unpickle_timestamp
+  - 1736208000000000000
+  - null
+  - null
+  - 10
+  std_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    L1SPfjXt/D8=
+- avg_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    k1X5GBb2EUA=
+  daily_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    E6EntAH4KEA=
+  date: !!python/object/apply:pandas._libs.tslibs.timestamps._unpickle_timestamp
+  - 1740614400000000000
+  - null
+  - null
+  - 10
+  std_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    O7uEHQRgAkA=
+- avg_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    zO/wqgKwEkA=
+  daily_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    Orfx1cv9LkA=
+  date: !!python/object/apply:pandas._libs.tslibs.timestamps._unpickle_timestamp
+  - 1743984000000000000
+  - null
+  - null
+  - 10
+  std_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    GrS85qRICEA=
+- avg_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    SiD9A0K5BkA=
+  daily_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    /NveSqGiHUA=
+  date: !!python/object/apply:pandas._libs.tslibs.timestamps._unpickle_timestamp
+  - 1760054400000000000
+  - null
+  - null
+  - 10
+  std_range: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    aUYXiY5o9j8=
+sources_used:
+- yahoo_finance
+- alpha_vantage
+- tiingo
+- quandl
+total_days: 501
+validation_results:
+- common_dates: 501
+  discrepancies: 987
+  discrepancy_rate: 197.0059880239521
+  source: tiingo
+verified_days: 494

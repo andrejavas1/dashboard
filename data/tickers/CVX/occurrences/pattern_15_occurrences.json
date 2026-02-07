@@ -1,0 +1,50 @@
+[
+  {
+    "Date": "2024-07-01",
+    "Open": 147.03506235901054,
+    "High": 148.4758424785238,
+    "Low": 145.9310757453636,
+    "Close": 146.43629455566406,
+    "Volume": 5584100,
+    "outcome": "UP",
+    "actual_move": 0.7985954556542465,
+    "time_to_target": 10,
+    "target_reached": false
+  },
+  {
+    "Date": "2024-07-16",
+    "Open": 146.8946817412387,
+    "High": 148.1109325611334,
+    "Low": 146.09008636276192,
+    "Close": 147.60572814941406,
+    "Volume": 6924200,
+    "outcome": "UP",
+    "actual_move": 1.140901695344875,
+    "time_to_target": 10,
+    "target_reached": false
+  },
+  {
+    "Date": "2024-12-24",
+    "Open": 136.7602313755013,
+    "High": 137.65857420640052,
+    "Low": 135.95743490156602,
+    "Close": 137.46743774414062,
+    "Volume": 3556100,
+    "outcome": "STRONG_UP",
+    "actual_move": 6.465520399117955,
+    "time_to_target": 10,
+    "target_reached": true
+  },
+  {
+    "Date": "2025-12-23",
+    "Open": 150.0399932861328,
+    "High": 151.0800018310547,
+    "Low": 149.85000610351562,
+    "Close": 150.50999450683594,
+    "Volume": 4663700,
+    "outcome": "STRONG_UP",
+    "actual_move": 5.806926989667191,
+    "time_to_target": 10,
+    "target_reached": true
+  }
+]

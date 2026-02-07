@@ -1,0 +1,934 @@
+{
+  "0": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 3,
+        "successes": 1,
+        "success_rate": 33.3
+      },
+      "Strong Bear": {
+        "total_occurrences": 3,
+        "successes": 3,
+        "success_rate": 100.0
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "1": {
+    "direction": "long",
+    "overall_success_rate": 57.14285714285714,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 2,
+        "successes": 0,
+        "success_rate": 0.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 3,
+        "successes": 3,
+        "success_rate": 100.0
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "2": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 3,
+        "successes": 1,
+        "success_rate": 33.3
+      },
+      "Strong Bear": {
+        "total_occurrences": 3,
+        "successes": 3,
+        "success_rate": 100.0
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "3": {
+    "direction": "long",
+    "overall_success_rate": 37.5,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 3,
+        "successes": 1,
+        "success_rate": 33.3
+      },
+      "Strong Bear": {
+        "total_occurrences": 3,
+        "successes": 3,
+        "success_rate": 100.0
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "4": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 3,
+        "successes": 1,
+        "success_rate": 33.3
+      },
+      "Strong Bear": {
+        "total_occurrences": 3,
+        "successes": 3,
+        "success_rate": 100.0
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "5": {
+    "direction": "long",
+    "overall_success_rate": 57.14285714285714,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 3,
+        "successes": 1,
+        "success_rate": 33.3
+      },
+      "Strong Bear": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "6": {
+    "direction": "long",
+    "overall_success_rate": 63.63636363636363,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 10,
+        "successes": 7,
+        "success_rate": 70.0
+      }
+    }
+  },
+  "7": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 3,
+        "successes": 1,
+        "success_rate": 33.3
+      },
+      "Strong Bear": {
+        "total_occurrences": 3,
+        "successes": 3,
+        "success_rate": 100.0
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "8": {
+    "direction": "long",
+    "overall_success_rate": 100.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "9": {
+    "direction": "long",
+    "overall_success_rate": 60.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 5,
+        "successes": 3,
+        "success_rate": 60.0
+      }
+    }
+  },
+  "10": {
+    "direction": "long",
+    "overall_success_rate": 40.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 4,
+        "successes": 2,
+        "success_rate": 50.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 1,
+        "successes": 0,
+        "success_rate": 0.0
+      }
+    }
+  },
+  "11": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 2,
+        "successes": 1,
+        "success_rate": 50.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 2,
+        "successes": 1,
+        "success_rate": 50.0
+      }
+    }
+  },
+  "12": {
+    "direction": "long",
+    "overall_success_rate": 63.63636363636363,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 2,
+        "successes": 1,
+        "success_rate": 50.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 9,
+        "successes": 6,
+        "success_rate": 66.7
+      }
+    }
+  },
+  "13": {
+    "direction": "long",
+    "overall_success_rate": 42.857142857142854,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 2,
+        "successes": 1,
+        "success_rate": 50.0
+      },
+      "Weak Bull": {
+        "total_occurrences": 3,
+        "successes": 3,
+        "success_rate": 100.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "14": {
+    "direction": "long",
+    "overall_success_rate": 60.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 5,
+        "successes": 3,
+        "success_rate": 60.0
+      },
+      "Weak Bull": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 4,
+        "successes": 3,
+        "success_rate": 75.0
+      }
+    }
+  },
+  "15": {
+    "direction": "long",
+    "overall_success_rate": 100.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      },
+      "Unknown": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "16": {
+    "direction": "long",
+    "overall_success_rate": 54.54545454545454,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 4,
+        "successes": 4,
+        "success_rate": 100.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 7,
+        "successes": 3,
+        "success_rate": 42.9
+      }
+    }
+  },
+  "17": {
+    "direction": "long",
+    "overall_success_rate": 40.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 5,
+        "successes": 2,
+        "success_rate": 40.0
+      }
+    }
+  },
+  "18": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 2,
+        "successes": 1,
+        "success_rate": 50.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 2,
+        "successes": 1,
+        "success_rate": 50.0
+      }
+    }
+  },
+  "19": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 4,
+        "successes": 2,
+        "success_rate": 50.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 5,
+        "successes": 3,
+        "success_rate": 60.0
+      },
+      "Unknown": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "20": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 2,
+        "successes": 1,
+        "success_rate": 50.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 1,
+        "successes": 0,
+        "success_rate": 0.0
+      },
+      "Unknown": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "21": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 1,
+        "successes": 0,
+        "success_rate": 0.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 7,
+        "successes": 5,
+        "success_rate": 71.4
+      }
+    }
+  },
+  "22": {
+    "direction": "long",
+    "overall_success_rate": 33.33333333333333,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 1,
+        "successes": 0,
+        "success_rate": 0.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      },
+      "Unknown": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "23": {
+    "direction": "long",
+    "overall_success_rate": 33.33333333333333,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 3,
+        "successes": 1,
+        "success_rate": 33.3
+      }
+    }
+  },
+  "24": {
+    "direction": "long",
+    "overall_success_rate": 54.54545454545454,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 9,
+        "successes": 4,
+        "success_rate": 44.4
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "25": {
+    "direction": "long",
+    "overall_success_rate": 37.5,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 7,
+        "successes": 3,
+        "success_rate": 42.9
+      },
+      "Sideways": {
+        "total_occurrences": 1,
+        "successes": 0,
+        "success_rate": 0.0
+      }
+    }
+  },
+  "26": {
+    "direction": "long",
+    "overall_success_rate": 57.14285714285714,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 7,
+        "successes": 4,
+        "success_rate": 57.1
+      }
+    }
+  },
+  "27": {
+    "direction": "long",
+    "overall_success_rate": 63.1578947368421,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 5,
+        "successes": 3,
+        "success_rate": 60.0
+      },
+      "Weak Bull": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 12,
+        "successes": 10,
+        "success_rate": 83.3
+      },
+      "Unknown": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "28": {
+    "direction": "long",
+    "overall_success_rate": 63.63636363636363,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 8,
+        "successes": 5,
+        "success_rate": 62.5
+      },
+      "Strong Bear": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "29": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 8,
+        "successes": 4,
+        "success_rate": 50.0
+      }
+    }
+  },
+  "30": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 4,
+        "successes": 2,
+        "success_rate": 50.0
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "31": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 3,
+        "successes": 1,
+        "success_rate": 33.3
+      },
+      "Strong Bear": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "32": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 8,
+        "successes": 6,
+        "success_rate": 75.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 9,
+        "successes": 6,
+        "success_rate": 66.7
+      },
+      "Unknown": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "33": {
+    "direction": "long",
+    "overall_success_rate": 33.33333333333333,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 8,
+        "successes": 3,
+        "success_rate": 37.5
+      },
+      "Sideways": {
+        "total_occurrences": 1,
+        "successes": 0,
+        "success_rate": 0.0
+      }
+    }
+  },
+  "34": {
+    "direction": "long",
+    "overall_success_rate": 53.84615384615385,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 9,
+        "successes": 4,
+        "success_rate": 44.4
+      },
+      "Strong Bear": {
+        "total_occurrences": 3,
+        "successes": 3,
+        "success_rate": 100.0
+      },
+      "Unknown": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "35": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 2,
+        "successes": 1,
+        "success_rate": 50.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      },
+      "Unknown": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "36": {
+    "direction": "long",
+    "overall_success_rate": 37.5,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 7,
+        "successes": 3,
+        "success_rate": 42.9
+      },
+      "Sideways": {
+        "total_occurrences": 1,
+        "successes": 0,
+        "success_rate": 0.0
+      }
+    }
+  },
+  "37": {
+    "direction": "long",
+    "overall_success_rate": 75.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 2,
+        "successes": 1,
+        "success_rate": 50.0
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "38": {
+    "direction": "long",
+    "overall_success_rate": 60.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 2,
+        "successes": 1,
+        "success_rate": 50.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 11,
+        "successes": 7,
+        "success_rate": 63.6
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "39": {
+    "direction": "long",
+    "overall_success_rate": 62.5,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 4,
+        "successes": 2,
+        "success_rate": 50.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "40": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 9,
+        "successes": 4,
+        "success_rate": 44.4
+      },
+      "Strong Bear": {
+        "total_occurrences": 7,
+        "successes": 6,
+        "success_rate": 85.7
+      }
+    }
+  },
+  "41": {
+    "direction": "long",
+    "overall_success_rate": 61.111111111111114,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 5,
+        "successes": 2,
+        "success_rate": 40.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 12,
+        "successes": 10,
+        "success_rate": 83.3
+      },
+      "Unknown": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "42": {
+    "direction": "long",
+    "overall_success_rate": 50.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 7,
+        "successes": 3,
+        "success_rate": 42.9
+      },
+      "Unknown": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "43": {
+    "direction": "long",
+    "overall_success_rate": 60.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 2,
+        "successes": 1,
+        "success_rate": 50.0
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "44": {
+    "direction": "long",
+    "overall_success_rate": 40.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 7,
+        "successes": 4,
+        "success_rate": 57.1
+      },
+      "Strong Bear": {
+        "total_occurrences": 3,
+        "successes": 3,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "45": {
+    "direction": "long",
+    "overall_success_rate": 42.857142857142854,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 7,
+        "successes": 3,
+        "success_rate": 42.9
+      }
+    }
+  },
+  "46": {
+    "direction": "long",
+    "overall_success_rate": 33.33333333333333,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 10,
+        "successes": 5,
+        "success_rate": 50.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 7,
+        "successes": 4,
+        "success_rate": 57.1
+      },
+      "Unknown": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "47": {
+    "direction": "long",
+    "overall_success_rate": 37.5,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 7,
+        "successes": 3,
+        "success_rate": 42.9
+      },
+      "Unknown": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "48": {
+    "direction": "long",
+    "overall_success_rate": 37.5,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 8,
+        "successes": 4,
+        "success_rate": 50.0
+      }
+    }
+  },
+  "49": {
+    "direction": "long",
+    "overall_success_rate": 63.63636363636363,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 13,
+        "successes": 7,
+        "success_rate": 53.8
+      },
+      "Strong Bear": {
+        "total_occurrences": 8,
+        "successes": 7,
+        "success_rate": 87.5
+      },
+      "Unknown": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "50": {
+    "direction": "long",
+    "overall_success_rate": 60.0,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 1,
+        "successes": 1,
+        "success_rate": 100.0
+      },
+      "Strong Bear": {
+        "total_occurrences": 2,
+        "successes": 1,
+        "success_rate": 50.0
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  },
+  "51": {
+    "direction": "long",
+    "overall_success_rate": 54.54545454545454,
+    "regime_performance": {
+      "Strong Bull": {
+        "total_occurrences": 7,
+        "successes": 5,
+        "success_rate": 71.4
+      },
+      "Strong Bear": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      },
+      "Unknown": {
+        "total_occurrences": 2,
+        "successes": 2,
+        "success_rate": 100.0
+      }
+    }
+  }
+}

@@ -10,7 +10,9 @@
 				"puppeteer_evaluate",
 				"puppeteer_navigate",
 				"puppeteer_screenshot",
-				"puppeteer_click"
+				"puppeteer_click",
+				"puppeteer_select",
+				"puppeteer_hover"
 			]
 		}
 	}

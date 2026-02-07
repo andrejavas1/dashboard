@@ -396,11 +396,60 @@
             flex-wrap: wrap;
             gap: 15px;
         }
+        
+        /* Ticker Queue Panel Styles */
+        .ticker-queue-panel {
+            background: #0f3460;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 12px 0;
+            border-left: 4px solid #ffd700;
+        }
+        
+        .ticker-tag {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #16213e;
+            border: 1px solid #4ecca3;
+            border-radius: 3px;
+            font-size: 10px;
+            color: #4ecca3;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+        
+        .ticker-tag:hover {
+            background: #4ecca3;
+            color: #1a1a2e;
+        }
+        
+        .ticker-tag.failed {
+            border-color: #e94560;
+            color: #e94560;
+        }
+        
+        .ticker-tag.failed:hover {
+            background: #e94560;
+            color: #fff;
+        }
+        
+        .ticker-tag .remove-btn {
+            margin-left: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Pattern Trading Dashboard - Real-Time</h1>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <h1 style="margin: 0;">Pattern Trading Dashboard - Real-Time</h1>
+            <div id="testStatus" style="display: flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 4px; font-size: 13px; font-weight: bold;">
+                <span id="testStatusIcon">⏳</span>
+                <span id="testStatusText">Loading test status...</span>
+            </div>
+        </div>
         <div class="main-split-layout">
             <div class="left-sidebar">
                 <div class="sidebar-header">
@@ -422,6 +471,69 @@
                                     <option value="long">Long</option>
                                     <option value="short">Short</option>
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Ticker Selector -->
+                    <div class="filter-group">
+                        <label for="tickerSelect">Ticker:</label>
+                        <select id="tickerSelect" onchange="changeTicker(this.value)">
+                            <!-- Options populated dynamically from API -->
+                        </select>
+                    </div>
+                    
+                    <!-- TICKER QUEUE MANAGEMENT PANEL -->
+                    <div class="ticker-queue-panel">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <strong style="color: #4ecca3;">Ticker Manager</strong>
+                            <button onclick="toggleTickerManager()" style="background: none; border: none; color: #4ecca3; cursor: pointer; font-size: 12px;">▼</button>
+                        </div>
+                        <div id="tickerManagerContent" style="display: none;">
+                            <!-- Add Ticker Form -->
+                            <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #0f3460;">
+                                <div style="display: flex; gap: 5px; margin-bottom: 8px;">
+                                    <input type="text" id="newTickerInput" placeholder="Add ticker (e.g., AAPL)" maxlength="5" style="flex: 1; padding: 6px; background: #0f3460; border: 1px solid #4ecca3; color: #eee; border-radius: 3px; font-size: 12px;">
+                                    <button onclick="addTicker()" style="padding: 6px 12px; background: #4ecca3; color: #1a1a2e; border: none; border-radius: 3px; cursor: pointer; font-weight: bold; font-size: 11px;">Add</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Processing Status -->
+                            <div id="processingStatus" style="margin-bottom: 12px; padding: 10px; background: #0f3460; border-radius: 4px; font-size: 11px; display: none;">
+                                <div style="color: #ffd700; font-weight: bold; margin-bottom: 5px;">⏳ Processing</div>
+                                <div>Ticker: <span id="processingTicker" style="color: #4ecca3;">-</span></div>
+                                <div>Phase: <span id="processingPhase" style="color: #4ecca3;">-</span></div>
+                                <div style="margin-top: 8px; background: #16213e; border-radius: 3px; height: 16px; overflow: hidden;">
+                                    <div id="progressBar" style="height: 100%; background: #4ecca3; width: 0%; transition: width 0.3s; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #1a1a2e; font-weight: bold;"></div>
+                                </div>
+                                <div style="margin-top: 4px; text-align: center; font-size: 10px; color: #888;"><span id="progressPct">0</span>%</div>
+                            </div>
+                            
+                            <!-- Queue Status -->
+                            <div style="margin-bottom: 8px;">
+                                <div style="color: #ffd700; font-size: 11px; font-weight: bold; margin-bottom: 6px;">📋 Queue & Portfolio</div>
+                                <div style="font-size: 10px; color: #888; margin-bottom: 8px;">
+                                    Portfolio: <span id="portfolioCount">-</span> | 
+                                    Queued: <span id="queuedCount">-</span>
+                                </div>
+                                
+                                <!-- Portfolio Tickers -->
+                                <div style="margin-bottom: 8px;">
+                                    <div style="color: #4ecca3; font-size: 10px; font-weight: bold; margin-bottom: 4px;">✓ Portfolio (<span id="portfolioListCount">0</span>)</div>
+                                    <div id="portfolioList" style="display: flex; flex-wrap: wrap; gap: 4px;"></div>
+                                </div>
+                                
+                                <!-- Queued Tickers -->
+                                <div>
+                                    <div style="color: #ffd700; font-size: 10px; font-weight: bold; margin-bottom: 4px;">⏳ Queued (<span id="queuedListCount">0</span>)</div>
+                                    <div id="queuedList" style="display: flex; flex-wrap: wrap; gap: 4px;"></div>
+                                </div>
+                                
+                                <!-- Failed Tickers -->
+                                <div id="failedSection" style="display: none; margin-top: 8px;">
+                                    <div style="color: #e94560; font-size: 10px; font-weight: bold; margin-bottom: 4px;">✗ Failed (<span id="failedListCount">0</span>)</div>
+                                    <div id="failedList" style="display: flex; flex-wrap: wrap; gap: 4px;"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -569,8 +681,16 @@
                         <span>Pattern Entry</span>
                     </div>
                     <div class="legend-item">
-                        <div class="legend-color" style="background: #ff6b6b;"></div>
-                        <span>Pattern Exit</span>
+                        <div class="legend-color" style="background: #00ff00;"></div>
+                        <span>Exit (Success)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #ff0000;"></div>
+                        <span>Exit (Failed)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #ffa500;"></div>
+                        <span>Exit (Small Gain)</span>
                     </div>
                 </div>
             </div>
@@ -591,6 +711,7 @@
         let selectedPattern = 'all';
         let loadedPatternMarkers = {};
         let chart = null;
+        let currentTicker = 'XOM';
         window.regimeHistory = [];
         
         // Real-time data
@@ -952,14 +1073,75 @@
         Chart.register(regimeBackgroundPlugin);
         Chart.register(occurrenceLabelPlugin);
         
+        // Load test status
+        async function loadTestStatus() {
+            try {
+                const response = await fetch('/api/test-status');
+                const data = await response.json();
+                
+                const statusEl = document.getElementById('testStatus');
+                const iconEl = document.getElementById('testStatusIcon');
+                const textEl = document.getElementById('testStatusText');
+                
+                if (data.status === 'PASSED') {
+                    statusEl.style.background = 'rgba(78, 204, 163, 0.2)';
+                    statusEl.style.color = '#4ecca3';
+                    statusEl.style.border = '1px solid #4ecca3';
+                    iconEl.textContent = '✓';
+                    textEl.textContent = 'Validation Passed';
+                } else if (data.status === 'FAILED') {
+                    statusEl.style.background = 'rgba(233, 69, 96, 0.2)';
+                    statusEl.style.color = '#e94560';
+                    statusEl.style.border = '1px solid #e94560';
+                    iconEl.textContent = '✗';
+                    textEl.textContent = 'Validation Failed';
+                } else {
+                    statusEl.style.background = 'rgba(255, 193, 7, 0.2)';
+                    statusEl.style.color = '#ffc107';
+                    statusEl.style.border = '1px solid #ffc107';
+                    iconEl.textContent = '⚠';
+                    textEl.textContent = 'Validation Unknown';
+                }
+            } catch (error) {
+                console.log('Test status not available');
+                const statusEl = document.getElementById('testStatus');
+                const iconEl = document.getElementById('testStatusIcon');
+                const textEl = document.getElementById('testStatusText');
+                statusEl.style.background = 'rgba(136, 136, 136, 0.2)';
+                statusEl.style.color = '#888';
+                statusEl.style.border = '1px solid #888';
+                iconEl.textContent = '-';
+                textEl.textContent = 'No Test Data';
+            }
+        }
+        
+        // Change ticker
+        async function changeTicker(ticker) {
+            currentTicker = ticker;
+            // Clear chart
+            if (chart) {
+                chart.destroy();
+                chart = null;
+            }
+            // Reset selections
+            selectedPattern = 'all';
+            loadedPatternMarkers = {};
+            // Reload all data
+            await loadData();
+        }
+        
         // Load initial data
         async function loadData() {
+            // Load test status first
+            loadTestStatus();
+            
             try {
-                const [dataInfo, patterns, ohlcv, regimeAnalysis] = await Promise.all([
-                    fetch('/api/data-info').then(r => r.json()),
-                    fetch('/api/patterns').then(r => r.json()),
-                    fetch('/api/ohlcv').then(r => r.json()),
-                    fetch('/api/pattern-regime-analysis').then(r => r.json()).catch(() => ({}))
+                const [dataInfo, patterns, ohlcv, regimeAnalysis, regimeHistory] = await Promise.all([
+                    fetch(`/api/data-info?ticker=${currentTicker}&_t=${Date.now()}`).then(r => r.json()),
+                    fetch(`/api/patterns?ticker=${currentTicker}&_t=${Date.now()}`).then(r => r.json()),
+                    fetch(`/api/ohlcv?ticker=${currentTicker}&_t=${Date.now()}`).then(r => r.json()),
+                    fetch(`/api/pattern-regime-analysis?ticker=${currentTicker}&_t=${Date.now()}`).then(r => r.json()).catch(() => ({})),
+                    fetch(`/api/regime-history?ticker=${currentTicker}&_t=${Date.now()}`).then(r => r.json()).catch(() => [])
                 ]);
                 
                 document.getElementById('dataTimestamp').textContent = new Date(dataInfo.patterns_modified).toLocaleString();
@@ -969,9 +1151,9 @@
                 ohlcvData = ohlcv;
                 window.patternRegimeAnalysis = regimeAnalysis;
                 
-                // Calculate and store historical regimes
-                window.regimeHistory = calculateHistoricalRegimes();
-                console.log('Calculated regimes:', window.regimeHistory.length);
+                // Use server-provided regime history (from features matrix) instead of calculating
+                window.regimeHistory = regimeHistory.length > 0 ? regimeHistory : calculateHistoricalRegimes();
+                console.log('Loaded regimes:', window.regimeHistory.length);
                 
                 // Populate pattern selector
                 const select = document.getElementById('patternSelect');
@@ -1071,8 +1253,7 @@
                 html += '<div class="stat"><span class="stat-label">Validation Success:</span>';
                 html += '<span class="stat-value ' + (validationRate >= 50 ? 'positive' : 'negative') + '">' + validationRate.toFixed(1) + '%</span></div>';
                 html += '<div class="stat"><span class="stat-label">Occurrences:</span>';
-                html += '<span class="stat-value" id="visible-occurrences-' + stats.id + '">' + occCount + '</span>';
-                html += '<span style="color: #666; font-size: 10px; margin-left: 5px;">(visible)</span></div>';
+                html += '<span class="stat-value" id="visible-occurrences-' + stats.id + '">' + occCount + '</span></div>';
                 html += '<div class="stat"><span class="stat-label">Avg Move:</span>';
                 html += '<span class="stat-value ' + (avgMove >= 0 ? 'positive' : 'negative') + '">' + (avgMove >= 0 ? '+' : '') + avgMove.toFixed(2) + '%</span></div>';
                 html += '<div class="stat"><span class="stat-label">Method:</span>';
@@ -1143,22 +1324,24 @@
                         data: [],
                         backgroundColor: '#ffaa00',
                         type: 'scatter',
-                        pointRadius: 12,
-                        pointHoverRadius: 16,
+                        pointRadius: 18,
+                        pointHoverRadius: 24,
+                        pointHitRadius: 25,
                         pointStyle: 'triangle',
                         pointBorderColor: '#000',
-                        pointBorderWidth: 2
+                        pointBorderWidth: 3
                     }, {
                         label: 'Exits',
                         data: [],
                         backgroundColor: '#ff6b6b',
                         type: 'scatter',
-                        pointRadius: 10,
-                        pointHoverRadius: 14,
+                        pointRadius: 16,
+                        pointHoverRadius: 22,
+                        pointHitRadius: 23,
                         pointStyle: 'triangle',
                         pointRotation: 180,
                         pointBorderColor: '#000',
-                        pointBorderWidth: 2
+                        pointBorderWidth: 3
                     }]
                 },
                 options: {
@@ -1167,6 +1350,8 @@
                     plugins: {
                         legend: { display: false },
                         tooltip: {
+                            mode: 'point',
+                            intersect: true,
                             callbacks: {
                                 title: function(context) {
                                     const index = context[0].parsed.x;
@@ -1177,6 +1362,9 @@
                                 },
                                 label: function(context) {
                                     const d = context.raw;
+                                    const datasetLabel = context.dataset.label;
+                                    
+                                    // Candlestick data
                                     if (d && d.o !== undefined) {
                                         return [
                                             `Open: ${d.o.toFixed(2)}`,
@@ -1185,6 +1373,24 @@
                                             `Close: ${d.c.toFixed(2)}`
                                         ];
                                     }
+                                    
+                                    // Entry marker data
+                                    if (datasetLabel === 'Entries' && d) {
+                                        const lines = [`Entry #${d.occurrence}`];
+                                        if (d.date) lines.push(`Date: ${d.date}`);
+                                        if (d.y) lines.push(`Price: ${d.y.toFixed(2)}`);
+                                        return lines;
+                                    }
+                                    
+                                    // Exit marker data
+                                    if (datasetLabel === 'Exits' && d) {
+                                        const lines = [`Exit #${d.occurrence}`];
+                                        if (d.date) lines.push(`Date: ${d.date}`);
+                                        if (d.y) lines.push(`Price: ${d.y.toFixed(2)}`);
+                                        if (d.outcome) lines.push(`Outcome: ${d.outcome}`);
+                                        return lines;
+                                    }
+                                    
                                     return '';
                                 }
                             }
@@ -1265,14 +1471,38 @@
         // Load pattern markers
         async function loadPatternMarkers(patternId) {
             try {
-                const response = await fetch('/api/pattern/' + patternId + '/markers');
+                const response = await fetch('/api/pattern/' + patternId + '/markers?ticker=' + currentTicker);
                 const data = await response.json();
                 
                 const entryCount = (data.entry || []).length;
                 
                 if (chart) {
-                    chart.data.datasets[1].data = (data.entry || []).map(m => ({ x: m.x, y: m.y, occurrence: m.occurrence }));
-                    chart.data.datasets[2].data = (data.exit || []).map(m => ({ x: m.x, y: m.y, occurrence: m.occurrence }));
+                    // Entry markers - all same color (yellow)
+                    chart.data.datasets[1].data = (data.entry || []).map(m => ({
+                        x: m.x,
+                        y: m.y,
+                        occurrence: m.occurrence,
+                        date: m.date
+                    }));
+                    chart.data.datasets[1].backgroundColor = '#ffaa00';  // Fixed yellow for entries
+                    
+                    // Exit markers - color by outcome: green for success, red for failure, orange for small gain
+                    chart.data.datasets[2].data = (data.exit || []).map(m => ({
+                        x: m.x,
+                        y: m.y,
+                        occurrence: m.occurrence,
+                        outcome: m.outcome,
+                        date: m.date
+                    }));
+                    // Set backgroundColor as function to color exits by outcome
+                    chart.data.datasets[2].backgroundColor = (context) => {
+                        const point = context.raw;
+                        if (!point || !point.outcome) return '#ff6b6b';  // Default orange-red
+                        // Exit outcomes: STRONG_UP = hit target (green), DOWN/STRONG_DOWN = loss (red), UP = small gain (orange)
+                        if (point.outcome === 'STRONG_UP') return '#00ff00';  // Success - hit target
+                        if (point.outcome === 'DOWN' || point.outcome === 'STRONG_DOWN') return '#ff0000';  // Failed - loss
+                        return '#ffa500';  // Small gain - orange
+                    };
                     chart.update();
                 }
                 
@@ -1292,7 +1522,7 @@
         // Load and display pattern indicators
         async function loadPatternIndicators(patternId) {
             try {
-                const response = await fetch('/api/pattern/' + patternId + '/indicators');
+                const response = await fetch('/api/pattern/' + patternId + '/indicators?ticker=' + currentTicker);
                 const data = await response.json();
                 
                 if (!data.indicators) return;
@@ -1547,8 +1777,279 @@
             autoFitYAxis();
         }
         
-        // Initialize
-        loadData();
+        // Load available tickers from API
+        async function loadTickers() {
+            try {
+                const response = await fetch('/api/tickers');
+                const data = await response.json();
+                
+                const tickerSelect = document.getElementById('tickerSelect');
+                tickerSelect.innerHTML = ''; // Clear existing options
+                
+                data.tickers.forEach(ticker => {
+                    const option = document.createElement('option');
+                    option.value = ticker;
+                    option.textContent = ticker;
+                    if (ticker === data.default) {
+                        option.selected = true;
+                        currentTicker = ticker;
+                    }
+                    tickerSelect.appendChild(option);
+                });
+                
+                console.log('Loaded tickers:', data.tickers);
+            } catch (error) {
+                console.error('Error loading tickers:', error);
+                // Fallback to default tickers if API fails
+                const tickerSelect = document.getElementById('tickerSelect');
+                tickerSelect.innerHTML = '<option value="XOM">XOM</option><option value="AAPL">AAPL</option><option value="TSLA">TSLA</option>';
+            }
+        }
+        
+        // Initialize - load tickers first, then data
+        loadTickers().then(() => loadData());
+        
+        // ========== TICKER QUEUE MANAGEMENT ==========
+        
+        // Toggle ticker manager panel
+        function toggleTickerManager() {
+            const content = document.getElementById('tickerManagerContent');
+            content.style.display = content.style.display === 'none' ? 'block' : 'none';
+            if (content.style.display === 'block') {
+                updateTickerQueueDisplay();
+                startProgressPolling();
+            }
+        }
+        
+        // Add new ticker to queue
+        async function addTicker() {
+            const input = document.getElementById('newTickerInput');
+            const ticker = input.value.trim().toUpperCase();
+            
+            if (!ticker) {
+                alert('Please enter a ticker symbol');
+                return;
+            }
+            
+            if (ticker.length < 3 || ticker.length > 5) {
+                alert('Ticker must be 3-5 characters');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/ticker-queue/add', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ticker: ticker})
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    input.value = '';
+                    updateTickerQueueDisplay();
+                    alert(`✓ ${ticker} added to queue!`);
+                } else {
+                    alert(`✗ Error: ${result.message}`);
+                }
+            } catch (error) {
+                console.error('Error adding ticker:', error);
+                alert('Error adding ticker: ' + error.message);
+            }
+        }
+        
+        // Update queue display
+        async function updateTickerQueueDisplay() {
+            try {
+                const response = await fetch('/api/ticker-queue/status');
+                const status = await response.json();
+                
+                // Update counts
+                document.getElementById('portfolioCount').textContent = status.total_completed;
+                document.getElementById('queuedCount').textContent = status.total_queued;
+                
+                // Update portfolio list
+                const portfolioList = document.getElementById('portfolioList');
+                portfolioList.innerHTML = '';
+                status.portfolio.forEach(ticker => {
+                    const tag = document.createElement('div');
+                    tag.className = 'ticker-tag';
+                    tag.innerHTML = `${ticker} ✓ <span class="remove-btn" onclick="event.stopPropagation(); deleteTicker('${ticker}')">✕</span>`;
+                    tag.onclick = () => changeTicker(ticker);
+                    portfolioList.appendChild(tag);
+                });
+                document.getElementById('portfolioListCount').textContent = status.portfolio.length;
+                
+                // Update queued list
+                const queuedList = document.getElementById('queuedList');
+                queuedList.innerHTML = '';
+                status.queued.forEach(ticker => {
+                    const tag = document.createElement('div');
+                    tag.className = 'ticker-tag';
+                    tag.innerHTML = `${ticker} <span class="remove-btn" onclick="cancelTicker('${ticker}')">✕</span>`;
+                    queuedList.appendChild(tag);
+                });
+                document.getElementById('queuedListCount').textContent = status.queued.length;
+                
+                // Update failed list
+                const failedSection = document.getElementById('failedSection');
+                const failedList = document.getElementById('failedList');
+                if (Object.keys(status.failed).length > 0) {
+                    failedSection.style.display = 'block';
+                    failedList.innerHTML = '';
+                    Object.keys(status.failed).forEach(ticker => {
+                        const tag = document.createElement('div');
+                        tag.className = 'ticker-tag failed';
+                        tag.innerHTML = `${ticker} <span class="remove-btn" onclick="retryTicker('${ticker}')">⟲</span>`;
+                        failedList.appendChild(tag);
+                    });
+                    document.getElementById('failedListCount').textContent = Object.keys(status.failed).length;
+                } else {
+                    failedSection.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error updating queue display:', error);
+            }
+        }
+        
+        // Cancel queued ticker
+        async function cancelTicker(ticker) {
+            if (!confirm(`Cancel processing ${ticker}?`)) return;
+            
+            try {
+                const response = await fetch(`/api/ticker-queue/cancel/${ticker}`, {method: 'DELETE'});
+                const result = await response.json();
+                if (result.success) {
+                    updateTickerQueueDisplay();
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error cancelling ticker:', error);
+            }
+        }
+        
+        // Retry failed ticker
+        async function retryTicker(ticker) {
+            if (!confirm(`Retry ${ticker}?`)) return;
+            
+            try {
+                const response = await fetch(`/api/ticker-queue/retry/${ticker}`, {method: 'POST'});
+                const result = await response.json();
+                if (result.success) {
+                    updateTickerQueueDisplay();
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error retrying ticker:', error);
+            }
+        }
+        
+        // Delete portfolio ticker
+        async function deleteTicker(ticker) {
+            if (!confirm(`Delete ${ticker} from portfolio?\n\nThis will permanently remove all data for this ticker.`)) return;
+            
+            try {
+                const response = await fetch(`/api/ticker-queue/remove/${ticker}`, {method: 'DELETE'});
+                
+                // Check if response is OK
+                if (!response.ok) {
+                    const text = await response.text();
+                    console.error('Server error:', response.status, text);
+                    alert(`Server error ${response.status}: ${text.substring(0, 200)}`);
+                    return;
+                }
+                
+                const result = await response.json();
+                if (result.success) {
+                    updateTickerQueueDisplay();
+                    // If the deleted ticker was currently selected, reload the page
+                    if (currentTicker === ticker) {
+                        location.reload();
+                    }
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error deleting ticker:', error);
+                alert('Error deleting ticker: ' + error.message);
+            }
+        }
+        
+        // Poll progress
+        let progressInterval = null;
+        function startProgressPolling() {
+            if (progressInterval) return; // Already polling
+            
+            progressInterval = setInterval(updateProgressDisplay, 1000);
+        }
+        
+        async function updateProgressDisplay() {
+            try {
+                const response = await fetch('/api/ticker-queue/progress');
+                const progress = await response.json();
+                
+                const statusDiv = document.getElementById('processingStatus');
+                
+                if (progress.status === 'processing' && progress.ticker) {
+                    statusDiv.style.display = 'block';
+                    document.getElementById('processingTicker').textContent = progress.ticker;
+                    document.getElementById('processingPhase').textContent = 
+                        `${progress.current_phase}/10: ${progress.phase_name}`;
+                    
+                    const progressBar = document.getElementById('progressBar');
+                    const progressPct = document.getElementById('progressPct');
+                    progressBar.style.width = progress.progress_pct + '%';
+                    progressPct.textContent = progress.progress_pct;
+                } else if (progress.status === 'complete') {
+                    statusDiv.style.display = 'none';
+                    updateTickerQueueDisplay();
+                } else {
+                    statusDiv.style.display = 'none';
+                }
+            } catch (error) {
+                console.debug('Error updating progress:', error);
+            }
+        }
+        
+        // Stop polling when manager is closed
+        function stopProgressPolling() {
+            if (progressInterval) {
+                clearInterval(progressInterval);
+                progressInterval = null;
+            }
+        }
+        
+        // Load tickers and populate dropdown
+        async function loadTickers() {
+            try {
+                const response = await fetch('/api/tickers/portfolio');
+                const data = await response.json();
+                
+                const tickerSelect = document.getElementById('tickerSelect');
+                tickerSelect.innerHTML = '';
+                
+                data.tickers.forEach(ticker => {
+                    const option = document.createElement('option');
+                    option.value = ticker;
+                    option.textContent = ticker;
+                    tickerSelect.appendChild(option);
+                });
+                
+                // Set to default if available
+                if (data.default) {
+                    tickerSelect.value = data.default;
+                    currentTicker = data.default;
+                }
+                
+                console.log('Loaded tickers:', data.tickers);
+            } catch (error) {
+                console.error('Error loading tickers:', error);
+                // Fallback to default tickers if API fails
+                const tickerSelect = document.getElementById('tickerSelect');
+                tickerSelect.innerHTML = '<option value="XOM">XOM</option><option value="AAPL">AAPL</option><option value="TSLA">TSLA</option>';
+            }
+        }
     </script>
 </body>
 </html>

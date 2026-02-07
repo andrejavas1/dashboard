@@ -1,0 +1,15 @@
+confidence_score: 100.0
+data_quality_metrics:
+  completeness: 100.0
+  gap_rate: 0
+  outlier_rate: 0.0
+missing_gaps: []
+outliers: []
+sources_used:
+- yahoo_finance
+- alpha_vantage
+- tiingo
+- quandl
+total_days: 1
+validation_results: []
+verified_days: 1

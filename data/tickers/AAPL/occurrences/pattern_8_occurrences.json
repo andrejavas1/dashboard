@@ -1,0 +1,86 @@
+[
+  {
+    "Date": "2024-03-07",
+    "Open": 167.78130279152694,
+    "High": 169.34851990765398,
+    "Low": 167.12665473872153,
+    "Close": 167.6325225830078,
+    "Volume": 71765100,
+    "outcome": "UP",
+    "actual_move": 1.4023711162378545,
+    "time_to_target": 10,
+    "target_reached": false
+  },
+  {
+    "Date": "2024-04-22",
+    "Open": 164.18068981978783,
+    "High": 165.9066008250168,
+    "Low": 163.4367584871004,
+    "Close": 164.4980926513672,
+    "Volume": 48116400,
+    "outcome": "STRONG_UP",
+    "actual_move": 9.56949587066406,
+    "time_to_target": 10,
+    "target_reached": true
+  },
+  {
+    "Date": "2024-05-06",
+    "Open": 180.8745517774664,
+    "High": 182.7095737332232,
+    "Low": 178.96016017665565,
+    "Close": 180.2397308349609,
+    "Volume": 78569700,
+    "outcome": "STRONG_UP",
+    "actual_move": 5.27712428625651,
+    "time_to_target": 10,
+    "target_reached": true
+  },
+  {
+    "Date": "2024-06-24",
+    "Open": 206.3187055335118,
+    "High": 211.2651058128792,
+    "Low": 205.1963237537201,
+    "Close": 206.73587036132807,
+    "Volume": 80727000,
+    "outcome": "STRONG_UP",
+    "actual_move": 9.868346953148546,
+    "time_to_target": 10,
+    "target_reached": true
+  },
+  {
+    "Date": "2024-09-26",
+    "Open": 226.0279341026713,
+    "High": 227.22121534991768,
+    "Low": 224.14851196557493,
+    "Close": 226.2467041015625,
+    "Volume": 36636700,
+    "outcome": "UP",
+    "actual_move": 0.6680715523199632,
+    "time_to_target": 10,
+    "target_reached": false
+  },
+  {
+    "Date": "2025-08-04",
+    "Open": 204.0803265791815,
+    "High": 207.44325668811337,
+    "Low": 201.2562704772093,
+    "Close": 202.9227752685547,
+    "Volume": 75109300,
+    "outcome": "STRONG_UP",
+    "actual_move": 13.672009851755206,
+    "time_to_target": 10,
+    "target_reached": true
+  },
+  {
+    "Date": "2026-01-21",
+    "Open": 248.6999969482422,
+    "High": 251.5599975585937,
+    "Low": 245.17999267578125,
+    "Close": 247.6499938964844,
+    "Volume": 54641700,
+    "outcome": "STRONG_UP",
+    "actual_move": 11.645466201765977,
+    "time_to_target": 10,
+    "target_reached": true
+  }
+]

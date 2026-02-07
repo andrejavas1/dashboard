@@ -1,0 +1,93 @@
+[
+  {
+    "Date": "2025-09-22",
+    "Open": 111.4749703021294,
+    "High": 111.82194158762375,
+    "Low": 110.59268788129803,
+    "Close": 111.04869842529295,
+    "Volume": 15611500,
+    "outcome": "UP",
+    "actual_move": 1.9460852090722631,
+    "time_to_target": 10,
+    "target_reached": false,
+    "regime": "Strong Bear"
+  },
+  {
+    "Date": "2025-10-07",
+    "Open": 113.08092450680392,
+    "High": 113.5171117864794,
+    "Low": 110.77112559505582,
+    "Close": 113.26927947998048,
+    "Volume": 11945000,
+    "outcome": "DOWN",
+    "actual_move": -1.356554986178172,
+    "time_to_target": 10,
+    "target_reached": false,
+    "regime": "Strong Bull"
+  },
+  {
+    "Date": "2025-10-21",
+    "Open": 111.91115898981307,
+    "High": 112.37708494977316,
+    "Low": 111.01896114768124,
+    "Close": 111.73271942138672,
+    "Volume": 9202300,
+    "outcome": "UP",
+    "actual_move": 1.2687443270007417,
+    "time_to_target": 10,
+    "target_reached": false,
+    "regime": "Sideways"
+  },
+  {
+    "Date": "2025-11-04",
+    "Open": 112.3969095996208,
+    "High": 113.3585001989856,
+    "Low": 111.53445797757612,
+    "Close": 113.15032196044922,
+    "Volume": 16860700,
+    "outcome": "STRONG_UP",
+    "actual_move": 5.196341218457028,
+    "time_to_target": 10,
+    "target_reached": true,
+    "regime": "Strong Bear"
+  },
+  {
+    "Date": "2025-11-24",
+    "Open": 117.1999969482422,
+    "High": 117.1999969482422,
+    "Low": 114.73999786376952,
+    "Close": 115.97000122070312,
+    "Volume": 18034900,
+    "outcome": "UP",
+    "actual_move": 1.966024623003838,
+    "time_to_target": 10,
+    "target_reached": false,
+    "regime": "Strong Bear"
+  },
+  {
+    "Date": "2025-12-16",
+    "Open": 116.7699966430664,
+    "High": 116.83999633789062,
+    "Low": 114.61000061035156,
+    "Close": 114.68000030517578,
+    "Volume": 17638700,
+    "outcome": "STRONG_UP",
+    "actual_move": 4.935469146889595,
+    "time_to_target": 10,
+    "target_reached": true,
+    "regime": "Strong Bear"
+  },
+  {
+    "Date": "2026-01-07",
+    "Open": 119.8000030517578,
+    "High": 120.12000274658205,
+    "Low": 118.2699966430664,
+    "Close": 118.48999786376952,
+    "Volume": 20353000,
+    "outcome": "STRONG_UP",
+    "actual_move": 12.78589062285004,
+    "time_to_target": 10,
+    "target_reached": true,
+    "regime": "Strong Bear"
+  }
+]

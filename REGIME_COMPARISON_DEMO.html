@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Regime Detection - Adjustable Duration</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #4ecca3;
+        }
+        .subtitle {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+        .controls-panel {
+            background: #16213e;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .slider-container {
+            margin-bottom: 15px;
+        }
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .slider-value {
+            color: #4ecca3;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            background: #0f3460;
+            border-radius: 4px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #4ecca3;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .slider-ticks {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #888;
+            margin-top: 5px;
+        }
+        .data-info {
+            text-align: center;
+            color: #4ecca3;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        .method-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .method-card {
+            background: #16213e;
+            border-radius: 8px;
+            padding: 15px;
+            border-left: 4px solid #4ecca3;
+        }
+        .method-card.fixed {
+            border-left-color: #e94560;
+        }
+        .method-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .method-title {
+            color: #4ecca3;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .method-card.fixed .method-title {
+            color: #e94560;
+        }
+        .method-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+            flex-wrap: wrap;
+        }
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .stat-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+        .chart-container {
+            height: 250px;
+            position: relative;
+        }
+        .description {
+            font-size: 11px;
+            color: #aaa;
+            margin-top: 8px;
+            padding: 8px;
+            background: #0f1a30;
+            border-radius: 4px;
+        }
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #4ecca3;
+        }
+        .global-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #16213e;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .legend-color {
+            width: 20px;
+            height: 12px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Market Regime Detection - Adjustable Duration</h1>
+    <p class="subtitle">Adjust the slider to see how minimum duration affects regime stability</p>
+    
+    <div class="controls-panel">
+        <div class="data-info" id="dataInfo">Loading data...</div>
+        
+        <div class="slider-container">
+            <div class="slider-label">
+                <span>Minimum Duration Before Regime Change</span>
+                <span class="slider-value" id="durationValue">60 days</span>
+            </div>
+            <input type="range" id="durationSlider" min="0" max="120" value="60" step="5">
+            <div class="slider-ticks">
+                <span>0 (immediate)</span>
+                <span>30</span>
+                <span>60 (balanced)</span>
+                <span>90</span>
+                <span>120 (very stable)</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="global-legend">
+        <div class="legend-item"><div class="legend-color" style="background: rgba(78, 204, 163, 0.4);"></div><span>Strong Bull</span></div>
+        <div class="legend-item"><div class="legend-color" style="background: rgba(78, 204, 163, 0.15);"></div><span>Weak Bull</span></div>
+        <div class="legend-item"><div class="legend-color" style="background: rgba(169, 169, 169, 0.15);"></div><span>Sideways</span></div>
+        <div class="legend-item"><div class="legend-color" style="background: rgba(233, 69, 96, 0.15);"></div><span>Weak Bear</span></div>
+        <div class="legend-item"><div class="legend-color" style="background: rgba(233, 69, 96, 0.4);"></div><span>Strong Bear</span></div>
+    </div>
+
+    <div id="loading" class="loading">Loading data...</div>
+    
+    <div id="methodGrid" class="method-grid" style="display: none;">
+        <div class="method-card">
+            <div class="method-header">
+                <span class="method-title">1. MA Alignment (Responds to Slider)</span>
+                <div class="method-stats" id="stats1"></div>
+            </div>
+            <div class="chart-container"><canvas id="chart1"></canvas></div>
+            <div class="description">50/200 MA crossovers with adjustable minimum duration. Move slider to see regime changes reduce.</div>
+        </div>
+
+        <div class="method-card">
+            <div class="method-header">
+                <span class="method-title">2. Price Momentum (Responds to Slider)</span>
+                <div class="method-stats" id="stats2"></div>
+            </div>
+            <div class="chart-container"><canvas id="chart2"></canvas></div>
+            <div class="description">50-day price change with adjustable confirmation period. Higher duration = fewer whipsaws.</div>
+        </div>
+
+        <div class="method-card fixed">
+            <div class="method-header">
+                <span class="method-title">3. ADX + Directional Movement (Fixed - 40 days)</span>
+                <div class="method-stats" id="stats3"></div>
+            </div>
+            <div class="chart-container"><canvas id="chart3"></canvas></div>
+            <div class="description">ADX with +DI/-DI crossovers. Fixed at 40 days for comparison baseline.</div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let ohlcvData = [];
+        let charts = {};
+        let currentDuration = 60;
+
+        // Regime colors
+        const REGIME_COLORS = {
+            strongBull: { bg: 'rgba(78, 204, 163, 0.4)', border: '#4ecca3' },
+            weakBull: { bg: 'rgba(78, 204, 163, 0.15)', border: 'rgba(78, 204, 163, 0.5)' },
+            sideways: { bg: 'rgba(169, 169, 169, 0.15)', border: 'rgba(169, 169, 169, 0.5)' },
+            weakBear: { bg: 'rgba(233, 69, 96, 0.15)', border: 'rgba(233, 69, 96, 0.5)' },
+            strongBear: { bg: 'rgba(233, 69, 96, 0.4)', border: '#e94560' }
+        };
+
+        // Load data on startup
+        async function loadData() {
+            try {
+                const response = await fetch('/api/ohlcv-full');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                ohlcvData = await response.json();
+                
+                document.getElementById('dataInfo').textContent = 
+                    `Loaded ${ohlcvData.length} days of XOM data (${ohlcvData[0].Date.split('T')[0]} to ${ohlcvData[ohlcvData.length-1].Date.split('T')[0]})`;
+                
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('methodGrid').style.display = 'grid';
+                
+                // Initialize charts
+                initCharts();
+                
+                // Initial calculation with default duration
+                updateAllCharts(60);
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('dataInfo').textContent = 'Error loading data. Make sure the server is running.';
+            }
+        }
+
+        // Calculate Simple Moving Average
+        function calculateSMA(data, period) {
+            const sma = [];
+            for (let i = 0; i < data.length; i++) {
+                if (i < period - 1) {
+                    sma.push(null);
+                    continue;
+                }
+                let sum = 0;
+                for (let j = 0; j < period; j++) {
+                    sum += data[i - j].Close;
+                }
+                sma.push(sum / period);
+            }
+            return sma;
+        }
+
+        // Calculate True Range
+        function calculateTrueRange(data) {
+            const tr = [data[0].High - data[0].Low];
+            for (let i = 1; i < data.length; i++) {
+                const tr1 = data[i].High - data[i].Low;
+                const tr2 = Math.abs(data[i].High - data[i-1].Close);
+                const tr3 = Math.abs(data[i].Low - data[i-1].Close);
+                tr.push(Math.max(tr1, tr2, tr3));
+            }
+            return tr;
+        }
+
+        // Calculate Average True Range
+        function calculateATR(data, period = 14) {
+            const tr = calculateTrueRange(data);
+            const atr = [];
+            for (let i = 0; i < tr.length; i++) {
+                if (i < period - 1) {
+                    atr.push(null);
+                } else if (i === period - 1) {
+                    let sum = 0;
+                    for (let j = 0; j < period; j++) {
+                        sum += tr[j];
+                    }
+                    atr.push(sum / period);
+                } else {
+                    atr.push((atr[i-1] * (period - 1) + tr[i]) / period);
+                }
+            }
+            return atr;
+        }
+
+        // Calculate +DI and -DI for ADX
+        function calculateDM(data, period = 14) {
+            const plusDM = [0];
+            const minusDM = [0];
+            
+            for (let i = 1; i < data.length; i++) {
+                const upMove = data[i].High - data[i-1].High;
+                const downMove = data[i-1].Low - data[i].Low;
+                
+                if (upMove > downMove && upMove > 0) {
+                    plusDM.push(upMove);
+                } else {
+                    plusDM.push(0);
+                }
+                
+                if (downMove > upMove && downMove > 0) {
+                    minusDM.push(downMove);
+                } else {
+                    minusDM.push(0);
+                }
+            }
+            
+            // Calculate smoothed +DM and -DM
+            const smoothedPlusDM = [];
+            const smoothedMinusDM = [];
+            const tr = calculateTrueRange(data);
+            
+            for (let i = 0; i < data.length; i++) {
+                if (i < period) {
+                    smoothedPlusDM.push(null);
+                    smoothedMinusDM.push(null);
+                } else if (i === period) {
+                    let sumPlus = 0, sumMinus = 0, sumTR = 0;
+                    for (let j = 1; j <= period; j++) {
+                        sumPlus += plusDM[j];
+                        sumMinus += minusDM[j];
+                        sumTR += tr[j];
+                    }
+                    smoothedPlusDM.push(sumPlus);
+                    smoothedMinusDM.push(sumMinus);
+                } else {
+                    smoothedPlusDM.push(smoothedPlusDM[i-1] - smoothedPlusDM[i-1]/period + plusDM[i]);
+                    smoothedMinusDM.push(smoothedMinusDM[i-1] - smoothedMinusDM[i-1]/period + minusDM[i]);
+                }
+            }
+            
+            // Calculate +DI and -DI
+            const plusDI = [];
+            const minusDI = [];
+            const atr = calculateATR(data, period);
+            
+            for (let i = 0; i < data.length; i++) {
+                if (atr[i] && smoothedPlusDM[i] !== null) {
+                    plusDI.push(100 * smoothedPlusDM[i] / (period * atr[i]));
+                    minusDI.push(100 * smoothedMinusDM[i] / (period * atr[i]));
+                } else {
+                    plusDI.push(null);
+                    minusDI.push(null);
+                }
+            }
+            
+            return { plusDI, minusDI };
+        }
+
+        // Calculate ADX
+        function calculateADX(data, period = 14) {
+            const { plusDI, minusDI } = calculateDM(data, period);
+            const dx = [];
+            
+            for (let i = 0; i < data.length; i++) {
+                if (plusDI[i] !== null && minusDI[i] !== null) {
+                    dx.push(100 * Math.abs(plusDI[i] - minusDI[i]) / (plusDI[i] + minusDI[i] + 0.0001));
+                } else {
+                    dx.push(null);
+                }
+            }
+            
+            const adx = [];
+            for (let i = 0; i < data.length; i++) {
+                if (i < 2 * period - 1) {
+                    adx.push(null);
+                } else if (i === 2 * period - 1) {
+                    let sum = 0;
+                    for (let j = period; j < 2 * period; j++) {
+                        sum += dx[j];
+                    }
+                    adx.push(sum / period);
+                } else {
+                    adx.push((adx[i-1] * (period - 1) + dx[i]) / period);
+                }
+            }
+            
+            return { adx, plusDI, minusDI };
+        }
+
+        // Apply minimum duration constraint to regime changes
+        function applyMinDuration(regimes, minDuration) {
+            if (minDuration <= 0) return regimes;
+            
+            const result = [...regimes];
+            let currentRegime = result[0];
+            let regimeStart = 0;
+            
+            for (let i = 1; i < result.length; i++) {
+                if (result[i] !== currentRegime) {
+                    const duration = i - regimeStart;
+                    if (duration < minDuration) {
+                        // Revert to previous regime
+                        for (let j = regimeStart; j < i; j++) {
+                            result[j] = result[regimeStart - 1] || result[i];
+                        }
+                    } else {
+                        currentRegime = result[i];
+                        regimeStart = i;
+                    }
+                }
+            }
+            
+            return result;
+        }
+
+        // Count regime changes
+        function countRegimeChanges(regimes) {
+            let changes = 0;
+            for (let i = 1; i < regimes.length; i++) {
+                if (regimes[i] !== regimes[i-1]) changes++;
+            }
+            return changes;
+        }
+
+        // Count regime occurrences
+        function countRegimes(regimes) {
+            const counts = { strongBull: 0, weakBull: 0, sideways: 0, weakBear: 0, strongBear: 0 };
+            regimes.forEach(r => { if (counts[r] !== undefined) counts[r]++; });
+            return counts;
+        }
+
+        // Method 1: MA Alignment (50/200)
+        function calculateMAAlignment(minDuration) {
+            const ma50 = calculateSMA(ohlcvData, 50);
+            const ma200 = calculateSMA(ohlcvData, 200);
+            
+            const rawRegimes = [];
+            for (let i = 0; i < ohlcvData.length; i++) {
+                if (ma50[i] === null || ma200[i] === null) {
+                    rawRegimes.push('sideways');
+                    continue;
+                }
+                
+                const maDiff = (ma50[i] - ma200[i]) / ma200[i] * 100;
+                
+                if (maDiff > 5) rawRegimes.push('strongBull');
+                else if (maDiff > 0) rawRegimes.push('weakBull');
+                else if (maDiff > -5) rawRegimes.push('weakBear');
+                else rawRegimes.push('strongBear');
+            }
+            
+            return applyMinDuration(rawRegimes, minDuration);
+        }
+
+        // Method 2: Price Momentum (50-day)
+        function calculatePriceMomentum(minDuration) {
+            const rawRegimes = [];
+            
+            for (let i = 0; i < ohlcvData.length; i++) {
+                if (i < 50) {
+                    rawRegimes.push('sideways');
+                    continue;
+                }
+                
+                const priceChange = (ohlcvData[i].Close - ohlcvData[i-50].Close) / ohlcvData[i-50].Close * 100;
+                
+                if (priceChange > 15) rawRegimes.push('strongBull');
+                else if (priceChange > 5) rawRegimes.push('weakBull');
+                else if (priceChange > -5) rawRegimes.push('sideways');
+                else if (priceChange > -15) rawRegimes.push('weakBear');
+                else rawRegimes.push('strongBear');
+            }
+            
+            return applyMinDuration(rawRegimes, minDuration);
+        }
+
+        // Method 3: ADX + Directional Movement (fixed 40 days)
+        function calculateADXRegime() {
+            const { adx, plusDI, minusDI } = calculateADX(ohlcvData, 14);
+            const rawRegimes = [];
+            
+            for (let i = 0; i < ohlcvData.length; i++) {
+                if (adx[i] === null || plusDI[i] === null) {
+                    rawRegimes.push('sideways');
+                    continue;
+                }
+                
+                const trendStrength = adx[i];
+                const diDiff = plusDI[i] - minusDI[i];
+                
+                if (trendStrength > 25) {
+                    if (diDiff > 10) rawRegimes.push('strongBull');
+                    else if (diDiff < -10) rawRegimes.push('strongBear');
+                    else rawRegimes.push('sideways');
+                } else {
+                    if (diDiff > 5) rawRegimes.push('weakBull');
+                    else if (diDiff < -5) rawRegimes.push('weakBear');
+                    else rawRegimes.push('sideways');
+                }
+            }
+            
+            // Fixed at 40 days
+            return applyMinDuration(rawRegimes, 40);
+        }
+
+        // Initialize all charts
+        function initCharts() {
+            const dates = ohlcvData.map(d => d.Date.split('T')[0]);
+            const prices = ohlcvData.map(d => d.Close);
+            
+            // Chart 1: MA Alignment
+            const ctx1 = document.getElementById('chart1').getContext('2d');
+            charts.chart1 = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: 'Price',
+                        data: prices,
+                        borderColor: '#fff',
+                        backgroundColor: 'transparent',
+                        borderWidth: 1,
+                        pointRadius: 0,
+                        tension: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { intersect: false },
+                    plugins: {
+                        legend: { display: false },
+                        annotation: { annotations: {} }
+                    },
+                    scales: {
+                        x: { display: false },
+                        y: {
+                            grid: { color: 'rgba(255,255,255,0.1)' },
+                            ticks: { color: '#aaa', font: { size: 10 } }
+                        }
+                    }
+                },
+                plugins: [{
+                    id: 'regimeBackground',
+                    beforeDraw: (chart) => drawRegimeBackground(chart, 'maAlignment')
+                }]
+            });
+
+            // Chart 2: Price Momentum
+            const ctx2 = document.getElementById('chart2').getContext('2d');
+            charts.chart2 = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: 'Price',
+                        data: prices,
+                        borderColor: '#fff',
+                        backgroundColor: 'transparent',
+                        borderWidth: 1,
+                        pointRadius: 0,
+                        tension: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { intersect: false },
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: { display: false },
+                        y: {
+                            grid: { color: 'rgba(255,255,255,0.1)' },
+                            ticks: { color: '#aaa', font: { size: 10 } }
+                        }
+                    }
+                },
+                plugins: [{
+                    id: 'regimeBackground',
+                    beforeDraw: (chart) => drawRegimeBackground(chart, 'momentum')
+                }]
+            });
+
+            // Chart 3: ADX (fixed)
+            const ctx3 = document.getElementById('chart3').getContext('2d');
+            charts.chart3 = new Chart(ctx3, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: 'Price',
+                        data: prices,
+                        borderColor: '#fff',
+                        backgroundColor: 'transparent',
+                        borderWidth: 1,
+                        pointRadius: 0,
+                        tension: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { intersect: false },
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: { display: false },
+                        y: {
+                            grid: { color: 'rgba(255,255,255,0.1)' },
+                            ticks: { color: '#aaa', font: { size: 10 } }
+                        }
+                    }
+                },
+                plugins: [{
+                    id: 'regimeBackground',
+                    beforeDraw: (chart) => drawRegimeBackground(chart, 'adx')
+                }]
+            });
+        }
+
+        // Store current regimes for drawing
+        let currentRegimes = {
+            maAlignment: [],
+            momentum: [],
+            adx: []
+        };
+
+        // Draw regime background on chart
+        function drawRegimeBackground(chart, method) {
+            const regimes = currentRegimes[method];
+            if (!regimes || regimes.length === 0) return;
+            
+            const ctx = chart.ctx;
+            const chartArea = chart.chartArea;
+            const xScale = chart.scales.x;
+            
+            ctx.save();
+            
+            for (let i = 0; i < regimes.length - 1; i++) {
+                const regime = regimes[i];
+                const color = REGIME_COLORS[regime].bg;
+                
+                const x1 = xScale.getPixelForValue(i);
+                const x2 = xScale.getPixelForValue(i + 1);
+                
+                ctx.fillStyle = color;
+                ctx.fillRect(x1, chartArea.top, x2 - x1, chartArea.bottom - chartArea.top);
+            }
+            
+            ctx.restore();
+        }
+
+        // Update all charts with new duration
+        function updateAllCharts(duration) {
+            currentDuration = duration;
+            
+            // Calculate regimes
+            currentRegimes.maAlignment = calculateMAAlignment(duration);
+            currentRegimes.momentum = calculatePriceMomentum(duration);
+            currentRegimes.adx = calculateADXRegime();
+            
+            // Update stats
+            updateStats('stats1', currentRegimes.maAlignment);
+            updateStats('stats2', currentRegimes.momentum);
+            updateStats('stats3', currentRegimes.adx);
+            
+            // Update charts
+            Object.values(charts).forEach(chart => chart.update('none'));
+        }
+
+        // Update stats display
+        function updateStats(elementId, regimes) {
+            const changes = countRegimeChanges(regimes);
+            const counts = countRegimes(regimes);
+            
+            const total = regimes.length;
+            const strongBullPct = ((counts.strongBull / total) * 100).toFixed(1);
+            const weakBullPct = ((counts.weakBull / total) * 100).toFixed(1);
+            const sidewaysPct = ((counts.sideways / total) * 100).toFixed(1);
+            const weakBearPct = ((counts.weakBear / total) * 100).toFixed(1);
+            const strongBearPct = ((counts.strongBear / total) * 100).toFixed(1);
+            
+            document.getElementById(elementId).innerHTML = `
+                <div class="stat"><div class="stat-color" style="background: ${REGIME_COLORS.strongBull.border};"></div><span>Strong Bull: ${strongBullPct}%</span></div>
+                <div class="stat"><div class="stat-color" style="background: ${REGIME_COLORS.weakBull.border};"></div><span>Weak Bull: ${weakBullPct}%</span></div>
+                <div class="stat"><div class="stat-color" style="background: ${REGIME_COLORS.sideways.border};"></div><span>Sideways: ${sidewaysPct}%</span></div>
+                <div class="stat"><div class="stat-color" style="background: ${REGIME_COLORS.weakBear.border};"></div><span>Weak Bear: ${weakBearPct}%</span></div>
+                <div class="stat"><div class="stat-color" style="background: ${REGIME_COLORS.strongBear.border};"></div><span>Strong Bear: ${strongBearPct}%</span></div>
+                <div class="stat" style="margin-left: 15px; color: #4ecca3; font-weight: bold;">Changes: ${changes}</div>
+            `;
+        }
+
+        // Slider event listener
+        document.getElementById('durationSlider').addEventListener('input', (e) => {
+            const duration = parseInt(e.target.value);
+            document.getElementById('durationValue').textContent = duration + ' days';
+            updateAllCharts(duration);
+        });
+
+        // Load data on page load
+        loadData();
+    </script>
+</body>
+</html>

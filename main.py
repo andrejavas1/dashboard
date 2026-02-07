@@ -121,13 +121,161 @@ def run_full_pipeline():
         ov = OutOfSampleValidation()
         validated = ov.run_phase6()
         
+        # CRITICAL: Extract ticker from Data Acquisition config for ticker-aware paths
+        ticker = da.config.get('data_sources', {}).get('ticker', 'UNKNOWN')
+        logger.info(f"Using ticker: {ticker}")
+        
         # Phase 7: Portfolio Construction
         logger.info("\n" + "=" * 80)
         logger.info("PHASE 7: PORTFOLIO CONSTRUCTION")
         logger.info("=" * 80)
         PortfolioConstruction = get_phase_module(7)
         pc = PortfolioConstruction()
-        portfolio = pc.run_phase7()
+        # Pass ticker-specific validated_patterns path
+        validated_patterns_path = f"data/tickers/{ticker}/validated_patterns.json"
+        portfolio = pc.run_phase7(patterns_path=validated_patterns_path)
+        # CRITICAL: Pass ticker to save_portfolio to write to ticker-specific directory
+        pc.save_portfolio(ticker=ticker)
+        
+        # Generate Pattern Occurrences for Dashboard
+        logger.info("\n" + "=" * 80)
+        logger.info("GENERATING PATTERN OCCURRENCES")
+        logger.info("=" * 80)
+        try:
+            import pandas as pd
+            import json
+            from src.realtime_feature_calculator import RealtimeFeatureCalculator
+            
+            # CRITICAL: Load from ticker-specific directory
+            ticker_data_dir = f"data/tickers/{ticker}"
+            ohlcv_path = f'{ticker_data_dir}/ohlcv.json'
+            patterns_path = f'{ticker_data_dir}/patterns.json'
+            
+            logger.info(f"Loading occurrence data from {ticker_data_dir}/")
+            with open(ohlcv_path, 'r') as f:
+                ohlcv_data = json.load(f)
+            with open(patterns_path, 'r') as f:
+                patterns = json.load(f)
+            
+            # Calculate features
+            logger.info("Calculating features for occurrence matching...")
+            df = pd.DataFrame(ohlcv_data)
+            df['Date'] = pd.to_datetime(df['Date'])
+            df = df.sort_values('Date')
+            
+            calc = RealtimeFeatureCalculator()
+            features = calc.calculate(df)
+            merged = pd.concat([df.set_index('Date'), features], axis=1).reset_index()
+            merged['Date_str'] = merged['Date'].dt.strftime('%Y-%m-%d')
+            
+            def match_conditions(row, conditions):
+                """Check if row matches all pattern conditions."""
+                for feature, condition in conditions.items():
+                    if feature not in row or pd.isna(row[feature]):
+                        return False
+                    value = row[feature]
+                    op = condition.get('operator', '>=')
+                    target = condition['value']
+                    if op == '>=':
+                        if value < target: return False
+                    elif op == '<=':
+                        if value > target: return False
+                    elif op == '>':
+                        if value <= target: return False
+                    elif op == '<':
+                        if value >= target: return False
+                return True
+            
+            # Generate occurrences for each pattern
+            logger.info(f"Generating occurrences for {len(patterns)} patterns...")
+            for i, pattern in enumerate(patterns):
+                conditions = pattern.get('conditions', {})
+                direction = pattern.get('direction', 'long')
+                label_col = pattern.get('label_col', '')
+                
+                # Parse time window from label (e.g., "Label_1.0pct_5d" -> 5 days)
+                time_window = 5
+                if '_5d' in label_col:
+                    time_window = 5
+                elif '_10d' in label_col:
+                    time_window = 10
+                elif '_15d' in label_col:
+                    time_window = 15
+                elif '_20d' in label_col:
+                    time_window = 20
+                elif '_30d' in label_col:
+                    time_window = 30
+                
+                occurrences = []
+                for idx, row in merged.iterrows():
+                    if match_conditions(row, conditions):
+                        entry_price = row['Close']
+                        exit_idx = min(idx + time_window, len(merged) - 1)
+                        exit_price = merged.iloc[exit_idx]['Close']
+                        actual_move = ((exit_price - entry_price) / entry_price) * 100
+                        
+                        # Determine outcome
+                        threshold = 1.0  # Default 1%
+                        if '1.0pct' in label_col:
+                            threshold = 1.0
+                        elif '2.0pct' in label_col:
+                            threshold = 2.0
+                        elif '3.0pct' in label_col:
+                            threshold = 3.0
+                        elif '5.0pct' in label_col:
+                            threshold = 5.0
+                        
+                        if direction == 'long':
+                            if actual_move >= threshold:
+                                outcome = 'STRONG_UP'
+                            elif actual_move > 0:
+                                outcome = 'UP'
+                            else:
+                                outcome = 'DOWN'
+                            target_reached = actual_move >= threshold
+                        else:  # short
+                            if actual_move <= -threshold:
+                                outcome = 'STRONG_DOWN'
+                            elif actual_move < 0:
+                                outcome = 'DOWN'
+                            else:
+                                outcome = 'UP'
+                            target_reached = actual_move <= -threshold
+                        
+                        occurrences.append({
+                            'Date': row['Date_str'],
+                            'Open': float(row['Open']),
+                            'High': float(row['High']),
+                            'Low': float(row['Low']),
+                            'Close': float(entry_price),
+                            'Volume': int(row['Volume']),
+                            'outcome': outcome,
+                            'actual_move': float(actual_move),
+                            'time_to_target': time_window,
+                            'target_reached': target_reached
+                        })
+                
+                # Save occurrences to ticker-specific directory
+                occurrences_dir = f'{ticker_data_dir}/occurrences'
+                os.makedirs(occurrences_dir, exist_ok=True)
+                with open(f'{occurrences_dir}/pattern_{i}_occurrences.json', 'w') as f:
+                    json.dump(occurrences, f, indent=2)
+                
+                # UPDATE the pattern with actual occurrence count (critical for dashboard consistency)
+                pattern['occurrences'] = len(occurrences)
+                
+                if i < 5:
+                    logger.info(f"  Pattern #{i}: {len(occurrences)} occurrences")
+            
+            # Save updated patterns with correct occurrence counts
+            with open(patterns_path, 'w') as f:
+                json.dump(patterns, f, indent=2)
+            logger.info(f"✓ Updated {len(patterns)} patterns with actual occurrence counts")
+            
+        except Exception as e:
+            logger.error(f"Could not generate occurrences: {e}")
+            import traceback
+            logger.error(traceback.format_exc())
         
         # Phase 8: Visual Pattern Documentation (skipped - using standalone dashboard)
         logger.info("\n" + "=" * 80)
@@ -144,7 +292,11 @@ def run_full_pipeline():
             logger.info("Converting OHLCV data to JSON format...")
             import pandas as pd
             import json
-            ohlcv_df = pd.read_csv('data/XOM_verified_ohlcv.csv')
+            # Get ticker from DataAcquisition config
+            ticker = da.config.get('data_sources', {}).get('ticker', 'XOM')
+            verified_csv_path = f'data/{ticker}_verified_ohlcv.csv'
+            logger.info(f"[DEBUG main.py] Loading OHLCV from: {verified_csv_path}")
+            ohlcv_df = pd.read_csv(verified_csv_path)
             ohlcv_data = []
             for _, row in ohlcv_df.iterrows():
                 ohlcv_data.append({
@@ -226,6 +378,98 @@ def run_full_pipeline():
         logger.info("  Charts: charts/")
         logger.info("  Log: pipeline.log")
         logger.info("  Pipeline runs: data/pipeline_runs.json")
+        
+        # Run pattern occurrence validation test
+        logger.info("\n" + "=" * 80)
+        logger.info("RUNNING PATTERN OCCURRENCE VALIDATION TEST")
+        logger.info("=" * 80)
+        
+        import subprocess
+        try:
+            test_result = subprocess.run(
+                ['python', 'test_pattern_occurrences.py'],
+                capture_output=True,
+                text=True,
+                timeout=60
+            )
+            
+            # Log test output
+            for line in test_result.stdout.split('\n'):
+                if line.strip():
+                    logger.info(line)
+            
+            if test_result.returncode == 0:
+                logger.info("\n[TEST PASSED] All pattern occurrences validated successfully")
+                test_status = "PASSED"
+            else:
+                logger.error("\n[TEST FAILED] Pattern occurrence validation failed")
+                test_status = "FAILED"
+                # Log stderr if there's an error
+                if test_result.stderr:
+                    for line in test_result.stderr.split('\n'):
+                        if line.strip():
+                            logger.error(line)
+            
+            # Save test status for dashboard
+            test_status_data = {
+                'timestamp': datetime.now().isoformat(),
+                'status': test_status,
+                'exit_code': test_result.returncode
+            }
+            with open('data/test_status.json', 'w') as f:
+                json.dump(test_status_data, f, indent=2)
+            
+            # Copy data to per-ticker directory
+            logger.info("\n" + "=" * 80)
+            logger.info("COPYING DATA TO PER-TICKER DIRECTORY")
+            logger.info("=" * 80)
+            try:
+                import shutil
+                # Get ticker from config
+                ticker = da.config.get('data_sources', {}).get('ticker', 'XOM')
+                ticker_dir = f'data/tickers/{ticker}'
+                os.makedirs(ticker_dir, exist_ok=True)
+                os.makedirs(f'{ticker_dir}/occurrences', exist_ok=True)
+                
+                # Copy main files
+                files_to_copy = [
+                    ('data/ohlcv.json', f'{ticker_dir}/ohlcv.json'),
+                    ('data/patterns.json', f'{ticker_dir}/patterns.json'),
+                    ('data/validated_patterns.json', f'{ticker_dir}/validated_patterns.json'),
+                    ('data/pattern_regime_analysis.json', f'{ticker_dir}/pattern_regime_analysis.json'),
+                    ('data/test_status.json', f'{ticker_dir}/test_status.json'),
+                    ('data/features_matrix.csv', f'{ticker_dir}/features_matrix.csv'),
+                ]
+                
+                for src, dst in files_to_copy:
+                    if os.path.exists(src):
+                        shutil.copy2(src, dst)
+                        logger.info(f"  Copied {src} -> {dst}")
+                
+                # Clear old occurrence files to prevent stale data
+                occ_dir = f'{ticker_dir}/occurrences'
+                for old_file in os.listdir(occ_dir):
+                    if old_file.startswith('pattern_') and old_file.endswith('_occurrences.json'):
+                        os.remove(f'{occ_dir}/{old_file}')
+                logger.info(f"  Cleared old occurrence files from {occ_dir}")
+                
+                # Copy occurrence files
+                occurrence_count = 0
+                for occ_file in os.listdir('data'):
+                    if occ_file.startswith('pattern_') and occ_file.endswith('_occurrences.json'):
+                        src = f'data/{occ_file}'
+                        dst = f'{ticker_dir}/occurrences/{occ_file}'
+                        shutil.copy2(src, dst)
+                        occurrence_count += 1
+                
+                logger.info(f"  Copied {occurrence_count} occurrence files")
+                logger.info(f"Data saved to {ticker_dir}/")
+            except Exception as copy_error:
+                logger.error(f"Error copying to ticker directory: {copy_error}")
+                
+        except Exception as test_error:
+            logger.error(f"Could not run validation test: {test_error}")
+            test_status = "ERROR"
         
         return True
         

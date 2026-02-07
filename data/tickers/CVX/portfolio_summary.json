@@ -1,0 +1,162 @@
+{
+  "total_patterns": 19,
+  "average_validation_success_rate": 80.36,
+  "average_training_success_rate": 90.23,
+  "average_occurrences": 13.74,
+  "average_composite_score": 60.17,
+  "expected_signals_per_month": 1.61,
+  "patterns": [
+    {
+      "id": 0,
+      "composite_score": 70.0160357326345,
+      "validation_success_rate": 92.3076923076923,
+      "training_success_rate": 92.3076923076923,
+      "validation_occurrences": 13,
+      "label_column": "Label_2.0pct_10d"
+    },
+    {
+      "id": 1,
+      "composite_score": 11.75,
+      "validation_success_rate": 0,
+      "training_success_rate": 100.0,
+      "validation_occurrences": 0,
+      "label_column": "Label_2.0pct_10d"
+    },
+    {
+      "id": 2,
+      "composite_score": 11.15,
+      "validation_success_rate": 0,
+      "training_success_rate": 87.5,
+      "validation_occurrences": 0,
+      "label_column": "Label_1.0pct_10d"
+    },
+    {
+      "id": 3,
+      "composite_score": 74.17018390090603,
+      "validation_success_rate": 100.0,
+      "training_success_rate": 100.0,
+      "validation_occurrences": 10,
+      "label_column": "Label_1.0pct_10d"
+    },
+    {
+      "id": 4,
+      "composite_score": 70.3845409133329,
+      "validation_success_rate": 93.75,
+      "training_success_rate": 93.75,
+      "validation_occurrences": 16,
+      "label_column": "Label_2.0pct_10d"
+    },
+    {
+      "id": 5,
+      "composite_score": 69.90609246228807,
+      "validation_success_rate": 100.0,
+      "training_success_rate": 100.0,
+      "validation_occurrences": 10,
+      "label_column": "Label_1.0pct_5d"
+    },
+    {
+      "id": 6,
+      "composite_score": 64.75461005077159,
+      "validation_success_rate": 84.84848484848484,
+      "training_success_rate": 84.84848484848484,
+      "validation_occurrences": 33,
+      "label_column": "Label_2.0pct_10d"
+    },
+    {
+      "id": 7,
+      "composite_score": 69.16168700359628,
+      "validation_success_rate": 100.0,
+      "training_success_rate": 100.0,
+      "validation_occurrences": 10,
+      "label_column": "Label_1.0pct_5d"
+    },
+    {
+      "id": 8,
+      "composite_score": 58.86379032328915,
+      "validation_success_rate": 82.35294117647058,
+      "training_success_rate": 82.35294117647058,
+      "validation_occurrences": 17,
+      "label_column": "Label_1.0pct_5d"
+    },
+    {
+      "id": 9,
+      "composite_score": 60.60339750906056,
+      "validation_success_rate": 83.33333333333334,
+      "training_success_rate": 83.33333333333334,
+      "validation_occurrences": 18,
+      "label_column": "Label_1.0pct_5d"
+    },
+    {
+      "id": 10,
+      "composite_score": 62.65819713143018,
+      "validation_success_rate": 82.35294117647058,
+      "training_success_rate": 82.35294117647058,
+      "validation_occurrences": 17,
+      "label_column": "Label_1.0pct_10d"
+    },
+    {
+      "id": 11,
+      "composite_score": 63.52052110379584,
+      "validation_success_rate": 90.9090909090909,
+      "training_success_rate": 90.9090909090909,
+      "validation_occurrences": 11,
+      "label_column": "Label_1.0pct_5d"
+    },
+    {
+      "id": 12,
+      "composite_score": 63.81723903454604,
+      "validation_success_rate": 88.23529411764706,
+      "training_success_rate": 88.23529411764706,
+      "validation_occurrences": 17,
+      "label_column": "Label_2.0pct_10d"
+    },
+    {
+      "id": 13,
+      "composite_score": 64.35023215193755,
+      "validation_success_rate": 86.66666666666667,
+      "training_success_rate": 86.66666666666667,
+      "validation_occurrences": 15,
+      "label_column": "Label_1.0pct_10d"
+    },
+    {
+      "id": 14,
+      "composite_score": 64.4161141685291,
+      "validation_success_rate": 82.35294117647058,
+      "training_success_rate": 82.35294117647058,
+      "validation_occurrences": 17,
+      "label_column": "Label_2.0pct_10d"
+    },
+    {
+      "id": 15,
+      "composite_score": 64.74642222332251,
+      "validation_success_rate": 84.61538461538461,
+      "training_success_rate": 84.61538461538461,
+      "validation_occurrences": 13,
+      "label_column": "Label_1.0pct_10d"
+    },
+    {
+      "id": 16,
+      "composite_score": 65.24189134030544,
+      "validation_success_rate": 89.47368421052632,
+      "training_success_rate": 89.47368421052632,
+      "validation_occurrences": 19,
+      "label_column": "Label_2.0pct_10d"
+    },
+    {
+      "id": 17,
+      "composite_score": 65.92981670314953,
+      "validation_success_rate": 85.71428571428571,
+      "training_success_rate": 85.71428571428571,
+      "validation_occurrences": 14,
+      "label_column": "Label_1.0pct_10d"
+    },
+    {
+      "id": 18,
+      "composite_score": 67.79649066770334,
+      "validation_success_rate": 100.0,
+      "training_success_rate": 100.0,
+      "validation_occurrences": 11,
+      "label_column": "Label_1.0pct_10d"
+    }
+  ]
+}

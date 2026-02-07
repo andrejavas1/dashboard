@@ -1,0 +1,488 @@
+[
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": "<=",
+        "value": -2964225.516238437
+      },
+      "AD_ROC_5d": {
+        "operator": "<=",
+        "value": 7466869.371840412
+      },
+      "Dist_MA_50": {
+        "operator": ">=",
+        "value": 6.580237677266355
+      }
+    },
+    "occurrences": 2,
+    "success_count": 2,
+    "success_rate": 100.0,
+    "avg_move": 7.583455933937354,
+    "avg_time": 9.7,
+    "false_positive_rate": 0.0,
+    "p_value": 0.0009765625,
+    "label_col": "Label_1.0pct_10d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "f805c7dc",
+    "pipeline_run_timestamp": "2026-02-07T10:05:51.149532",
+    "training_success_rate": 100.0,
+    "validation_success_rate": 100.0
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": "<=",
+        "value": -18059837.09776166
+      },
+      "OBV_ROC_20d": {
+        "operator": "<=",
+        "value": 4.816009709503444
+      },
+      "Days_Since_52w_High": {
+        "operator": ">=",
+        "value": 209.0
+      }
+    },
+    "occurrences": 3,
+    "success_count": 1,
+    "success_rate": 33.33333333333333,
+    "avg_move": 7.127193942221936,
+    "avg_time": 10.333333333333334,
+    "false_positive_rate": 6.25,
+    "p_value": 0.0002593994140625,
+    "label_col": "Label_2.0pct_10d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "f805c7dc",
+    "pipeline_run_timestamp": "2026-02-07T10:05:51.149532",
+    "training_success_rate": 93.75,
+    "validation_success_rate": 93.75
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": "<=",
+        "value": -2964225.516238437
+      },
+      "Chaikin_Oscillator": {
+        "operator": "<=",
+        "value": 2760501.2504347414
+      },
+      "Dist_MA_50": {
+        "operator": ">=",
+        "value": 6.580237677266355
+      }
+    },
+    "occurrences": 2,
+    "success_count": 2,
+    "success_rate": 100.0,
+    "avg_move": 7.341204559138088,
+    "avg_time": 9.0,
+    "false_positive_rate": 15.384615384615385,
+    "p_value": 0.01123046875,
+    "label_col": "Label_1.0pct_10d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "f805c7dc",
+    "pipeline_run_timestamp": "2026-02-07T10:05:51.149532",
+    "training_success_rate": 84.61538461538461,
+    "validation_success_rate": 84.61538461538461
+  },
+  {
+    "conditions": {
+      "OBV_ROC_20d": {
+        "operator": "<=",
+        "value": -74.92603718192206
+      },
+      "Stoch_14_D": {
+        "operator": "<=",
+        "value": 33.85054094284052
+      }
+    },
+    "occurrences": 3,
+    "success_count": 3,
+    "success_rate": 100.0,
+    "avg_move": 3.2644580023975265,
+    "avg_time": 4.9,
+    "false_positive_rate": 0.0,
+    "p_value": 0.0009765625,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "f805c7dc",
+    "pipeline_run_timestamp": "2026-02-07T10:05:51.149532",
+    "training_success_rate": 100.0,
+    "validation_success_rate": 100.0
+  },
+  {
+    "conditions": {
+      "Stoch_14_K": {
+        "operator": "<=",
+        "value": 11.831038390376548
+      },
+      "Upper_Shadow_Ratio": {
+        "operator": ">=",
+        "value": 42.8575321115421
+      }
+    },
+    "occurrences": 8,
+    "success_count": 5,
+    "success_rate": 62.5,
+    "avg_move": 3.6907283081920452,
+    "avg_time": 4.2,
+    "false_positive_rate": 0.0,
+    "p_value": 0.0009765625,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "f805c7dc",
+    "pipeline_run_timestamp": "2026-02-07T10:05:51.149532",
+    "training_success_rate": 100.0,
+    "validation_success_rate": 100.0
+  },
+  {
+    "conditions": {
+      "OBV_ROC_5d": {
+        "operator": "<=",
+        "value": -34.19348207756671
+      },
+      "RSI_Momentum": {
+        "operator": ">=",
+        "value": -0.024659281941922
+      }
+    },
+    "occurrences": 5,
+    "success_count": 2,
+    "success_rate": 40.0,
+    "avg_move": 2.655236202711318,
+    "avg_time": 8.909090909090908,
+    "false_positive_rate": 0.0,
+    "p_value": 0.00048828125,
+    "label_col": "Label_1.0pct_10d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "f805c7dc",
+    "pipeline_run_timestamp": "2026-02-07T10:05:51.149532",
+    "training_success_rate": 100.0,
+    "validation_success_rate": 100.0
+  },
+  {
+    "conditions": {
+      "OBV_ROC_20d": {
+        "operator": "<=",
+        "value": -74.92603718192206
+      },
+      "Stoch_14_K": {
+        "operator": "<=",
+        "value": 32.512787107111976
+      }
+    },
+    "occurrences": 3,
+    "success_count": 3,
+    "success_rate": 100.0,
+    "avg_move": 3.1515595237426854,
+    "avg_time": 4.5,
+    "false_positive_rate": 9.090909090909092,
+    "p_value": 0.005859375,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "f805c7dc",
+    "pipeline_run_timestamp": "2026-02-07T10:05:51.149532",
+    "training_success_rate": 90.9090909090909,
+    "validation_success_rate": 90.9090909090909
+  },
+  {
+    "conditions": {
+      "Stoch_14_K": {
+        "operator": "<=",
+        "value": 11.831038390376548
+      },
+      "RSI_Momentum": {
+        "operator": ">=",
+        "value": -8.974960571131447
+      }
+    },
+    "occurrences": 11,
+    "success_count": 7,
+    "success_rate": 63.63636363636363,
+    "avg_move": 4.576637570523547,
+    "avg_time": 9.294117647058824,
+    "false_positive_rate": 10.526315789473683,
+    "p_value": 0.0003643035888671875,
+    "label_col": "Label_2.0pct_10d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "f805c7dc",
+    "pipeline_run_timestamp": "2026-02-07T10:05:51.149532",
+    "training_success_rate": 89.47368421052632,
+    "validation_success_rate": 89.47368421052632
+  },
+  {
+    "conditions": {
+      "CCI_20": {
+        "operator": "<=",
+        "value": -117.21049842475652
+      },
+      "52w_Range_Pct": {
+        "operator": "<=",
+        "value": 67.375563106573
+      }
+    },
+    "occurrences": 5,
+    "success_count": 2,
+    "success_rate": 40.0,
+    "avg_move": 4.213453474011088,
+    "avg_time": 8.0,
+    "false_positive_rate": 11.76470588235294,
+    "p_value": 0.0011749267578125,
+    "label_col": "Label_2.0pct_10d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "f805c7dc",
+    "pipeline_run_timestamp": "2026-02-07T10:05:51.149532",
+    "training_success_rate": 88.23529411764706,
+    "validation_success_rate": 88.23529411764706
+  },
+  {
+    "conditions": {
+      "Stoch_14_D": {
+        "operator": "<=",
+        "value": 33.85054094284052
+      },
+      "Dist_MA_50": {
+        "operator": ">=",
+        "value": 1.7105286179015928
+      }
+    },
+    "occurrences": 6,
+    "success_count": 4,
+    "success_rate": 66.66666666666666,
+    "avg_move": 5.506992374795974,
+    "avg_time": 8.846153846153847,
+    "false_positive_rate": 13.333333333333334,
+    "p_value": 0.003692626953125,
+    "label_col": "Label_1.0pct_10d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "f805c7dc",
+    "pipeline_run_timestamp": "2026-02-07T10:05:51.149532",
+    "training_success_rate": 86.66666666666667,
+    "validation_success_rate": 86.66666666666667
+  },
+  {
+    "conditions": {
+      "Body_Range_Ratio": {
+        "operator": "<=",
+        "value": 21.858401914434133
+      },
+      "52w_Range_Pct": {
+        "operator": ">=",
+        "value": 81.04182230016768
+      }
+    },
+    "occurrences": 5,
+    "success_count": 3,
+    "success_rate": 60.0,
+    "avg_move": 4.34130637352825,
+    "avg_time": 5.5,
+    "false_positive_rate": 7.142857142857142,
+    "p_value": 0.0064697265625,
+    "label_col": "Label_1.0pct_10d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "f805c7dc",
+    "pipeline_run_timestamp": "2026-02-07T10:05:51.149532",
+    "training_success_rate": 85.71428571428571,
+    "validation_success_rate": 85.71428571428571
+  },
+  {
+    "conditions": {
+      "Stoch_14_D": {
+        "operator": "<=",
+        "value": 19.830024810499836
+      },
+      "RSI_Momentum": {
+        "operator": ">=",
+        "value": -8.974960571131447
+      }
+    },
+    "occurrences": 10,
+    "success_count": 6,
+    "success_rate": 60.0,
+    "avg_move": 4.813823727931421,
+    "avg_time": 9.642857142857142,
+    "false_positive_rate": 15.151515151515152,
+    "p_value": 0,
+    "label_col": "Label_2.0pct_10d",
+    "method": "rule_based",
+    "direction": "long",
+    "pipeline_run_id": "f805c7dc",
+    "pipeline_run_timestamp": "2026-02-07T10:05:51.149532",
+    "training_success_rate": 84.84848484848484,
+    "validation_success_rate": 84.84848484848484
+  },
+  {
+    "conditions": {
+      "Vol_Change_5d": {
+        "operator": "<=",
+        "value": -37.900327744464704
+      },
+      "52w_Range_Pct": {
+        "operator": "<=",
+        "value": 67.375563106573
+      }
+    },
+    "occurrences": 10,
+    "success_count": 5,
+    "success_rate": 50.0,
+    "avg_move": 3.6667094504848143,
+    "avg_time": 4.533333333333333,
+    "false_positive_rate": 16.666666666666664,
+    "p_value": 0.0037689208984375,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "f805c7dc",
+    "pipeline_run_timestamp": "2026-02-07T10:05:51.149532",
+    "training_success_rate": 83.33333333333334,
+    "validation_success_rate": 83.33333333333334
+  },
+  {
+    "conditions": {
+      "AD_ROC_5d": {
+        "operator": "<=",
+        "value": -15750832.151677651
+      },
+      "Vol_Change_5d": {
+        "operator": "<=",
+        "value": -1.4820179467250785
+      }
+    },
+    "occurrences": 11,
+    "success_count": 6,
+    "success_rate": 54.54545454545454,
+    "avg_move": 2.897849011044308,
+    "avg_time": 3.357142857142857,
+    "false_positive_rate": 17.647058823529413,
+    "p_value": 0.0063629150390625,
+    "label_col": "Label_1.0pct_5d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "f805c7dc",
+    "pipeline_run_timestamp": "2026-02-07T10:05:51.149532",
+    "training_success_rate": 82.35294117647058,
+    "validation_success_rate": 82.35294117647058
+  },
+  {
+    "conditions": {
+      "Chaikin_Oscillator": {
+        "operator": "<=",
+        "value": -122009.48886698484
+      },
+      "52w_Range_Pct": {
+        "operator": ">=",
+        "value": 81.04182230016768
+      }
+    },
+    "occurrences": 5,
+    "success_count": 3,
+    "success_rate": 60.0,
+    "avg_move": 5.98459640694785,
+    "avg_time": 8.928571428571429,
+    "false_positive_rate": 17.647058823529413,
+    "p_value": 0.0063629150390625,
+    "label_col": "Label_1.0pct_10d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "f805c7dc",
+    "pipeline_run_timestamp": "2026-02-07T10:05:51.149532",
+    "training_success_rate": 82.35294117647058,
+    "validation_success_rate": 82.35294117647058
+  },
+  {
+    "conditions": {
+      "AD_ROC_20d": {
+        "operator": "<=",
+        "value": -28212480.944775715
+      },
+      "OBV_ROC_5d": {
+        "operator": ">=",
+        "value": 14.396050101440782
+      }
+    },
+    "occurrences": 4,
+    "success_count": 2,
+    "success_rate": 50.0,
+    "avg_move": 7.363683955489991,
+    "avg_time": 11.0,
+    "false_positive_rate": 17.647058823529413,
+    "p_value": 0.0063629150390625,
+    "label_col": "Label_2.0pct_10d",
+    "direction": "long",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "f805c7dc",
+    "pipeline_run_timestamp": "2026-02-07T10:05:51.149532",
+    "training_success_rate": 82.35294117647058,
+    "validation_success_rate": 82.35294117647058
+  },
+  {
+    "conditions": {
+      "Days_Since_52w_Low": {
+        "operator": "<=",
+        "value": 167.0
+      },
+      "52w_Range_Pct": {
+        "operator": ">=",
+        "value": 81.04182230016768
+      }
+    },
+    "occurrences": 4,
+    "success_count": 2,
+    "success_rate": 50.0,
+    "avg_move": 4.776716129448646,
+    "avg_time": 10.916666666666666,
+    "false_positive_rate": 0.0,
+    "p_value": 0.001708984375,
+    "label_col": "Label_2.0pct_10d",
+    "direction": "short",
+    "method": "rule_based",
+    "volatility_regime": "All",
+    "trend_regime": "All",
+    "pipeline_run_id": "f805c7dc",
+    "pipeline_run_timestamp": "2026-02-07T10:05:51.149532",
+    "training_success_rate": 92.3076923076923,
+    "validation_success_rate": 92.3076923076923
+  }
+]

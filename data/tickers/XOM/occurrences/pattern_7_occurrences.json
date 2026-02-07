@@ -1,0 +1,80 @@
+[
+  {
+    "Date": "2024-02-07",
+    "Open": 95.37670661239063,
+    "High": 95.82444391651993,
+    "Low": 94.3786328034068,
+    "Close": 95.34872436523438,
+    "Volume": 13826800,
+    "outcome": "STRONG_UP",
+    "actual_move": 3.2003237755118192,
+    "time_to_target": 15,
+    "target_reached": true,
+    "regime": "Sideways"
+  },
+  {
+    "Date": "2024-02-29",
+    "Open": 98.55082746567577,
+    "High": 98.91799179934898,
+    "Low": 98.1177620255146,
+    "Close": 98.4001922607422,
+    "Volume": 17566100,
+    "outcome": "STRONG_UP",
+    "actual_move": 8.582082898171787,
+    "time_to_target": 15,
+    "target_reached": true,
+    "regime": "Sideways"
+  },
+  {
+    "Date": "2024-07-16",
+    "Open": 108.529052652184,
+    "High": 110.42724336666392,
+    "Low": 107.92163220283228,
+    "Close": 110.13302612304688,
+    "Volume": 13614100,
+    "outcome": "DOWN",
+    "actual_move": -1.6201263065490037,
+    "time_to_target": 15,
+    "target_reached": false,
+    "regime": "Strong Bull"
+  },
+  {
+    "Date": "2025-01-14",
+    "Open": 104.93861692820798,
+    "High": 105.874278162353,
+    "Low": 104.01260373463214,
+    "Close": 105.835693359375,
+    "Volume": 11191200,
+    "outcome": "UP",
+    "actual_move": 0.14582511539712528,
+    "time_to_target": 15,
+    "target_reached": false,
+    "regime": "Strong Bull"
+  },
+  {
+    "Date": "2025-05-22",
+    "Open": 101.22445608770848,
+    "High": 101.62715741386944,
+    "Low": 100.0752960733414,
+    "Close": 101.13606262207033,
+    "Volume": 13417400,
+    "outcome": "STRONG_UP",
+    "actual_move": 8.886086155315882,
+    "time_to_target": 15,
+    "target_reached": true,
+    "regime": "Strong Bear"
+  },
+  {
+    "Date": "2025-09-24",
+    "Open": 113.57658868873862,
+    "High": 114.7562728834336,
+    "Low": 113.47745727916364,
+    "Close": 113.5666732788086,
+    "Volume": 14756100,
+    "outcome": "DOWN",
+    "actual_move": -2.5750649411024114,
+    "time_to_target": 15,
+    "target_reached": false,
+    "regime": "Strong Bear"
+  }
+]

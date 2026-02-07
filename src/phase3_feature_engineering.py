@@ -52,8 +52,18 @@ class FeatureEngineering:
         self.macd_slow = self.config['features']['macd_params']['slow']
         self.macd_signal = self.config['features']['macd_params']['signal']
         
-        # Adjust parameters for quick mode
-        if self.run_mode == 'quick':
+        # Adjust parameters for quick/ultra mode
+        if self.run_mode == 'ultra':
+            # Ultra mode: minimal features for maximum speed
+            self.ma_periods = [20]  # Single MA
+            self.roc_periods = [5]  # Single ROC
+            self.atr_periods = [14]
+            self.rsi_periods = [14]
+            self.adx_periods = [14]
+            self.volume_avg_periods = [10]
+            self.high_low_periods = [10]
+            logger.info("Ultra Mode: Minimal feature calculation parameters")
+        elif self.run_mode == 'quick':
             self.ma_periods = [20, 50]  # Reduced from [10, 20, 50, 100, 200]
             self.roc_periods = [5, 10]  # Reduced from [1, 3, 5, 10, 20]
             self.atr_periods = [14]  # Reduced from [5, 10, 14, 20]
@@ -429,16 +439,27 @@ class FeatureEngineering:
         # Only store relative trend (boolean), not absolute OBV values
         data['OBV_Trend'] = (obv > obv_ma).astype(int)
         # Store OBV rate of change (relative) instead of absolute values
-        data['OBV_ROC_5d'] = obv.pct_change(5) * 100
-        data['OBV_ROC_20d'] = obv.pct_change(20) * 100
+        # Cap extreme values to prevent outliers when OBV crosses zero
+        obv_roc_5d = obv.pct_change(5) * 100
+        obv_roc_20d = obv.pct_change(20) * 100
+        data['OBV_ROC_5d'] = obv_roc_5d.clip(-500, 500)
+        data['OBV_ROC_20d'] = obv_roc_20d.clip(-500, 500)
         
-        # Accumulation/Distribution - only use relative rate of change, not absolute values
+        # Accumulation/Distribution Line
         mfv = ((data['Close'] - data['Low']) - (data['High'] - data['Close'])) / (data['High'] - data['Low'])
         mfv = mfv.fillna(0.5)
         ad = (mfv * data['Volume']).cumsum()
-        # Only store relative rate of change, not absolute AD values
-        data['AD_ROC_5d'] = ad.pct_change(5) * 100
-        data['AD_ROC_20d'] = ad.pct_change(20) * 100
+        
+        # Chaikin A/D Oscillator (industry standard) - EMA difference instead of percentage change
+        # This avoids the percentage change problem on cumulative values
+        ad_ema_fast = ad.ewm(span=3, adjust=False).mean()
+        ad_ema_slow = ad.ewm(span=10, adjust=False).mean()
+        data['Chaikin_Oscillator'] = ad_ema_fast - ad_ema_slow
+        
+        # Keep backward compatibility: use absolute difference instead of percentage
+        data['AD_ROC_5d'] = ad.diff(5)  # Absolute change, not percentage
+        data['AD_ROC_20d'] = ad.diff(20)  # Absolute change, not percentage
+        
         # Store AD trend direction (boolean)
         data['AD_Trend'] = (ad.diff(5) > 0).astype(int)
         
@@ -823,12 +844,12 @@ class FeatureEngineering:
         features = self.calculate_fibonacci_features(features)
         features = self.calculate_vwap_features(features)
         
-        # Skip these expensive features in quick mode
-        if self.run_mode != 'quick':
+        # Skip these expensive features in quick/ultra mode
+        if self.run_mode not in ['quick', 'ultra']:
             features = self.calculate_enhanced_momentum_features(features)
             features = self.calculate_cycle_features(features)
         else:
-            logger.info("Quick Mode: Skipping enhanced momentum and cycle features")
+            logger.info(f"{self.run_mode.upper()} Mode: Skipping enhanced momentum and cycle features")
         
         # Clean features (replace infinity, handle NaN)
         features = self.clean_features(features)
